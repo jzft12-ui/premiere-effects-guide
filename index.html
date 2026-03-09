@@ -321,8 +321,24 @@
 
     .section-head h2 {
       margin: 0;
-      font-size: 22px;
+      font-size: 24px;
       color: var(--heading);
+      letter-spacing: .2px;
+      text-shadow: 0 1px 0 rgba(0,0,0,.28);
+    }
+
+    .section-head {
+      position: relative;
+    }
+
+    .section-head::before {
+      content: "";
+      display: block;
+      width: 64px;
+      height: 4px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--blue) 0%, var(--purple) 100%);
+      margin-bottom: 12px;
     }
 
     .section-head p {
@@ -335,7 +351,36 @@
       width: 100%;
       border-collapse: collapse;
       background: rgba(13,21,36,.82);
-      table-layout: auto;
+      table-layout: fixed;
+    }
+
+    .section table th:nth-child(1),
+    .section table td:nth-child(1),
+    .section table th:nth-child(2),
+    .section table td:nth-child(2),
+    .section table th:nth-child(3),
+    .section table td:nth-child(3) {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .searchable-group:not([data-group="popular-combos"]) .section table th:nth-child(1),
+    .searchable-group:not([data-group="popular-combos"]) .section table td:nth-child(1) {
+      width: 30%;
+    }
+
+    .searchable-group:not([data-group="popular-combos"]) .section table th:nth-child(2),
+    .searchable-group:not([data-group="popular-combos"]) .section table td:nth-child(2) {
+      width: 30%;
+    }
+
+    .searchable-group:not([data-group="popular-combos"]) .section table th:nth-child(3),
+    .searchable-group:not([data-group="popular-combos"]) .section table td:nth-child(3) {
+      width: 40%;
+    }
+
+    .searchable-group:not([data-group="popular-combos"]) .section table td:nth-child(3) {
+      white-space: nowrap;
     }
 
     th, td {
@@ -367,32 +412,59 @@
     .zh {
       font-weight: 500;
       color: #e6edf7;
+      word-break: keep-all;
+      overflow-wrap: normal;
     }
 
     #popular-combos .section table {
       table-layout: fixed;
     }
 
-    #popular-combos table th:nth-child(1),
-    #popular-combos table td:nth-child(1) {
+    #popular-combos .section table,
+    #popular-combos .capcut-table {
+      table-layout: fixed;
+      width: 100%;
+    }
+
+    #popular-combos .section table th,
+    #popular-combos .section table td {
+      vertical-align: top;
+    }
+
+    #popular-combos .capcut-table th:nth-child(1),
+    #popular-combos .capcut-table td:nth-child(1) {
+      width: 9%;
+      min-width: 9%;
       white-space: nowrap;
-      width: 92px;
+      word-break: keep-all;
+      overflow-wrap: normal;
     }
 
-    #popular-combos table th:nth-child(2),
-    #popular-combos table td:nth-child(2) {
+    #popular-combos .capcut-table th:nth-child(2),
+    #popular-combos .capcut-table td:nth-child(2) {
+      width: 16%;
+      min-width: 16%;
       white-space: nowrap;
-      width: 170px;
+      word-break: keep-all;
+      overflow-wrap: normal;
     }
 
-    #popular-combos table th:nth-child(3),
-    #popular-combos table td:nth-child(3) {
-      width: 42%;
+    #popular-combos .capcut-table th:nth-child(3),
+    #popular-combos .capcut-table td:nth-child(3) {
+      width: 47%;
+      min-width: 47%;
     }
 
-    #popular-combos table th:nth-child(4),
-    #popular-combos table td:nth-child(4) {
+    #popular-combos .capcut-table th:nth-child(4),
+    #popular-combos .capcut-table td:nth-child(4) {
       width: 28%;
+      min-width: 28%;
+    }
+
+    #popular-combos .capcut-table td:nth-child(1),
+    #popular-combos .capcut-table td:nth-child(2) {
+      font-weight: 600;
+      letter-spacing: .1px;
     }
 
     .highlight {
@@ -516,20 +588,29 @@
         margin: 0 0 14px;
       }
 
-      #popular-combos .section table {
+      table {
         table-layout: auto;
       }
 
-      #popular-combos table th:nth-child(1),
-      #popular-combos table td:nth-child(1),
-      #popular-combos table th:nth-child(2),
-      #popular-combos table td:nth-child(2),
-      #popular-combos table th:nth-child(3),
-      #popular-combos table td:nth-child(3),
-      #popular-combos table th:nth-child(4),
-      #popular-combos table td:nth-child(4) {
+      #popular-combos .capcut-table {
+        table-layout: auto;
+      }
+
+      .searchable-group:not([data-group="popular-combos"]) .section table td:nth-child(3) {
+        white-space: normal;
+      }
+
+      #popular-combos .capcut-table th:nth-child(1),
+      #popular-combos .capcut-table td:nth-child(1),
+      #popular-combos .capcut-table th:nth-child(2),
+      #popular-combos .capcut-table td:nth-child(2),
+      #popular-combos .capcut-table th:nth-child(3),
+      #popular-combos .capcut-table td:nth-child(3),
+      #popular-combos .capcut-table th:nth-child(4),
+      #popular-combos .capcut-table td:nth-child(4) {
         white-space: normal;
         width: auto;
+        min-width: auto;
       }
 
       .highlight,
@@ -1488,7 +1569,13 @@
             <h2>影片插入動畫</h2>
             <p>CapCut 影片素材常見分成進場、退場、組合動畫三類，下面用風格類型整理重點。</p>
           </div>
-          <table>
+          <table class="capcut-table">
+            <colgroup>
+              <col style="width:9%">
+              <col style="width:16%">
+              <col style="width:47%">
+              <col style="width:28%">
+            </colgroup>
             <thead>
               <tr><th>分類</th><th>動畫類型</th><th>用途簡述</th><th>可能用到的 Premiere 做法</th></tr>
             </thead>
@@ -1515,7 +1602,13 @@
             <h2>文字動畫</h2>
             <p>CapCut 文字常見分成進場、退場、循環播放、字幕四類，下面用教學上最容易理解的風格整理。</p>
           </div>
-          <table>
+          <table class="capcut-table">
+            <colgroup>
+              <col style="width:9%">
+              <col style="width:16%">
+              <col style="width:47%">
+              <col style="width:28%">
+            </colgroup>
             <thead>
               <tr><th>分類</th><th>動畫類型</th><th>用途簡述</th><th>可能用到的 Premiere 做法</th></tr>
             </thead>
