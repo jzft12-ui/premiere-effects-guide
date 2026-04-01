@@ -6,20 +6,16 @@
   <title>Premiere Pro 效果與轉場中英對照表</title>
   <style>
     :root {
-      --bg: #0b1220;
-      --bg2: #111827;
-      --panel: #121a2b;
-      --panel-2: #182235;
-      --panel-3: #1d2940;
-      --line: #2a3852;
-      --text: #e6edf7;
-      --muted: #9fb0c9;
-      --heading: #f8fbff;
-      --blue: #7cb4ff;
-      --purple: #b6a1ff;
-      --warm: #ffcc8a;
-      --shadow: 0 14px 30px rgba(0,0,0,.28);
-      --print-line: #999;
+      --bg-color: #f3f4f6;
+      --surface-color: #ffffff;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --border-color: #e5e7eb;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --table-hover: #f9fafb;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     }
 
     * { box-sizing: border-box; }
@@ -27,894 +23,287 @@
 
     body {
       margin: 0;
-      font-family: "Microsoft JhengHei", "Noto Sans TC", Arial, sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(124,180,255,.08) 0%, transparent 24%),
-        radial-gradient(circle at top right, rgba(182,161,255,.07) 0%, transparent 18%),
-        linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
-      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
       line-height: 1.6;
     }
 
+    /* 頂部導覽列 */
     .topnav {
       position: sticky;
       top: 0;
       z-index: 50;
-      background: rgba(11,18,32,.82);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(42,56,82,.95);
-      box-shadow: 0 8px 20px rgba(0,0,0,.24);
-    }
-
-    .subnav-wrap {
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 0 20px 10px;
-      display: none;
-    }
-
-    .subnav-wrap.show {
-      display: block;
-    }
-
-    .subnav-wrap.is-hiding {
-      pointer-events: none;
-    }
-
-    .subnav-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-      justify-content: center;
-      padding: 8px 0 2px;
-    }
-
-    .subnav-label {
-      display: none;
-    }
-
-    .subnav-close {
-      padding: 7px 10px;
-      border-radius: 999px;
-      border: 1px solid #4a4068;
-      background: linear-gradient(180deg, #2a223d 0%, #191526 100%);
-      color: #e2d9ff;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      white-space: nowrap;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
     }
 
     .topnav-inner {
-      max-width: 1280px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 10px 20px;
+      padding: 12px 24px;
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-      justify-content: center;
-      overflow-x: visible;
+      gap: 12px;
     }
 
     .navbtn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 8px 12px;
+      padding: 8px 16px;
       border-radius: 999px;
       text-decoration: none;
-      color: #d9e7ff;
-      background: linear-gradient(180deg, #1a2335 0%, #131b2b 100%);
-      border: 1px solid #33415d;
-      font-size: 13px;
-      font-weight: 700;
-      white-space: nowrap;
-      box-shadow: 0 6px 14px rgba(0,0,0,.16);
-      transition: .18s ease;
+      color: var(--text-muted);
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.2s ease;
     }
 
     .navbtn:hover {
-      transform: translateY(-1px);
-      border-color: #4e79c7;
-      background: linear-gradient(180deg, #1d2a42 0%, #131b2b 100%);
+      color: var(--primary);
+      border-color: var(--primary);
+      background: #eff6ff;
     }
 
-    .navbtn.is-active {
-      color: #ffffff;
-      border-color: #9d8cff;
-      background: linear-gradient(180deg, #3a2f58 0%, #241d38 100%);
-      box-shadow: 0 10px 22px rgba(125,115,221,.28);
-    }
-
-    .subnav-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 6px 11px;
-      border-radius: 999px;
-      text-decoration: none;
-      color: #d7e6ff;
-      background: rgba(20, 31, 49, 0.78);
-      border: 1px solid rgba(106, 142, 201, 0.55);
-      font-size: 12px;
-      font-weight: 600;
-      white-space: nowrap;
-      transition: .18s ease;
-      box-shadow: none;
-    }
-
-    .subnav-btn:hover {
-      transform: translateY(-1px);
-      color: #f4f8ff;
-      border-color: #9cc2ff;
-      background: rgba(34, 49, 76, 0.88);
-    }
-
+    /* 主要內容區 */
     .wrap {
-      max-width: 1180px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 28px 24px 42px;
+      padding: 32px 24px;
     }
 
+    /* 標頭與搜尋區塊 */
     .header {
-      background: linear-gradient(135deg, rgba(18,26,43,.98) 0%, rgba(24,34,53,.98) 100%);
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      padding: 20px 22px;
-      margin-bottom: 18px;
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .header::after {
-      content: "";
-      position: absolute;
-      right: -40px;
-      top: -40px;
-      width: 180px;
-      height: 180px;
-      background: radial-gradient(circle, rgba(124,180,255,.14) 0%, rgba(124,180,255,0) 70%);
-      pointer-events: none;
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 32px;
+      box-shadow: var(--shadow-sm);
     }
 
     h1 {
-      margin: 0 0 12px;
-      font-size: 32px;
-      color: var(--heading);
-      letter-spacing: .2px;
+      margin: 0 0 16px;
+      font-size: 28px;
+      color: var(--text-main);
     }
 
     .intro-row {
-      max-width: none;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 260px;
-      gap: 14px;
-      align-items: stretch;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
     }
 
-    .info-panel {
-      background: rgba(11,18,32,.55);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 14px 16px;
-      box-shadow: 0 6px 16px rgba(0,0,0,.14);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .info-panel h3 {
-      margin: 0 0 8px;
-      font-size: 15px;
-      color: #d9c9ff;
-    }
-
-    .info-panel p {
-      margin: 0;
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .search-panel {
-      background: rgba(11,18,32,.55);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 14px;
-      box-shadow: 0 6px 16px rgba(0,0,0,.14);
+    .search-panel, .info-panel {
+      background: var(--bg-color);
+      border-radius: 12px;
+      padding: 16px;
     }
 
     .search-label {
       display: block;
       font-size: 14px;
-      font-weight: 700;
-      color: #cfe0ff;
-      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 12px;
     }
 
     .search-toolbar {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto auto;
-      gap: 10px;
-      align-items: center;
+      display: flex;
+      gap: 12px;
     }
 
     .search-box {
-      width: 100%;
-      min-width: 0;
-      padding: 13px 15px;
-      border-radius: 14px;
-      border: 1px solid #33415d;
+      flex: 1;
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
       font-size: 15px;
       outline: none;
-      background: #0d1524;
-      color: var(--heading);
-      transition: border-color .18s ease, box-shadow .18s ease;
-    }
-
-    .search-box::placeholder {
-      color: #7f91ac;
+      transition: border-color 0.2s;
     }
 
     .search-box:focus {
-      border-color: #5d8fe0;
-      box-shadow: 0 0 0 4px rgba(124,180,255,.15);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
     }
 
     .tool-btn {
-      padding: 11px 13px;
-      border-radius: 14px;
-      border: 1px solid #33415d;
-      background: linear-gradient(180deg, #1a2335 0%, #131b2b 100%);
-      color: #dbe7fb;
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: none;
+      background: var(--primary);
+      color: white;
       font-size: 14px;
-      font-weight: 700;
+      font-weight: 600;
       cursor: pointer;
-      white-space: nowrap;
-      box-shadow: 0 6px 14px rgba(0,0,0,.16);
-      transition: .18s ease;
+      transition: background 0.2s;
     }
 
     .tool-btn:hover {
-      transform: translateY(-1px);
-      border-color: #4e79c7;
-      background: linear-gradient(180deg, #1d2a42 0%, #131b2b 100%);
+      background: var(--primary-hover);
     }
 
     .tool-btn-secondary {
-      border-color: #4a4068;
-      color: #e2d9ff;
-      background: linear-gradient(180deg, #2a223d 0%, #191526 100%);
+      background: var(--surface-color);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
     }
 
     .tool-btn-secondary:hover {
-      border-color: #8d73dd;
-      background: linear-gradient(180deg, #32284a 0%, #191526 100%);
+      background: var(--bg-color);
     }
 
+    .info-panel h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+
+    .info-panel p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* 分類區塊 */
     .group-anchor {
-      scroll-margin-top: 86px;
+      scroll-margin-top: 80px;
     }
 
     details.section-group {
-      background: transparent;
-      border: none;
-      margin-bottom: 22px;
-      overflow: visible;
-      box-shadow: none;
-      position: relative;
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
     }
 
     summary.group-summary {
       list-style: none;
       cursor: pointer;
-      padding: 20px 22px;
-      margin: 0 4px;
+      padding: 20px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
-      background: linear-gradient(135deg, #151f31 0%, #1b263a 100%);
-      border: 1px solid #31415c;
-      border-radius: 24px;
-      box-shadow: 0 16px 34px rgba(0,0,0,.24);
-      position: relative;
-    }
-
-    summary.group-summary::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 7px;
-      background: linear-gradient(180deg, var(--blue) 0%, var(--purple) 100%);
-      border-top-left-radius: 24px;
-      border-bottom-left-radius: 24px;
+      background: var(--surface-color);
+      border-bottom: 1px solid transparent;
+      transition: background 0.2s;
     }
 
     summary.group-summary::-webkit-details-marker { display: none; }
+    
+    details[open] summary.group-summary {
+      border-bottom: 1px solid var(--border-color);
+      background: #f8fafc;
+    }
 
     .group-title-wrap h2 {
       margin: 0;
-      font-size: 24px;
-      color: var(--heading);
-      letter-spacing: .2px;
+      font-size: 20px;
     }
 
     .group-title-wrap p {
-      margin: 6px 0 0;
-      color: var(--muted);
+      margin: 4px 0 0;
       font-size: 14px;
+      color: var(--text-muted);
     }
 
     .toggle-badge {
-      flex-shrink: 0;
-      padding: 9px 15px;
-      border-radius: 999px;
-      border: 1px solid #33415d;
-      background: #0f1728;
-      color: #dce7fa;
       font-size: 13px;
-      font-weight: 700;
-      min-width: 108px;
-      text-align: center;
-      box-shadow: 0 6px 14px rgba(0,0,0,.16);
+      color: var(--primary);
+      font-weight: 600;
+      background: #eff6ff;
+      padding: 6px 12px;
+      border-radius: 999px;
     }
 
-    details.section-group .toggle-open { display: none; }
-    details.section-group[open] .toggle-open { display: inline; }
-    details.section-group[open] .toggle-closed { display: none; }
+    details .toggle-open { display: none; }
+    details[open] .toggle-open { display: inline; }
+    details[open] .toggle-closed { display: none; }
 
-    .group-content {
-      padding: 14px 0 0;
-      margin-top: 12px;
-      background: transparent;
-    }
-
+    /* 表格設計 */
     .section {
-      background: linear-gradient(180deg, rgba(18,26,43,.96) 0%, rgba(21,31,49,.96) 100%);
-      scroll-margin-top: 130px;
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      overflow: hidden;
-      margin: 0 4px 18px;
-      box-shadow: 0 10px 24px rgba(0,0,0,.18);
+      padding: 24px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .section:last-child {
+      border-bottom: none;
     }
 
     .section-head {
-      padding: 15px 18px;
-      border-bottom: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(24,34,53,.98) 0%, rgba(19,28,44,.98) 100%);
+      margin-bottom: 16px;
     }
 
     .section-head h2 {
       margin: 0;
-      font-size: 24px;
-      color: var(--heading);
-      letter-spacing: .2px;
-      text-shadow: 0 1px 0 rgba(0,0,0,.28);
-    }
-
-    .section-head {
-      position: relative;
-    }
-
-    .section-head::before {
-      content: "";
-      display: block;
-      width: 64px;
-      height: 4px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--blue) 0%, var(--purple) 100%);
-      margin-bottom: 12px;
+      font-size: 18px;
+      color: var(--text-main);
     }
 
     .section-head p {
-      margin: 6px 0 0;
-      color: var(--muted);
+      margin: 4px 0 0;
       font-size: 14px;
+      color: var(--text-muted);
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      background: rgba(13,21,36,.82);
       table-layout: fixed;
-    }
-
-    .section table th:nth-child(1),
-    .section table td:nth-child(1),
-    .section table th:nth-child(2),
-    .section table td:nth-child(2),
-    .section table th:nth-child(3),
-    .section table td:nth-child(3) {
-      padding-left: 18px;
-      padding-right: 18px;
-    }
-
-    .searchable-group:not([data-group="popular-combos"]) .section table th:nth-child(1),
-    .searchable-group:not([data-group="popular-combos"]) .section table td:nth-child(1) {
-      width: 30%;
-    }
-
-    .searchable-group:not([data-group="popular-combos"]) .section table th:nth-child(2),
-    .searchable-group:not([data-group="popular-combos"]) .section table td:nth-child(2) {
-      width: 30%;
-    }
-
-    .searchable-group:not([data-group="popular-combos"]) .section table th:nth-child(3),
-    .searchable-group:not([data-group="popular-combos"]) .section table td:nth-child(3) {
-      width: 40%;
-    }
-
-    .searchable-group:not([data-group="popular-combos"]) .section table td:nth-child(3) {
-      white-space: nowrap;
     }
 
     th, td {
-      border-bottom: 1px solid #2f3b51;
-      padding: 12px 14px;
+      padding: 12px 16px;
       text-align: left;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 15px;
       vertical-align: top;
-      font-size: 16px;
     }
 
     th {
-      background: linear-gradient(180deg, #1d2a42 0%, #162033 100%);
-      color: #cfe0ff;
-      font-size: 15px;
+      background: var(--bg-color);
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--table-hover); }
 
-    tr:hover td {
-      background: rgba(124,180,255,.06);
-    }
-
-    .en {
-      font-weight: 600;
-      color: #f3f7fd;
-      white-space: nowrap;
-    }
-
-    .zh {
-      font-weight: 500;
-      color: #e6edf7;
-      word-break: keep-all;
-      overflow-wrap: normal;
-    }
-
-    #popular-combos .section table {
-      table-layout: fixed;
-    }
-
-    #popular-combos .section table,
-    #popular-combos .capcut-table {
-      table-layout: fixed;
-      width: 100%;
-    }
-
-    #popular-combos .section table th,
-    #popular-combos .section table td {
-      vertical-align: top;
-    }
-
-    #popular-combos .capcut-table th:nth-child(1),
-    #popular-combos .capcut-table td:nth-child(1) {
-      width: 9%;
-      min-width: 9%;
-      white-space: nowrap;
-      word-break: keep-all;
-      overflow-wrap: normal;
-    }
-
-    #popular-combos .capcut-table th:nth-child(2),
-    #popular-combos .capcut-table td:nth-child(2) {
-      width: 16%;
-      min-width: 16%;
-      white-space: nowrap;
-      word-break: keep-all;
-      overflow-wrap: normal;
-    }
-
-    #popular-combos .capcut-table th:nth-child(3),
-    #popular-combos .capcut-table td:nth-child(3) {
-      width: 47%;
-      min-width: 47%;
-    }
-
-    #popular-combos .capcut-table th:nth-child(4),
-    #popular-combos .capcut-table td:nth-child(4) {
-      width: 28%;
-      min-width: 28%;
-    }
-
-    #popular-combos .capcut-table td:nth-child(1),
-    #popular-combos .capcut-table td:nth-child(2) {
-      font-weight: 600;
-      letter-spacing: .1px;
-    }
-
-    .highlight {
-      background: linear-gradient(135deg, rgba(59,41,24,.92) 0%, rgba(23,31,47,.98) 100%);
-      border: 1px solid #7d613f;
-      border-radius: 22px;
-      padding: 18px;
-      margin: 18px 4px 0;
-      box-shadow: 0 10px 22px rgba(0,0,0,.18);
-    }
-
-    .highlight h3 {
-      margin: 0 0 10px;
-      color: var(--warm);
-      font-size: 20px;
-    }
-
-    .chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .chip {
-      border: 1px solid #75593a;
-      background: rgba(12,18,30,.82);
-      color: #f0f5fc;
-      border-radius: 999px;
-      padding: 7px 11px;
-      font-size: 14px;
-      box-shadow: 0 4px 10px rgba(0,0,0,.12);
-    }
-
-    .placeholder {
-      margin: 20px 4px 0;
-      background: linear-gradient(180deg, rgba(18,26,43,.96) 0%, rgba(13,21,36,.96) 100%);
-      border: 1px dashed #475569;
-      border-radius: 22px;
-      padding: 18px;
-    }
-
-    .placeholder h3 {
-      margin: 0 0 8px;
-      color: var(--heading);
-    }
-
-    .footer-note {
-      margin-top: 18px;
-      color: var(--muted);
-      font-size: 14px;
-      text-align: center;
-    }
-
-    .is-hidden {
-      display: none !important;
-    }
-
+    .en { font-weight: 600; color: var(--text-main); width: 25%; }
+    .zh { font-weight: 500; color: var(--text-main); width: 25%; }
+    
     .no-result {
       display: none;
-      margin: 0 0 20px;
-      background: rgba(18,26,43,.96);
-      border: 1px dashed #475569;
-      border-radius: 18px;
-      padding: 18px;
-      color: #c9d5e8;
+      padding: 32px;
       text-align: center;
-      box-shadow: 0 8px 18px rgba(0,0,0,.16);
+      background: var(--surface-color);
+      border: 1px dashed var(--border-color);
+      border-radius: 12px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
     }
 
-    .no-result.show {
-      display: block;
-    }
-
-    mark {
-      background: #fde68a;
-      color: #111827;
-      padding: 0 2px;
-      border-radius: 4px;
-    }
-
-    @media (max-width: 900px) {
-      .wrap {
-        padding: 20px 14px 34px;
-      }
-
-      .header {
-        padding: 18px;
-      }
-
-      h1 {
-        font-size: 28px;
-      }
-
-      .intro-row {
-        grid-template-columns: 1fr;
-      }
-
-      .group-title-wrap h2 {
-        font-size: 22px;
-      }
-
-      .section-head h2 {
-        font-size: 20px;
-      }
-
-      .search-toolbar {
-        grid-template-columns: 1fr;
-      }
-
-      summary.group-summary {
-        margin: 0;
-        padding: 18px;
-      }
-
-      .group-content {
-        padding: 10px 0 0;
-        margin-top: 10px;
-      }
-
-      .section {
-        margin: 0 0 14px;
-      }
-
-      table {
-        table-layout: auto;
-      }
-
-      #popular-combos .capcut-table {
-        table-layout: auto;
-      }
-
-      .searchable-group:not([data-group="popular-combos"]) .section table td:nth-child(3) {
-        white-space: normal;
-      }
-
-      #popular-combos .capcut-table th:nth-child(1),
-      #popular-combos .capcut-table td:nth-child(1),
-      #popular-combos .capcut-table th:nth-child(2),
-      #popular-combos .capcut-table td:nth-child(2),
-      #popular-combos .capcut-table th:nth-child(3),
-      #popular-combos .capcut-table td:nth-child(3),
-      #popular-combos .capcut-table th:nth-child(4),
-      #popular-combos .capcut-table td:nth-child(4) {
-        white-space: normal;
-        width: auto;
-        min-width: auto;
-      }
-
-      .topnav-inner {
-        justify-content: flex-start;
-        padding: 10px 14px;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-      }
-
-      .subnav-wrap {
-        padding: 0 14px 10px;
-        overflow-x: auto;
-      }
-
-      .subnav-bar {
-        justify-content: flex-start;
-        flex-wrap: nowrap;
-        min-width: max-content;
-      }
-
-      .info-panel {
-        padding: 12px 14px;
-      }
-    }
-
-    @media print {
-      .topnav,
-      .search-panel,
-      .info-panel,
-      .toggle-badge,
-      .no-result,
-      .highlight {
-        display: none !important;
-      }
-
-      html, body {
-        background: #fff !important;
-        color: #000 !important;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-      }
-
-      body {
-        font-size: 11pt;
-        line-height: 1.45;
-      }
-
-      .wrap {
-        max-width: none !important;
-        padding: 0 !important;
-        margin: 0 !important;
-      }
-
-      .header {
-        padding: 0 0 8mm 0 !important;
-        margin: 0 0 6mm 0 !important;
-        border: none !important;
-        background: #fff !important;
-        box-shadow: none !important;
-      }
-
-      h1 {
-        font-size: 20pt !important;
-        color: #000 !important;
-        margin: 0 0 4mm 0 !important;
-      }
-
-      details.section-group {
-        display: block !important;
-        margin: 0 0 6mm 0 !important;
-        break-inside: avoid;
-      }
-
-      summary.group-summary {
-        margin: 0 0 3mm 0 !important;
-        padding: 0 !important;
-        border: none !important;
-        background: #fff !important;
-        box-shadow: none !important;
-        border-radius: 0 !important;
-      }
-
-      summary.group-summary::before,
-      .section-head::before,
-      .header::after {
-        display: none !important;
-      }
-
-      .group-title-wrap h2,
-      .section-head h2,
-      .placeholder h3,
-      h1,
-      .en,
-      .zh,
-      .chip {
-        color: #000 !important;
-        text-shadow: none !important;
-      }
-
-      .group-title-wrap h2 {
-        font-size: 16pt !important;
-        margin: 0 0 1mm 0 !important;
-      }
-
-      .group-title-wrap p,
-      .section-head p,
-      .footer-note,
-      .search-label {
-        color: #333 !important;
-      }
-
-      .group-content {
-        padding: 0 !important;
-        margin: 0 !important;
-      }
-
-      .section {
-        margin: 0 0 5mm 0 !important;
-        border: 1px solid #999 !important;
-        border-radius: 0 !important;
-        background: #fff !important;
-        box-shadow: none !important;
-        break-inside: avoid;
-        page-break-inside: avoid;
-      }
-
-      .section-head {
-        padding: 3mm 4mm !important;
-        background: #fff !important;
-        border-bottom: 1px solid #999 !important;
-      }
-
-      .section-head h2 {
-        font-size: 13pt !important;
-        margin: 0 0 1mm 0 !important;
-      }
-
-      .section-head p {
-        font-size: 9.5pt !important;
-        margin: 0 !important;
-      }
-
-      table,
-      .capcut-table {
-        width: 100% !important;
-        table-layout: fixed !important;
-        border-collapse: collapse !important;
-        background: #fff !important;
-      }
-
-      th, td {
-        border: 1px solid #999 !important;
-        padding: 2.5mm 3mm !important;
-        font-size: 9.5pt !important;
-        color: #000 !important;
-        background: #fff !important;
-        vertical-align: top !important;
-        word-break: break-word;
-        overflow-wrap: anywhere;
-      }
-
-      th {
-        background: #efefef !important;
-        font-weight: 700 !important;
-      }
-
-      tr, thead, tbody {
-        break-inside: avoid;
-        page-break-inside: avoid;
-      }
-
-      .searchable-group:not([data-group="popular-combos"]) .section table th:nth-child(1),
-      .searchable-group:not([data-group="popular-combos"]) .section table td:nth-child(1) {
-        width: 22% !important;
-      }
-
-      .searchable-group:not([data-group="popular-combos"]) .section table th:nth-child(2),
-      .searchable-group:not([data-group="popular-combos"]) .section table td:nth-child(2) {
-        width: 22% !important;
-      }
-
-      .searchable-group:not([data-group="popular-combos"]) .section table th:nth-child(3),
-      .searchable-group:not([data-group="popular-combos"]) .section table td:nth-child(3) {
-        width: 56% !important;
-        white-space: normal !important;
-      }
-
-      #popular-combos .capcut-table th:nth-child(1),
-      #popular-combos .capcut-table td:nth-child(1) {
-        width: 10% !important;
-        white-space: normal !important;
-      }
-
-      #popular-combos .capcut-table th:nth-child(2),
-      #popular-combos .capcut-table td:nth-child(2) {
-        width: 15% !important;
-        white-space: normal !important;
-      }
-
-      #popular-combos .capcut-table th:nth-child(3),
-      #popular-combos .capcut-table td:nth-child(3) {
-        width: 45% !important;
-      }
-
-      #popular-combos .capcut-table th:nth-child(4),
-      #popular-combos .capcut-table td:nth-child(4) {
-        width: 30% !important;
-      }
-
-      .footer-note {
-        margin-top: 4mm !important;
-        text-align: center !important;
-        font-size: 9pt !important;
-      }
-
-      @page {
-        size: A4 portrait;
-        margin: 10mm;
-      }
+    @media (max-width: 768px) {
+      .intro-row { grid-template-columns: 1fr; }
+      .search-toolbar { flex-direction: column; }
+      th, td { padding: 10px; }
+      .en, .zh { width: 30%; }
     }
   </style>
 </head>
 <body>
   <div class="topnav">
     <div class="topnav-inner">
-      <a class="navbtn top-group-btn" href="#video-transitions" data-target-group="video-transitions">Video Transitions 影片轉場</a>
-      <a class="navbtn top-group-btn" href="#video-effects" data-target-group="video-effects">Video Effects 影片效果</a>
-      <a class="navbtn top-group-btn" href="#audio-transitions" data-target-group="audio-transitions">Audio Transitions 音訊轉場</a>
-      <a class="navbtn top-group-btn" href="#audio-effects" data-target-group="audio-effects">Audio Effects 音訊效果</a>
-      <a class="navbtn top-group-btn" href="#popular-combos" data-target-group="popular-combos">平台動畫對照（CapCut）</a>
+      <a class="navbtn" href="#video-transitions">Video Transitions 影片轉場</a>
+      <a class="navbtn" href="#video-effects">Video Effects 影片效果</a>
+      <a class="navbtn" href="#audio-transitions">Audio Transitions 音訊轉場</a>
+      <a class="navbtn" href="#audio-effects">Audio Effects 音訊效果</a>
     </div>
-    <div class="subnav-wrap" id="subnavWrap"></div>
   </div>
 
   <div class="wrap">
@@ -924,22 +313,22 @@
         <div class="search-panel">
           <label class="search-label" for="searchInput">快速搜尋英文、中文、用途說明</label>
           <div class="search-toolbar">
-            <input id="searchInput" class="search-box" type="text" placeholder="例如：blur、模糊、去背、交叉溶解、音量" />
+            <input id="searchInput" class="search-box" type="text" placeholder="例如：blur、模糊、交叉溶解..." />
             <button type="button" class="tool-btn" id="expandAllBtn">全部展開</button>
             <button type="button" class="tool-btn tool-btn-secondary" id="collapseAllBtn">全部收合</button>
           </div>
         </div>
         <div class="info-panel">
           <h3>課堂查詢小提示</h3>
-          <p>點分類標題可展開或收合。輸入關鍵字後，系統會自動顯示相關分類。</p>
+          <p>點擊分類標題可展開或收合。輸入關鍵字後，系統會自動幫你尋找相關內容。</p>
         </div>
       </div>
     </div>
 
-    <div class="no-result" id="noResult">找不到符合的內容，請換個英文、中文或用途關鍵字再試試看。</div>
+    <div class="no-result" id="noResult">找不到符合的內容，請換個關鍵字再試試看。</div>
 
     <div id="video-transitions" class="group-anchor"></div>
-    <details class="section-group searchable-group" data-group="video-transitions" open>
+    <details class="section-group" open>
       <summary class="group-summary">
         <div class="group-title-wrap">
           <h2>Video Transitions 影片轉場</h2>
@@ -947,6 +336,7 @@
         </div>
         <span class="toggle-badge"><span class="toggle-closed">展開分類</span><span class="toggle-open">收合分類</span></span>
       </summary>
+      
       <div class="group-content">
         <div class="section">
           <div class="section-head">
@@ -954,9 +344,7 @@
             <p>帶有推拉、翻轉、彈跳感的動態切換。</p>
           </div>
           <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
+            <thead><tr><th>英文</th><th>中文</th><th>用途簡述</th></tr></thead>
             <tbody>
               <tr><td class="en">Block Motion</td><td class="zh">區塊動態</td><td>像畫面分塊移動後切換。</td></tr>
               <tr><td class="en">Flip Motion</td><td class="zh">翻轉動態</td><td>像翻面一樣切到下一畫面。</td></tr>
@@ -976,9 +364,7 @@
             <p>最常見的淡入淡出類型，適合一般剪輯。</p>
           </div>
           <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
+            <thead><tr><th>英文</th><th>中文</th><th>用途簡述</th></tr></thead>
             <tbody>
               <tr><td class="en">Additive Dissolve</td><td class="zh">加算溶解</td><td>亮度疊加式淡化，切換時會偏亮。</td></tr>
               <tr><td class="en">Blur Dissolve</td><td class="zh">模糊溶解</td><td>模糊中慢慢切換到下一畫面。</td></tr>
@@ -1001,9 +387,7 @@
             <p>風格感、故障感、震動感比較強的轉場。</p>
           </div>
           <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
+            <thead><tr><th>英文</th><th>中文</th><th>用途簡述</th></tr></thead>
             <tbody>
               <tr><td class="en">Chaos</td><td class="zh">混亂轉場</td><td>不規則、雜亂感的切換。</td></tr>
               <tr><td class="en">Earthquake</td><td class="zh">地震轉場</td><td>畫面強烈震動後切換。</td></tr>
@@ -1025,9 +409,7 @@
             <p>主要用在 VR／360 影片的轉場。</p>
           </div>
           <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
+            <thead><tr><th>英文</th><th>中文</th><th>用途簡述</th></tr></thead>
             <tbody>
               <tr><td class="en">VR Chroma Leaks</td><td class="zh">VR 色彩洩漏</td><td>360 畫面色彩滲漏式切換。</td></tr>
               <tr><td class="en">VR Gradient Wipe</td><td class="zh">VR 漸層擦除</td><td>用漸層方式做 VR 擦除轉場。</td></tr>
@@ -1047,9 +429,7 @@
             <p>常見於 MV、廣告、動態風格影片。</p>
           </div>
           <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
+            <thead><tr><th>英文</th><th>中文</th><th>用途簡述</th></tr></thead>
             <tbody>
               <tr><td class="en">Burn Chroma</td><td class="zh">燃燒色彩</td><td>像顏色被燒開般切換。</td></tr>
               <tr><td class="en">Chroma Leak</td><td class="zh">色彩洩漏</td><td>色光滲出式切換。</td></tr>
@@ -1077,9 +457,7 @@
             <p>最容易理解的推動、分割、甩鏡類型。</p>
           </div>
           <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
+            <thead><tr><th>英文</th><th>中文</th><th>用途簡述</th></tr></thead>
             <tbody>
               <tr><td class="en">3D Roll</td><td class="zh">3D 捲動</td><td>立體捲動方式切換。</td></tr>
               <tr><td class="en">Film Roll</td><td class="zh">膠片捲動</td><td>像膠卷滾動般切換。</td></tr>
@@ -1098,973 +476,56 @@
             <p>偏向自動流暢過渡的效果。</p>
           </div>
           <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
+            <thead><tr><th>英文</th><th>中文</th><th>用途簡述</th></tr></thead>
             <tbody>
               <tr><td class="en">Motion Camera</td><td class="zh">動態鏡頭</td><td>模擬鏡頭運動的切換。</td></tr>
               <tr><td class="en">Motion Tween</td><td class="zh">動態補間</td><td>自動補出較平滑的過渡。</td></tr>
-              <tr><td class="en">Shape Flow</td><td class="zh">形狀流動</td><td>依圖形輪廓做流動式切換。</td></tr>
             </tbody>
           </table>
-        </div>
-
-        <div class="section">
-          <div class="section-head">
-            <h2>Text 文字</h2>
-            <p>適合片頭字卡、字幕動畫。</p>
-          </div>
-          <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="en">Text Animator</td><td class="zh">文字動畫</td><td>讓文字以動畫方式進出。</td></tr>
-              <tr><td class="en">Typewriter</td><td class="zh">打字機</td><td>一個字一個字打出來。</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="section">
-          <div class="section-head">
-            <h2>Transformers 變形轉場</h2>
-            <p>以翻頁、鏡射、切片、波浪等方式做切換。</p>
-          </div>
-          <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="en">3D Spin</td><td class="zh">3D 旋轉</td><td>立體翻轉旋轉切換。</td></tr>
-              <tr><td class="en">Frame</td><td class="zh">框架轉場</td><td>用框架包住或切開畫面。</td></tr>
-              <tr><td class="en">Louver</td><td class="zh">百葉窗</td><td>像百葉窗開合般切換。</td></tr>
-              <tr><td class="en">Mirror</td><td class="zh">鏡像</td><td>鏡射方式切換。</td></tr>
-              <tr><td class="en">Page Peel</td><td class="zh">翻頁</td><td>像紙張翻頁般切換。</td></tr>
-              <tr><td class="en">Slice</td><td class="zh">切片</td><td>畫面分片切開後切換。</td></tr>
-              <tr><td class="en">Wave</td><td class="zh">波浪</td><td>波浪扭動方式切換。</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="section">
-          <div class="section-head">
-            <h2>Wipe 擦除轉場</h2>
-            <p>用某個方向或形狀把新畫面掃進來。</p>
-          </div>
-          <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="en">Clock Wipe</td><td class="zh">時鐘擦除</td><td>像時鐘指針掃過一圈般切換。</td></tr>
-              <tr><td class="en">Linear Wipe</td><td class="zh">線性擦除</td><td>用直線方向掃過畫面。</td></tr>
-              <tr><td class="en">Neon Wipe</td><td class="zh">霓虹擦除</td><td>帶霓虹光感的擦除轉場。</td></tr>
-              <tr><td class="en">Panel Wipe</td><td class="zh">面板擦除</td><td>像一塊板子滑過去完成切換。</td></tr>
-              <tr><td class="en">Plateau Wipe</td><td class="zh">平台擦除</td><td>有層次感的平台式擦除。</td></tr>
-              <tr><td class="en">Radial Wipe</td><td class="zh">放射擦除</td><td>由中心角度展開切換。</td></tr>
-              <tr><td class="en">Soft Wipe</td><td class="zh">柔邊擦除</td><td>邊緣較柔和的擦除。</td></tr>
-              <tr><td class="en">Star Wipe</td><td class="zh">星形擦除</td><td>星星形狀展開後切換。</td></tr>
-              <tr><td class="en">Stretch Wipe</td><td class="zh">拉伸擦除</td><td>拉開式的擦除轉場。</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="highlight">
-          <h3>課堂最常用的轉場</h3>
-          <div class="chips">
-            <div class="chip">Cross Dissolve 交叉溶解</div>
-            <div class="chip">Dip to Black 漸變成黑色</div>
-            <div class="chip">Dip to White 漸變成白色</div>
-            <div class="chip">Morph Cut 變形剪接</div>
-            <div class="chip">Push 推動</div>
-            <div class="chip">Whip 甩動</div>
-            <div class="chip">Linear Wipe 線性擦除</div>
-            <div class="chip">Typewriter 打字機</div>
-          </div>
         </div>
       </div>
     </details>
-
-    <div id="video-effects" class="group-anchor"></div>
-    <details class="section-group searchable-group" data-group="video-effects" open>
-      <summary class="group-summary">
-        <div class="group-title-wrap">
-          <h2>Video Effects 影片效果</h2>
-          <p>整理常見影片效果，方便學生依用途找模糊、修色、去背、變形與風格化效果。</p>
-        </div>
-        <span class="toggle-badge"><span class="toggle-closed">展開分類</span><span class="toggle-open">收合分類</span></span>
-      </summary>
-      <div class="group-content">
-        <div class="section">
-          <div class="section-head">
-            <h2>Adjust 調整</h2>
-            <p>基礎亮度、對比、色調與畫面整體修正。</p>
-          </div>
-          <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="en">Extract</td><td class="zh">擷取</td><td>保留特定亮度範圍，讓畫面有高反差分離感。</td></tr>
-              <tr><td class="en">Levels</td><td class="zh">色階</td><td>調整黑點、白點與中間亮度。</td></tr>
-              <tr><td class="en">Lighting Effects</td><td class="zh">光線效果</td><td>模擬聚光燈、點光源等打光效果。</td></tr>
-              <tr><td class="en">ProcAmp</td><td class="zh">處理放大器</td><td>快速調整亮度、對比、色相與飽和度。</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="section">
-          <div class="section-head">
-            <h2>Blur &amp; Sharpen 模糊與銳利</h2>
-            <p>常用於柔化、失焦、銳化與畫面強調。</p>
-          </div>
-          <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="en">Bokeh Blur</td><td class="zh">散景模糊</td><td>模擬鏡頭散景、背景柔化感。</td></tr>
-              <tr><td class="en">Compound Blur</td><td class="zh">複合模糊</td><td>可依其他圖層控制模糊程度。</td></tr>
-              <tr><td class="en">Directional Blur</td><td class="zh">方向模糊</td><td>朝某方向拉出模糊感。</td></tr>
-              <tr><td class="en">Focus Blur</td><td class="zh">對焦模糊</td><td>模擬景深與對焦模糊效果。</td></tr>
-              <tr><td class="en">Gaussian Blur</td><td class="zh">高斯模糊</td><td>最常見的柔化模糊效果。</td></tr>
-              <tr><td class="en">Reduce Interlace Flicker</td><td class="zh">減少隔行閃爍</td><td>降低細線條在隔行顯示時的閃爍。</td></tr>
-              <tr><td class="en">Sharpen</td><td class="zh">銳利化</td><td>讓邊緣更清楚、更硬一些。</td></tr>
-              <tr><td class="en">Unsharp Mask</td><td class="zh">非銳化遮色片</td><td>進階銳化工具，較常用於細節強化。</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="section">
-          <div class="section-head">
-            <h2>Color Correction 色彩校正</h2>
-            <p>最重要的修色區之一，剪片很常用。</p>
-          </div>
-          <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="en">ASC CDL</td><td class="zh">ASC CDL 色彩校正</td><td>專業調色用的標準色彩控制。</td></tr>
-              <tr><td class="en">Brightness &amp; Contrast</td><td class="zh">亮度與對比</td><td>快速調亮、調暗與調整對比。</td></tr>
-              <tr><td class="en">Lumetri Color</td><td class="zh">Lumetri 色彩</td><td>Premiere 最常用的完整調色工具。</td></tr>
-              <tr><td class="en">Tint</td><td class="zh">色調</td><td>將黑白區域染成指定顏色。</td></tr>
-              <tr><td class="en">Video Limiter</td><td class="zh">影片限制器</td><td>限制亮度與色彩範圍，避免超出播出標準。</td></tr>
-              <tr><td class="en">Vignette</td><td class="zh">暗角</td><td>讓畫面四周變暗，集中視線在中間。</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="section">
-          <div class="section-head">
-            <h2>Distort 扭曲</h2>
-            <p>讓畫面變形、扭轉、彎曲或穩定化。</p>
-          </div>
-          <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="en">Corner Pin</td><td class="zh">角點定位</td><td>拖曳四角，將畫面貼到指定平面上。</td></tr>
-              <tr><td class="en">Lens Distortion</td><td class="zh">鏡頭扭曲</td><td>模擬桶狀或枕狀變形。</td></tr>
-              <tr><td class="en">Mirror</td><td class="zh">鏡像</td><td>將畫面左右或上下鏡射。</td></tr>
-              <tr><td class="en">Spherize</td><td class="zh">球面化</td><td>讓畫面局部像球面鼓起或凹下。</td></tr>
-              <tr><td class="en">Turbulent Displace</td><td class="zh">湍流位移</td><td>製造水波、火焰、抖動般的扭曲。</td></tr>
-              <tr><td class="en">Twirl</td><td class="zh">旋扭</td><td>像漩渦一樣把畫面扭轉。</td></tr>
-              <tr><td class="en">Warp Stabilizer</td><td class="zh">變形穩定器</td><td>穩定手震畫面，非常常用。</td></tr>
-              <tr><td class="en">Wave Warp</td><td class="zh">波浪扭曲</td><td>產生規律波浪變形。</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="section">
-          <div class="section-head">
-            <h2>Generate 生成</h2>
-            <p>用效果直接產生圖形、色彩或背景。</p>
-          </div>
-          <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="en">4-Color Gradient</td><td class="zh">四色漸層</td><td>用四個顏色產生漸層背景。</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="section">
-          <div class="section-head">
-            <h2>Image Control 影像控制</h2>
-            <p>控制影像顏色、通道與裁切方式。</p>
-          </div>
-          <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="en">Black &amp; White</td><td class="zh">黑白</td><td>把畫面轉成黑白。</td></tr>
-              <tr><td class="en">Channel Mix</td><td class="zh">通道混合</td><td>調整紅綠藍各色彩通道比例。</td></tr>
-              <tr><td class="en">Color Pass</td><td class="zh">保留顏色</td><td>只保留某一顏色，其餘變灰。</td></tr>
-              <tr><td class="en">Color Replace</td><td class="zh">取代顏色</td><td>把指定顏色換成另一種顏色。</td></tr>
-              <tr><td class="en">Gamma Correction</td><td class="zh">伽瑪校正</td><td>調整中間亮度，不大幅改變黑白點。</td></tr>
-              <tr><td class="en">Invert</td><td class="zh">反相</td><td>把顏色反轉成相反色。</td></tr>
-              <tr><td class="en">Rounded Crop</td><td class="zh">圓角裁切</td><td>把畫面裁成帶圓角的框。</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="section">
-          <div class="section-head">
-            <h2>Immersive Video 沉浸式影片效果</h2>
-            <p>主要用於 VR／360 影片。</p>
-          </div>
-          <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="en">VR Blur</td><td class="zh">VR 模糊</td><td>給 360 畫面使用的模糊效果。</td></tr>
-              <tr><td class="en">VR Chromatic Aberrations</td><td class="zh">VR 色差</td><td>模擬鏡頭邊緣色散。</td></tr>
-              <tr><td class="en">VR Color Gradients</td><td class="zh">VR 色彩漸層</td><td>在 VR 畫面中加入漸層色彩。</td></tr>
-              <tr><td class="en">VR De-Noise</td><td class="zh">VR 降噪</td><td>降低 VR 影片雜訊。</td></tr>
-              <tr><td class="en">VR Digital Glitch</td><td class="zh">VR 數位故障</td><td>加入數位錯誤、干擾感。</td></tr>
-              <tr><td class="en">VR Fractal Noise</td><td class="zh">VR 分形雜訊</td><td>產生分形噪點紋理。</td></tr>
-              <tr><td class="en">VR Glow</td><td class="zh">VR 發光</td><td>為 VR 影像加上發光效果。</td></tr>
-              <tr><td class="en">VR Plane to Sphere</td><td class="zh">VR 平面轉球面</td><td>把平面畫面轉成球面視角。</td></tr>
-              <tr><td class="en">VR Projection</td><td class="zh">VR 投影</td><td>轉換不同 VR 投影方式。</td></tr>
-              <tr><td class="en">VR Rotate Sphere</td><td class="zh">VR 旋轉球面</td><td>旋轉 360 球面視角。</td></tr>
-              <tr><td class="en">VR Sharpen</td><td class="zh">VR 銳利化</td><td>讓 VR 畫面更清楚。</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="section">
-          <div class="section-head">
-            <h2>Keying 去背</h2>
-            <p>常用於綠幕、遮罩、透明處理。</p>
-          </div>
-          <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="en">Alpha Adjust</td><td class="zh">Alpha 調整</td><td>調整透明度通道。</td></tr>
-              <tr><td class="en">Color Key</td><td class="zh">色彩去背</td><td>依指定顏色把背景去除。</td></tr>
-              <tr><td class="en">Logo Cutout</td><td class="zh">標誌挖空</td><td>依圖案或亮度挖出透明區域。</td></tr>
-              <tr><td class="en">Luma Key</td><td class="zh">亮度去背</td><td>依亮或暗的範圍做去背。</td></tr>
-              <tr><td class="en">Track Matte Key</td><td class="zh">軌道遮罩鍵</td><td>用另一軌畫面控制透明範圍。</td></tr>
-              <tr><td class="en">Ultra Key</td><td class="zh">超級去背</td><td>Premiere 最常用的綠幕去背工具。</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="section">
-          <div class="section-head">
-            <h2>Lights &amp; Glows 光效與發光</h2>
-            <p>適合做 MV、片頭、舞台光、夢幻風格。</p>
-          </div>
-          <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="en">Echo Glow</td><td class="zh">回聲發光</td><td>帶殘影感的發光效果。</td></tr>
-              <tr><td class="en">Edge Glow</td><td class="zh">邊緣發光</td><td>讓物體邊緣發亮。</td></tr>
-              <tr><td class="en">Glint</td><td class="zh">閃光</td><td>做出金屬、亮點閃爍效果。</td></tr>
-              <tr><td class="en">Light Leaks</td><td class="zh">漏光</td><td>模擬底片式漏光氛圍。</td></tr>
-              <tr><td class="en">RGB Split</td><td class="zh">RGB 分離</td><td>製造色偏、故障、分色感。</td></tr>
-              <tr><td class="en">Volumetric Rays</td><td class="zh">體積光束</td><td>做出穿透感的光線。</td></tr>
-              <tr><td class="en">Wonder Glow</td><td class="zh">夢幻發光</td><td>柔和、漂亮的發光風格。</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="section">
-          <div class="section-head">
-            <h2>Noise &amp; Grain 雜訊與顆粒</h2>
-            <p>加入雜點或粗粒感，營造質感。</p>
-          </div>
-          <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="en">Noise</td><td class="zh">雜訊</td><td>增加畫面雜點顆粒。</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="section">
-          <div class="section-head">
-            <h2>Perspective 透視</h2>
-            <p>讓平面畫面有立體、陰影與空間感。</p>
-          </div>
-          <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="en">Basic 3D</td><td class="zh">基本 3D</td><td>讓畫面做簡單 3D 傾斜旋轉。</td></tr>
-              <tr><td class="en">Drop Shadow</td><td class="zh">投影</td><td>加上陰影，增加立體感。</td></tr>
-              <tr><td class="en">Long Shadow</td><td class="zh">長陰影</td><td>做出設計感較強的長投影。</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="section">
-          <div class="section-head">
-            <h2>Stylize 風格化</h2>
-            <p>把畫面變成特殊視覺風格。</p>
-          </div>
-          <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="en">Brush Strokes</td><td class="zh">筆觸</td><td>讓畫面像筆刷塗抹的感覺。</td></tr>
-              <tr><td class="en">Color Emboss</td><td class="zh">彩色浮雕</td><td>做出帶色彩的浮雕紋理。</td></tr>
-              <tr><td class="en">Find Edges</td><td class="zh">尋找邊緣</td><td>抓出輪廓線，像描邊效果。</td></tr>
-              <tr><td class="en">Mosaic</td><td class="zh">馬賽克</td><td>把畫面變成格狀像素感。</td></tr>
-              <tr><td class="en">Posterize</td><td class="zh">色階簡化</td><td>減少顏色層次，形成海報風。</td></tr>
-              <tr><td class="en">Roughen Edges</td><td class="zh">粗糙邊緣</td><td>讓邊緣不規則、破碎感更強。</td></tr>
-              <tr><td class="en">Strobe Light</td><td class="zh">頻閃燈</td><td>產生快速閃爍的燈光效果。</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="section">
-          <div class="section-head">
-            <h2>Time 時間</h2>
-            <p>控制畫面更新節奏與動態感。</p>
-          </div>
-          <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="en">Posterize Time</td><td class="zh">時間分格</td><td>降低動作流暢度，做出卡格動畫感。</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="section">
-          <div class="section-head">
-            <h2>Transform 變形</h2>
-            <p>控制移動、翻轉、旋轉、抖動與縮放。</p>
-          </div>
-          <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="en">3D Rotate</td><td class="zh">3D 旋轉</td><td>做出立體旋轉效果。</td></tr>
-              <tr><td class="en">Auto Reframe</td><td class="zh">自動重新取景</td><td>自動追蹤主體，重新調整畫面比例。</td></tr>
-              <tr><td class="en">Camera Shake</td><td class="zh">鏡頭晃動</td><td>製造手持或震動感。</td></tr>
-              <tr><td class="en">Grow</td><td class="zh">擴張</td><td>讓邊界向外長大。</td></tr>
-              <tr><td class="en">Horizontal Flip</td><td class="zh">水平翻轉</td><td>左右翻面。</td></tr>
-              <tr><td class="en">Move</td><td class="zh">移動</td><td>單純控制位置移動。</td></tr>
-              <tr><td class="en">Offset</td><td class="zh">偏移</td><td>把畫面內容循環偏移。</td></tr>
-              <tr><td class="en">Shrink</td><td class="zh">縮小</td><td>讓畫面或邊界向內收縮。</td></tr>
-              <tr><td class="en">Spacer</td><td class="zh">間距</td><td>拉開元素或影像間距感。</td></tr>
-              <tr><td class="en">Spin</td><td class="zh">旋轉</td><td>快速旋轉畫面。</td></tr>
-              <tr><td class="en">Transform</td><td class="zh">變形</td><td>常用的進階位移、縮放、旋轉工具。</td></tr>
-              <tr><td class="en">Vertical Flip</td><td class="zh">垂直翻轉</td><td>上下翻面。</td></tr>
-              <tr><td class="en">Wiggle</td><td class="zh">擺動</td><td>做出抖動、不穩定晃動感。</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="section">
-          <div class="section-head">
-            <h2>Transition 過渡</h2>
-            <p>以效果方式做過渡控制。</p>
-          </div>
-          <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="en">Gradient Wipe</td><td class="zh">漸層擦除</td><td>依灰階漸層決定轉場顯現順序。</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="section">
-          <div class="section-head">
-            <h2>Utility 工具</h2>
-            <p>偏輔助性、技術性或資訊顯示用途。</p>
-          </div>
-          <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="en">Auto Align</td><td class="zh">自動對齊</td><td>協助畫面或元素自動校正對齊。</td></tr>
-              <tr><td class="en">Cineon Converter</td><td class="zh">Cineon 轉換器</td><td>處理 Cineon／底片掃描色彩資料。</td></tr>
-              <tr><td class="en">clone</td><td class="zh">仿製</td><td>複製畫面某區域到另一區域。</td></tr>
-              <tr><td class="en">Metadata &amp; Timecode Burn-in</td><td class="zh">中繼資料與時間碼燒錄</td><td>把時間碼或資訊直接顯示在畫面上。</td></tr>
-              <tr><td class="en">Simple Text</td><td class="zh">簡易文字</td><td>快速加入基本文字。</td></tr>
-              <tr><td class="en">Stroke</td><td class="zh">描邊</td><td>幫物件或遮罩邊緣加外框線。</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="highlight">
-          <h3>課堂最常用的影片效果</h3>
-          <div class="chips">
-            <div class="chip">Gaussian Blur 高斯模糊</div>
-            <div class="chip">Lumetri Color Lumetri 色彩</div>
-            <div class="chip">Brightness &amp; Contrast 亮度與對比</div>
-            <div class="chip">Warp Stabilizer 變形穩定器</div>
-            <div class="chip">Ultra Key 超級去背</div>
-            <div class="chip">Drop Shadow 投影</div>
-            <div class="chip">Transform 變形</div>
-            <div class="chip">Posterize Time 時間分格</div>
-          </div>
-        </div>
-      </div>
-    </details>
-
-    <div id="audio-transitions" class="group-anchor"></div>
-    <details class="section-group searchable-group" data-group="audio-transitions" open>
-      <summary class="group-summary">
-        <div class="group-title-wrap">
-          <h2>Audio Transitions 音訊轉場</h2>
-          <p>整理最常用的音訊淡入淡出與交叉淡化，方便學生快速找到聲音接法。</p>
-        </div>
-        <span class="toggle-badge"><span class="toggle-closed">展開分類</span><span class="toggle-open">收合分類</span></span>
-      </summary>
-      <div class="group-content">
-        <div class="section">
-          <div class="section-head">
-            <h2>Audio Transitions 音訊轉場</h2>
-            <p>用來讓聲音接得更自然，避免突然斷掉或爆音。</p>
-          </div>
-          <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="en">Constant Gain</td><td class="zh">固定增益</td><td>用固定速度淡入或淡出音量，變化比較直接。</td></tr>
-              <tr><td class="en">Constant Power</td><td class="zh">固定功率</td><td>最常用的音訊交叉淡化，兩段聲音銜接較自然。</td></tr>
-              <tr><td class="en">Exponential Fade</td><td class="zh">指數淡化</td><td>音量變化前後速度不同，聽起來更柔順。</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="highlight">
-          <h3>音訊轉場最常用</h3>
-          <div class="chips">
-            <div class="chip">Constant Power 固定功率</div>
-            <div class="chip">Exponential Fade 指數淡化</div>
-          </div>
-        </div>
-      </div>
-    </details>
-
-    <div id="audio-effects" class="group-anchor"></div>
-    <details class="section-group searchable-group" data-group="audio-effects" open>
-      <summary class="group-summary">
-        <div class="group-title-wrap">
-          <h2>Audio Effects 音訊效果</h2>
-          <p>整理常見音量、EQ、降噪、混響與特殊音色效果，方便學生上課時查找。</p>
-        </div>
-        <span class="toggle-badge"><span class="toggle-closed">展開分類</span><span class="toggle-open">收合分類</span></span>
-      </summary>
-      <div class="group-content">
-        <div class="section">
-          <div class="section-head">
-            <h2>Amplitude and Compression 音量與壓縮</h2>
-            <p>控制聲音大小、壓縮動態、修飾人聲。</p>
-          </div>
-          <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="en">Amplify</td><td class="zh">放大</td><td>直接提高或降低整體音量。</td></tr>
-              <tr><td class="en">Channel Mixer</td><td class="zh">聲道混音器</td><td>調整左右聲道的混合比例。</td></tr>
-              <tr><td class="en">Channel Volume</td><td class="zh">聲道音量</td><td>分別控制各聲道音量大小。</td></tr>
-              <tr><td class="en">DeEsser</td><td class="zh">齒音消除</td><td>減少人聲中過尖的「ㄙ」「嘶」聲。</td></tr>
-              <tr><td class="en">Dynamics</td><td class="zh">動態處理</td><td>整合壓縮、限制、雜訊門等功能。</td></tr>
-              <tr><td class="en">Dynamics Processing</td><td class="zh">動態處理器</td><td>用曲線方式細調音量動態變化。</td></tr>
-              <tr><td class="en">Hard Limiter</td><td class="zh">硬限制器</td><td>限制最大音量，避免爆音。</td></tr>
-              <tr><td class="en">Multiband Compressor</td><td class="zh">多頻段壓縮器</td><td>分頻壓縮，讓聲音更穩定、厚實。</td></tr>
-              <tr><td class="en">Single-band Compressor</td><td class="zh">單頻段壓縮器</td><td>整體一起壓縮，控制音量起伏。</td></tr>
-              <tr><td class="en">Tube-modeled Compressor</td><td class="zh">真空管模擬壓縮器</td><td>模擬溫暖厚實的管機壓縮音色。</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="section">
-          <div class="section-head">
-            <h2>Delay and Echo 延遲與回聲</h2>
-            <p>讓聲音重複、拖尾，營造空間感。</p>
-          </div>
-          <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="en">Analog Delay</td><td class="zh">類比延遲</td><td>模擬較有質感的類比回聲。</td></tr>
-              <tr><td class="en">Delay</td><td class="zh">延遲</td><td>讓聲音延後重複播放。</td></tr>
-              <tr><td class="en">Multitap Delay</td><td class="zh">多重延遲</td><td>一次產生多個不同時間點的回聲。</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="section">
-          <div class="section-head">
-            <h2>Filter and EQ 濾波與等化</h2>
-            <p>調整高低頻、去除雜音、修飾音色最常用。</p>
-          </div>
-          <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="en">Bandpass</td><td class="zh">帶通濾波</td><td>只保留一段中間頻率。</td></tr>
-              <tr><td class="en">Bass</td><td class="zh">低音</td><td>加強或削弱低頻。</td></tr>
-              <tr><td class="en">FFT Filter</td><td class="zh">FFT 濾波器</td><td>用頻譜方式精細處理聲音。</td></tr>
-              <tr><td class="en">Graphic Equalizer (10 Bands)</td><td class="zh">圖形等化器（10 段）</td><td>用 10 段頻率調整音色。</td></tr>
-              <tr><td class="en">Graphic Equalizer (20 Bands)</td><td class="zh">圖形等化器（20 段）</td><td>比 10 段更細緻地調整頻率。</td></tr>
-              <tr><td class="en">Graphic Equalizer (30 Bands)</td><td class="zh">圖形等化器（30 段）</td><td>最細緻的圖形 EQ 之一。</td></tr>
-              <tr><td class="en">Highpass</td><td class="zh">高通濾波</td><td>去除低頻雜音，保留高頻。</td></tr>
-              <tr><td class="en">Lowpass</td><td class="zh">低通濾波</td><td>去除高頻，保留較低的聲音。</td></tr>
-              <tr><td class="en">Notch Filter</td><td class="zh">陷波濾波器</td><td>精準削掉某個討厭的頻率。</td></tr>
-              <tr><td class="en">Parametric Equalizer</td><td class="zh">參數等化器</td><td>最常用的進階 EQ，可精準修音。</td></tr>
-              <tr><td class="en">Scientific Filter</td><td class="zh">科學濾波器</td><td>提供更多技術性濾波調整。</td></tr>
-              <tr><td class="en">Simple Notch Filter</td><td class="zh">簡易陷波濾波器</td><td>簡單去除單一干擾頻率。</td></tr>
-              <tr><td class="en">Simple Parametric EQ</td><td class="zh">簡易參數等化器</td><td>較容易上手的參數式 EQ。</td></tr>
-              <tr><td class="en">Treble</td><td class="zh">高音</td><td>加強或削弱高頻。</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="section">
-          <div class="section-head">
-            <h2>Modulation 調變</h2>
-            <p>讓聲音有飄動、旋轉、科幻感。</p>
-          </div>
-          <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="en">Chorus/Flanger</td><td class="zh">合唱／鑲邊</td><td>讓聲音更厚、更有飄動感。</td></tr>
-              <tr><td class="en">Flanger</td><td class="zh">鑲邊</td><td>產生掃過去的金屬感、飛機感聲音。</td></tr>
-              <tr><td class="en">Phaser</td><td class="zh">相位器</td><td>做出旋轉、穿梭、科幻感聲音。</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="section">
-          <div class="section-head">
-            <h2>Noise Reduction/Restoration 降噪／修復</h2>
-            <p>去除底噪、電流聲、空間殘響。</p>
-          </div>
-          <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="en">Automatic Click Remover</td><td class="zh">自動去除爆點聲</td><td>去除錄音中的點擊、爆裂雜聲。</td></tr>
-              <tr><td class="en">DeHummer</td><td class="zh">去除低頻嗡聲</td><td>降低電流嗡嗡聲或設備底噪。</td></tr>
-              <tr><td class="en">DeNoise</td><td class="zh">降噪</td><td>減少背景底噪、風聲、環境雜音。</td></tr>
-              <tr><td class="en">DeReverb</td><td class="zh">去除殘響</td><td>降低空間回音、空曠感。</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="section">
-          <div class="section-head">
-            <h2>Reverb 混響</h2>
-            <p>模擬空間反射聲，讓音聲像在房間、舞台或大廳裡。</p>
-          </div>
-          <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="en">Convolution Reverb</td><td class="zh">卷積混響</td><td>較真實地模擬空間混響。</td></tr>
-              <tr><td class="en">Studio Reverb</td><td class="zh">錄音室混響</td><td>常見的標準混響效果。</td></tr>
-              <tr><td class="en">Surround Reverb</td><td class="zh">環繞混響</td><td>適合多聲道或環繞感音場。</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="section">
-          <div class="section-head">
-            <h2>Special 特殊效果</h2>
-            <p>偏音色變形、分析工具或特殊聲道用途。</p>
-          </div>
-          <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="en">Distortion</td><td class="zh">失真</td><td>讓聲音變粗糙、破裂、電吉他感。</td></tr>
-              <tr><td class="en">Fill Left with Right</td><td class="zh">用右聲道填滿左聲道</td><td>把右聲道內容複製到左聲道。</td></tr>
-              <tr><td class="en">Fill Right with Left</td><td class="zh">用左聲道填滿右聲道</td><td>把左聲道內容複製到右聲道。</td></tr>
-              <tr><td class="en">GuitarSuite</td><td class="zh">吉他效果組</td><td>提供偏吉他音色處理的效果組。</td></tr>
-              <tr><td class="en">Invert</td><td class="zh">反相</td><td>將音訊波形相位反轉。</td></tr>
-              <tr><td class="en">Loudness Meter</td><td class="zh">響度表</td><td>監看音量是否符合標準。</td></tr>
-              <tr><td class="en">Loudness Radar</td><td class="zh">響度雷達</td><td>用圖表方式長時間監看響度變化。</td></tr>
-              <tr><td class="en">Mastering</td><td class="zh">母帶處理</td><td>做整體聲音潤飾與最後修飾。</td></tr>
-              <tr><td class="en">Swap Channels</td><td class="zh">交換聲道</td><td>左右聲道互換。</td></tr>
-              <tr><td class="en">Vocal Enhancer</td><td class="zh">人聲增強</td><td>讓人聲更清楚、集中。</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="section">
-          <div class="section-head">
-            <h2>Stereo Imagery 立體聲像</h2>
-            <p>控制左右聲道的寬度與空間感。</p>
-          </div>
-          <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="en">Stereo Expander</td><td class="zh">立體聲擴展</td><td>讓左右聲道聽起來更寬。</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="section">
-          <div class="section-head">
-            <h2>Time and Pitch 時間與音高</h2>
-            <p>改變聲音高低或節奏感。</p>
-          </div>
-          <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="en">Pitch Shifter</td><td class="zh">變調器</td><td>改變聲音音高，可做男聲女聲變化或趣味效果。</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="section">
-          <div class="section-head">
-            <h2>其他常見音訊效果</h2>
-            <p>直接顯示在 Audio Effects 主層級的項目。</p>
-          </div>
-          <table>
-            <thead>
-              <tr><th>英文</th><th>中文</th><th>用途簡述</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="en">Balance</td><td class="zh">平衡</td><td>調整聲音偏左或偏右。</td></tr>
-              <tr><td class="en">Binauralizer - Ambisonics</td><td class="zh">雙耳化器－Ambisonics</td><td>把 Ambisonics 聲音轉成雙耳聆聽效果。</td></tr>
-              <tr><td class="en">Mute</td><td class="zh">靜音</td><td>讓音訊完全不出聲。</td></tr>
-              <tr><td class="en">Panner - Ambisonics</td><td class="zh">聲像定位器－Ambisonics</td><td>調整 Ambisonics 聲音方向與位置。</td></tr>
-              <tr><td class="en">Volume</td><td class="zh">音量</td><td>最基本的整體音量調整。</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="highlight">
-          <h3>課堂最常用的音訊效果</h3>
-          <div class="chips">
-            <div class="chip">Volume 音量</div>
-            <div class="chip">Parametric Equalizer 參數等化器</div>
-            <div class="chip">DeNoise 降噪</div>
-            <div class="chip">DeReverb 去除殘響</div>
-            <div class="chip">Hard Limiter 硬限制器</div>
-            <div class="chip">Dynamics 動態處理</div>
-            <div class="chip">Vocal Enhancer 人聲增強</div>
-          </div>
-        </div>
-      </div>
-    </details>
-
-    <div id="popular-combos" class="group-anchor"></div>
-    <details class="section-group searchable-group" data-group="popular-combos" open>
-      <summary class="group-summary">
-        <div class="group-title-wrap">
-          <h2>平台動畫對照（CapCut）</h2>
-          <p>依照你實際看到的 CapCut 分類，整理影片插入動畫與文字動畫，方便對照 Premiere 的可做方式。</p>
-        </div>
-        <span class="toggle-badge"><span class="toggle-closed">展開分類</span><span class="toggle-open">收合分類</span></span>
-      </summary>
-      <div class="group-content">
-        <div class="section">
-          <div class="section-head">
-            <h2>影片插入動畫</h2>
-            <p>CapCut 影片素材常見分成進場、退場、組合動畫三類，下面用風格類型整理重點。</p>
-          </div>
-          <table class="capcut-table">
-            <colgroup>
-              <col style="width:9%">
-              <col style="width:16%">
-              <col style="width:47%">
-              <col style="width:28%">
-            </colgroup>
-            <thead>
-              <tr><th>分類</th><th>動畫類型</th><th>用途簡述</th><th>可能用到的 Premiere 做法</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="zh">進場</td><td>滑動／位移類</td><td>像向上推動、向左滑動、向右滑動、推入這種直接把畫面送進來的方式，最適合短影音節奏切換。</td><td>Position、Transform、Directional Blur、Ease Out</td></tr>
-              <tr><td class="zh">進場</td><td>縮放／彈跳類</td><td>像放大、縮小、縮放衝擊、彈跳落地，適合重點畫面、人物出現、封面節奏點。</td><td>Scale、Transform、Ease、Motion Blur、Zoom Blur</td></tr>
-              <tr><td class="zh">進場</td><td>旋轉／翻轉／3D 類</td><td>像翻轉、旋轉盤、立方體、手機、水晶這類，畫面會有卡片或立體物件感。</td><td>Rotation、Basic 3D、3D Rotate、Page Peel、Corner Pin</td></tr>
-              <tr><td class="zh">進場</td><td>模糊／鏡頭動感類</td><td>像模糊閃入、模糊快照、波動放大、哈哈鏡，重點在鏡頭感與視覺衝擊。</td><td>Gaussian Blur、Lens Blur、Transform、Turbulent Displace、Wave Warp</td></tr>
-              <tr><td class="zh">進場</td><td>光效／粒子類</td><td>像星星魔法、煙火、螢火蟲、能量爆炸、繁花隧道，適合片頭、夢幻感、科技感。</td><td>Glow、Light Sweep、Light Leak、Volumetric Rays、疊加素材、Opacity</td></tr>
-              <tr><td class="zh">進場</td><td>故障／科技類</td><td>像故障抖動、像素線位移、材質點滴、CRT 類，適合遊戲、科技、警告型畫面。</td><td>Glitch、RGB Split、Posterize Time、Transform、Noise</td></tr>
-              <tr><td class="zh">退場</td><td>淡出／模糊類</td><td>像模糊、溶解、拖尾、模糊百葉窗、模糊擦光，適合柔和收尾。</td><td>Opacity、Gaussian Blur、Lens Blur、Cross Dissolve、Film Dissolve</td></tr>
-              <tr><td class="zh">退場</td><td>滑出／收回類</td><td>像向下滑動、向左滑動、上拉、拖曳出去、回收，適合俐落退場。</td><td>Position、Transform、Directional Blur、Ease In</td></tr>
-              <tr><td class="zh">退場</td><td>縮放／翻轉類</td><td>像縮小、翻轉退場、旋轉飛出、縮遠消失，適合段落結束。</td><td>Scale、Rotation、Basic 3D、3D Rotate、Zoom Blur</td></tr>
-              <tr><td class="zh">退場</td><td>粒子／特效類</td><td>像裂開、花瓣消散、萬花筒出場、爆開、螢幕熄滅這類較有戲劇感。</td><td>Glow、Light Sweep、遮罩、疊加粒子素材、Dip to Black、Flash</td></tr>
-              <tr><td class="zh">組合</td><td>進場＋停留＋退場模板</td><td>最接近 CapCut 模板的做法，例如彈出→停住→縮回、滑入→停住→滑出。</td><td>Position、Scale、Rotation、Opacity、Transform、關鍵影格節奏控制</td></tr>
-              <tr><td class="zh">組合</td><td>分割／拼貼類</td><td>像三分割、上下分割、左右分割、中間分割、分身，適合卡點與畫面拆分。</td><td>Crop、Mask、Transform、Push、Split、Offset</td></tr>
-              <tr><td class="zh">組合</td><td>3D 物件模板類</td><td>像立方體、手機、水晶、魔方、翻頁盒子等，偏向預設模板式呈現。</td><td>Basic 3D、3D Rotate、Corner Pin、Drop Shadow、疊加素材</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="section">
-          <div class="section-head">
-            <h2>文字動畫</h2>
-            <p>CapCut 文字常見分成進場、退場、循環播放、字幕四類，下面用教學上最容易理解的風格整理。</p>
-          </div>
-          <table class="capcut-table">
-            <colgroup>
-              <col style="width:9%">
-              <col style="width:16%">
-              <col style="width:47%">
-              <col style="width:28%">
-            </colgroup>
-            <thead>
-              <tr><th>分類</th><th>動畫類型</th><th>用途簡述</th><th>可能用到的 Premiere 做法</th></tr>
-            </thead>
-            <tbody>
-              <tr><td class="zh">進場</td><td>逐字／打字類</td><td>像預覽打字、打字游標、逐字預覽，適合教學、旁白字幕、資訊字卡。</td><td>Typewriter、Text Animator、遮罩、裁切動畫</td></tr>
-              <tr><td class="zh">進場</td><td>滑入／位移類</td><td>像逝標滑入、擦入、右下擦入、向右緩入，適合章節標題與重點提示。</td><td>Position、Transform、Directional Blur</td></tr>
-              <tr><td class="zh">進場</td><td>故障／科技類</td><td>像故障閃動、故障橫掃、切片故障、CRT 類進場，適合科技、遊戲風格。</td><td>Glitch、RGB Split、Posterize Time、Transform、Noise</td></tr>
-              <tr><td class="zh">進場</td><td>光效／粒子類</td><td>像禮花粒子、愛心衝擊、發光閃入、星光閃粉，適合慶祝、夢幻、品牌感字幕。</td><td>Glow、Light Sweep、粒子素材、Opacity、Add 混合</td></tr>
-              <tr><td class="zh">進場</td><td>縮放／彈跳類</td><td>像彈弓、彈入、彈出、慢速放大、彈跳升起，適合短影音重點字。</td><td>Scale、Transform、Ease、Motion Blur</td></tr>
-              <tr><td class="zh">退場</td><td>模糊／淡出類</td><td>像模糊、向右模糊、拖尾、溶解、模糊百葉窗，適合柔和退場。</td><td>Opacity、Gaussian Blur、Cross Dissolve、Film Dissolve</td></tr>
-              <tr><td class="zh">退場</td><td>滑出／擦除類</td><td>像向左滑動、向下滑動、向上擦除、向下擦除、向左釋放，適合俐落結尾。</td><td>Position、Mask、Crop、Linear Wipe、Transform</td></tr>
-              <tr><td class="zh">退場</td><td>故障／碎裂類</td><td>像故障消失、雪花故障、下沉故障、撕裂分割、粒子拖尾出場，適合較強烈收尾。</td><td>Glitch、RGB Split、Noise、遮罩、粒子素材、Opacity</td></tr>
-              <tr><td class="zh">循環播放</td><td>閃爍／脈衝類</td><td>像閃爍、閃動、脈衝、心跳頻閃，適合重點字持續提醒。</td><td>Opacity 關鍵影格、Glow、Brightness &amp; Contrast、循環節奏</td></tr>
-              <tr><td class="zh">循環播放</td><td>擺動／搖晃類</td><td>像搖晃、顫抖、震動、搖擺，適合搞笑、表情、活潑風格。</td><td>Rotation、Position、Transform、Wiggle 類概念</td></tr>
-              <tr><td class="zh">循環播放</td><td>波浪／流動類</td><td>像波浪、流光、波浪抖動、流光故障，適合夢幻與科技感。</td><td>Wave Warp、Turbulent Displace、Glow、Opacity</td></tr>
-              <tr><td class="zh">字幕</td><td>逐字顯示類</td><td>像逐字變色、逐字顯色、逐字抖動、逐字出現，最適合教學和口說字幕。</td><td>Typewriter、Text Animator、Fill Color 動畫、遮罩</td></tr>
-              <tr><td class="zh">字幕</td><td>邊框／標註類</td><td>像邊框彈出、邊框彈出 II、逐字邊框、對齊邊框，適合標重點與框選。</td><td>Stroke、Shape Layer、Mask、Scale、Opacity</td></tr>
-              <tr><td class="zh">字幕</td><td>多行／排版類</td><td>像多行、多行組合、算圖、3D 台階，適合資訊型字幕與排版展示。</td><td>Essential Graphics、Position、Scale、對齊與行距調整</td></tr>
-              <tr><td class="zh">字幕</td><td>顏色／高亮類</td><td>像高光、發光、尾部變色、顏色覆蓋，適合讓關鍵詞更突出。</td><td>Fill、Glow、Opacity、顏色關鍵影格</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="highlight">
-          <h3>使用這區塊的方式</h3>
-          <div class="chips">
-            <div class="chip">先看 CapCut 名稱</div>
-            <div class="chip">再判斷動畫類型</div>
-            <div class="chip">最後對應 Premiere 做法</div>
-            <div class="chip">先模仿 3 種常見模板</div>
-            <div class="chip">再自行調整細微參數</div>
-          </div>
-        </div>
-      </div>
-    </details>
-
-    <p class="footer-note">列印建議：瀏覽器可直接按 Ctrl + P，選擇直向或橫向預覽；畫面查詢可先用上方搜尋框，再決定要不要展開完整分類。</p>
   </div>
 
   <script>
-(() => {
-  const input = document.getElementById('searchInput');
-  const noResult = document.getElementById('noResult');
-  const groups = Array.from(document.querySelectorAll('.searchable-group'));
-  const sections = Array.from(document.querySelectorAll('.searchable-group .section, .searchable-group .highlight'));
-  const expandAllBtn = document.getElementById('expandAllBtn');
-  const collapseAllBtn = document.getElementById('collapseAllBtn');
-  const topGroupBtns = Array.from(document.querySelectorAll('.top-group-btn'));
-  const subnavWrap = document.getElementById('subnavWrap');
-
-  function clearMarks(root) {
-    root.querySelectorAll('mark').forEach((mark) => {
-      mark.replaceWith(document.createTextNode(mark.textContent || ''));
+    // 展開與收合功能
+    const details = document.querySelectorAll('details');
+    document.getElementById('expandAllBtn').addEventListener('click', () => {
+      details.forEach(detail => detail.setAttribute('open', ''));
     });
-  }
-
-  function clearActiveTopBtns() {
-    topGroupBtns.forEach((btn) => btn.classList.remove('is-active'));
-  }
-
-  function hideSubnav() {
-    if (!subnavWrap) return;
-    subnavWrap.innerHTML = '';
-    subnavWrap.classList.remove('show');
-    clearActiveTopBtns();
-  }
-
-  function buildSubnav(groupId) {
-    if (!subnavWrap) return;
-
-    const group = document.querySelector(`.searchable-group[data-group="${groupId}"]`);
-    const topBtn = document.querySelector(`.top-group-btn[data-target-group="${groupId}"]`);
-
-    if (!group) {
-      hideSubnav();
-      return;
-    }
-
-    clearActiveTopBtns();
-    if (topBtn) topBtn.classList.add('is-active');
-
-    const headings = Array.from(group.querySelectorAll('.section .section-head h2'));
-    const items = headings.map((h2, index) => {
-      const section = h2.closest('.section');
-      if (!section) return '';
-      if (!section.id) {
-        section.id = `${groupId}-section-${index + 1}`;
-      }
-      return `<a class="subnav-btn" href="#${section.id}">${h2.textContent}</a>`;
-    }).filter(Boolean).join('');
-
-    if (!items) {
-      hideSubnav();
-      return;
-    }
-
-    subnavWrap.innerHTML = `
-      <div class="subnav-bar">
-        ${items}
-        <button type="button" class="subnav-close" id="subnavCloseBtn">收起</button>
-      </div>
-    `;
-    subnavWrap.classList.add('show');
-
-    const closeBtn = document.getElementById('subnavCloseBtn');
-    if (closeBtn) {
-      closeBtn.addEventListener('click', hideSubnav);
-    }
-  }
-
-  function toggleSubnav(groupId) {
-    const activeBtn = document.querySelector('.top-group-btn.is-active');
-    const activeGroupId = activeBtn ? activeBtn.getAttribute('data-target-group') : '';
-    const group = document.querySelector(`.searchable-group[data-group="${groupId}"]`);
-    if (group) group.open = true;
-
-    if (subnavWrap && subnavWrap.classList.contains('show') && activeGroupId === groupId) {
-      hideSubnav();
-      return;
-    }
-
-    buildSubnav(groupId);
-  }
-
-  function filterContent() {
-    if (!input || !noResult) return;
-
-    const keyword = input.value.trim().toLowerCase();
-    let visibleCount = 0;
-
-    sections.forEach((section) => {
-      clearMarks(section);
-
-      if (keyword === '') {
-        section.classList.remove('is-hidden');
-        section.querySelectorAll('tbody tr').forEach((row) => {
-          row.classList.remove('is-hidden');
-        });
-        visibleCount += 1;
-        return;
-      }
-
-      const rows = Array.from(section.querySelectorAll('tbody tr'));
-
-      if (rows.length > 0) {
-        let matchedRows = 0;
-        rows.forEach((row) => {
-          const rowText = (row.innerText || '').toLowerCase();
-          const match = rowText.includes(keyword);
-          row.classList.toggle('is-hidden', !match);
-          if (match) matchedRows += 1;
-        });
-        const hasMatch = matchedRows > 0;
-        section.classList.toggle('is-hidden', !hasMatch);
-        if (hasMatch) visibleCount += 1;
-      } else {
-        const match = (section.innerText || '').toLowerCase().includes(keyword);
-        section.classList.toggle('is-hidden', !match);
-        if (match) visibleCount += 1;
-      }
+    
+    document.getElementById('collapseAllBtn').addEventListener('click', () => {
+      details.forEach(detail => detail.removeAttribute('open'));
     });
 
-    groups.forEach((group) => {
-      const hasVisible = Array.from(group.querySelectorAll('.section, .highlight')).some((el) => !el.classList.contains('is-hidden'));
-      group.classList.toggle('is-hidden', !hasVisible);
-      if (keyword !== '' && hasVisible) group.open = true;
-    });
-
-    noResult.classList.toggle('show', visibleCount === 0);
-  }
-
-  if (expandAllBtn) {
-    expandAllBtn.addEventListener('click', () => {
-      groups.forEach((group) => {
-        if (!group.classList.contains('is-hidden')) group.open = true;
+    // 簡易搜尋功能
+    const searchInput = document.getElementById('searchInput');
+    const noResult = document.getElementById('noResult');
+    
+    searchInput.addEventListener('input', function(e) {
+      const term = e.target.value.toLowerCase();
+      let hasVisibleRow = false;
+      
+      document.querySelectorAll('tbody tr').forEach(row => {
+        const text = row.textContent.toLowerCase();
+        if (text.includes(term)) {
+          row.style.display = '';
+          hasVisibleRow = true;
+          // 確保外層的 details 被打開
+          row.closest('details').setAttribute('open', '');
+        } else {
+          row.style.display = 'none';
+        }
       });
-    });
-  }
 
-  if (collapseAllBtn) {
-    collapseAllBtn.addEventListener('click', () => {
-      groups.forEach((group) => {
-        if (!group.classList.contains('is-hidden')) group.open = false;
+      // 隱藏沒有符合項目的整個表格/區塊
+      document.querySelectorAll('.section').forEach(section => {
+        const visibleRows = section.querySelectorAll('tbody tr:not([style*="display: none"])');
+        section.style.display = visibleRows.length > 0 ? '' : 'none';
       });
-      hideSubnav();
+
+      noResult.style.display = hasVisibleRow || term === '' ? 'none' : 'block';
     });
-  }
-
-  topGroupBtns.forEach((btn) => {
-    btn.addEventListener('click', (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      const groupId = btn.getAttribute('data-target-group');
-      if (groupId) toggleSubnav(groupId);
-    });
-  });
-
-  if (subnavWrap) {
-    subnavWrap.addEventListener('click', (event) => {
-      const link = event.target.closest('.subnav-btn');
-      if (!link) return;
-      event.preventDefault();
-      const targetId = (link.getAttribute('href') || '').replace('#', '');
-      const target = document.getElementById(targetId);
-      if (target) {
-        const heading = target.querySelector('.section-head') || target;
-        const topnav = document.querySelector('.topnav');
-        const topnavHeight = topnav ? topnav.offsetHeight : 0;
-        const extraOffset = 14;
-        const y = heading.getBoundingClientRect().top + window.pageYOffset - topnavHeight - extraOffset;
-        window.scrollTo({ top: y, behavior: 'smooth' });
-      }
-      window.setTimeout(hideSubnav, 160);
-    });
-
-    subnavWrap.addEventListener('mouseleave', () => {
-      window.setTimeout(() => {
-        if (!subnavWrap.matches(':hover')) hideSubnav();
-      }, 120);
-    });
-  }
-
-  document.addEventListener('click', (event) => {
-    const insideTopnav = event.target.closest('.topnav');
-    if (!insideTopnav) hideSubnav();
-  });
-
-  if (input) input.addEventListener('input', filterContent);
-})();
-</script>
+  </script>
 </body>
 </html>
