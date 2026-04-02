@@ -5,160 +5,183 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Premiere Pro Effects</title>
     <style>
-        /* 基礎重置與配色 */
+        /* CSS 基礎重置與變數設定 (沿用最喜歡的版本) */
         :root {
-            --bg-dark: #121212;
-            --bg-card: #1e1e1e;
-            --bg-accordion: #2d2d30;
-            --text-main: #e0e0e0;
-            --text-muted: #9e9e9e;
-            --accent: #3daee9;
-            --tag-bg: #333333;
-            --tag-hover: #444444;
+            --bg-color: #181818;
+            --surface-color: #252526;
+            --surface-hover: #2d2d30;
+            --text-primary: #e0e0e0;
+            --text-secondary: #9e9e9e;
+            --accent-color: #3daee9;
+            --accent-purple: #b661ff;
+            --warning-color: #e2a85c;
             --border-color: #3e3e42;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-main);
             margin: 0;
             padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
             line-height: 1.6;
         }
 
-        /* 頂部標題列 */
+        /* 頂部導覽列 */
         header {
-            background-color: #000000;
-            padding: 20px 40px;
+            background-color: #111111;
+            padding: 15px 30px;
             border-bottom: 1px solid var(--border-color);
             position: sticky;
             top: 0;
-            z-index: 1000;
+            z-index: 100;
         }
 
         header h1 {
             margin: 0;
-            font-size: 1.5rem;
-            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
             letter-spacing: 1px;
         }
 
-        /* 內容容器 */
-        .container {
+        /* 主要內容區塊 */
+        main {
             max-width: 1200px;
             margin: 40px auto;
             padding: 0 20px;
         }
 
-        /* 大分類區塊 (Video, Audio, Presets) */
-        .section-wrapper {
-            margin-bottom: 40px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            overflow: hidden;
-            background-color: var(--bg-card);
+        .tier-section {
+            margin-bottom: 50px;
         }
 
-        /* 收合按鈕 (Accordion) */
-        .accordion-btn {
-            width: 100%;
-            background-color: var(--bg-accordion);
-            color: #ffffff;
+        .tier-title {
+            font-size: 1.5rem;
+            color: var(--accent-purple);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* 收合選單 (Accordion) 樣式 */
+        .accordion {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            padding: 18px 20px;
             cursor: pointer;
-            padding: 18px 25px;
-            border: none;
-            text-align: left;
-            outline: none;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: bold;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: background-color 0.3s;
+            background-color: var(--surface-color);
+            transition: background-color 0.2s ease;
         }
 
-        .accordion-btn:hover {
-            background-color: #3e3e42;
+        .accordion-header:hover {
+            background-color: var(--surface-hover);
         }
 
-        .accordion-btn::after {
-            content: '+';
-            font-size: 1.5rem;
-            transition: transform 0.3s;
+        .accordion-header.active {
+            border-bottom: 1px solid var(--border-color);
+            color: var(--accent-color);
         }
 
-        .accordion-btn.active::after {
+        .icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .active .icon {
             transform: rotate(45deg);
-            color: var(--accent);
         }
 
-        /* 收合內容區 */
+        /* 內部網格與卡片設計 */
         .accordion-content {
-            padding: 0 25px;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
-            background-color: var(--bg-card);
-        }
-
-        .accordion-content.show {
-            padding: 25px;
-            max-height: 5000px; /* 足夠大的數值以容納內容 */
-        }
-
-        /* 內部小分類卡片 */
-        .sub-category-card {
-            background-color: #252526;
-            border-radius: 6px;
             padding: 20px;
-            margin-bottom: 20px;
-            border-left: 4px solid var(--accent);
+            display: none;
+            background-color: #1e1e1e;
         }
 
-        .sub-category-card h3 {
-            margin: 0 0 5px 0;
-            color: #ffffff;
-            font-size: 1.1rem;
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
         }
 
-        .sub-category-card p.desc {
-            margin: 0 0 15px 0;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        /* 單一特效標籤 (Tags) */
-        .tag-container {
+        .card {
+            background-color: var(--surface-color);
+            padding: 18px 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--border-color);
+            transition: border-color 0.2s ease;
             display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
+            flex-direction: column;
         }
 
-        .effect-tag {
-            background-color: var(--tag-bg);
-            color: var(--text-main);
-            padding: 5px 12px;
-            border-radius: 15px;
+        .card:hover {
+            border-left-color: var(--accent-color);
+        }
+
+        .card h4 {
+            margin: 0 0 10px 0;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card .cn-name {
+            color: var(--accent-color);
+            font-size: 0.9rem;
+            font-weight: normal;
+        }
+
+        /* 完整清單列表樣式 */
+        .item-list {
+            margin-top: auto;
+            padding-top: 10px;
+            border-top: 1px dashed var(--border-color);
             font-size: 0.85rem;
-            border: 1px solid var(--border-color);
-            transition: all 0.2s;
-        }
-
-        .effect-tag:hover {
-            background-color: var(--tag-hover);
-            border-color: var(--accent);
-            cursor: default;
-        }
-
-        .legacy-section {
-            border-left-color: #e2a85c;
+            color: var(--text-secondary);
+            line-height: 1.5;
         }
         
-        .legacy-text {
-            color: #e2a85c;
-            font-size: 0.85rem;
-            margin-bottom: 15px;
+        .item-list span {
+            color: #b0bec5;
+        }
+
+        /* 警告標籤 (Legacy 專用) */
+        .warning-badge {
+            display: inline-block;
+            background-color: rgba(226, 168, 92, 0.1);
+            color: var(--warning-color);
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            border: 1px solid rgba(226, 168, 92, 0.3);
+        }
+
+        .card.legacy:hover {
+            border-left-color: var(--warning-color);
+        }
+
+        @media (max-width: 600px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -168,512 +191,239 @@
         <h1>Premiere Pro Effects</h1>
     </header>
 
-    <div class="container">
+    <main>
+        <section class="tier-section">
+            <h2 class="tier-title">🎬 視覺處理 (Video)</h2>
 
-        <div class="section-wrapper">
-            <button class="accordion-btn">🎬 Video Transitions (影片轉場)</button>
-            <div class="accordion-content">
-                <div class="sub-category-card">
-                    <h3>3D Motion (3D 運動)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">Cube Spin</span>
-                        <span class="effect-tag">Flip Over</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Dissolve (溶解)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">Additive Dissolve</span>
-                        <span class="effect-tag">Cross Dissolve</span>
-                        <span class="effect-tag">Dip to Black</span>
-                        <span class="effect-tag">Dip to White</span>
-                        <span class="effect-tag">Film Dissolve</span>
-                        <span class="effect-tag">Morph Cut</span>
-                        <span class="effect-tag">Non-Additive Dissolve</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Immersive Video (沉浸式影片 VR)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">VR Chroma Leaks</span>
-                        <span class="effect-tag">VR Gradient Wipe</span>
-                        <span class="effect-tag">VR Iris Wipe</span>
-                        <span class="effect-tag">VR Light Rays</span>
-                        <span class="effect-tag">VR Mobius Zoom</span>
-                        <span class="effect-tag">VR Random Blocks</span>
-                        <span class="effect-tag">VR Spherical Blur</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Iris (光圈)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">Iris Box</span>
-                        <span class="effect-tag">Iris Cross</span>
-                        <span class="effect-tag">Iris Diamond</span>
-                        <span class="effect-tag">Iris Points</span>
-                        <span class="effect-tag">Iris Round</span>
-                        <span class="effect-tag">Iris Shapes</span>
-                        <span class="effect-tag">Iris Star</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Page Peel (翻頁)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">Page Peel</span>
-                        <span class="effect-tag">Page Turn</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Slide (滑動)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">Center Split</span>
-                        <span class="effect-tag">Push</span>
-                        <span class="effect-tag">Slide</span>
-                        <span class="effect-tag">Split</span>
-                        <span class="effect-tag">Swap</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Wipe (擦除)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">Band Wipe</span>
-                        <span class="effect-tag">Barn Doors</span>
-                        <span class="effect-tag">Checker Wipe</span>
-                        <span class="effect-tag">CheckerBoard</span>
-                        <span class="effect-tag">Clock Wipe</span>
-                        <span class="effect-tag">Gradient Wipe</span>
-                        <span class="effect-tag">Inset</span>
-                        <span class="effect-tag">Paint Splatter</span>
-                        <span class="effect-tag">Pinwheel</span>
-                        <span class="effect-tag">Radial Wipe</span>
-                        <span class="effect-tag">Random Blocks</span>
-                        <span class="effect-tag">Random Wipe</span>
-                        <span class="effect-tag">Spiral Boxes</span>
-                        <span class="effect-tag">Venetian Blinds</span>
-                        <span class="effect-tag">Wedge Wipe</span>
-                        <span class="effect-tag">Wipe</span>
-                        <span class="effect-tag">Zig-Zag Blocks</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Zoom (縮放)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">Cross Zoom</span>
+            <div class="accordion">
+                <div class="accordion-header">Video Transitions (影片轉場) <span class="icon">+</span></div>
+                <div class="accordion-content">
+                    <div class="grid-container">
+                        <div class="card">
+                            <h4>3D Motion <span class="cn-name">3D 運動</span></h4>
+                            <div class="item-list"><span>包含：</span>Cube Spin, Flip Over</div>
+                        </div>
+                        <div class="card">
+                            <h4>Dissolve <span class="cn-name">溶解</span></h4>
+                            <div class="item-list"><span>包含：</span>Additive Dissolve, Cross Dissolve, Dip to Black, Dip to White, Film Dissolve, Morph Cut, Non-Additive Dissolve</div>
+                        </div>
+                        <div class="card">
+                            <h4>Immersive Video <span class="cn-name">沉浸式影片 VR</span></h4>
+                            <div class="item-list"><span>包含：</span>VR Chroma Leaks, VR Gradient Wipe, VR Iris Wipe, VR Light Rays, VR Mobius Zoom, VR Random Blocks, VR Spherical Blur</div>
+                        </div>
+                        <div class="card">
+                            <h4>Iris <span class="cn-name">光圈</span></h4>
+                            <div class="item-list"><span>包含：</span>Iris Box, Iris Cross, Iris Diamond, Iris Points, Iris Round, Iris Shapes, Iris Star</div>
+                        </div>
+                        <div class="card">
+                            <h4>Page Peel <span class="cn-name">翻頁</span></h4>
+                            <div class="item-list"><span>包含：</span>Page Peel, Page Turn</div>
+                        </div>
+                        <div class="card">
+                            <h4>Slide <span class="cn-name">滑動</span></h4>
+                            <div class="item-list"><span>包含：</span>Center Split, Push, Slide, Split, Swap</div>
+                        </div>
+                        <div class="card">
+                            <h4>Wipe <span class="cn-name">擦除</span></h4>
+                            <div class="item-list"><span>包含：</span>Band Wipe, Barn Doors, Checker Wipe, CheckerBoard, Clock Wipe, Gradient Wipe, Inset, Paint Splatter, Pinwheel, Radial Wipe, Random Blocks, Random Wipe, Spiral Boxes, Venetian Blinds, Wedge Wipe, Wipe, Zig-Zag Blocks</div>
+                        </div>
+                        <div class="card">
+                            <h4>Zoom <span class="cn-name">縮放</span></h4>
+                            <div class="item-list"><span>包含：</span>Cross Zoom</div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="section-wrapper">
-            <button class="accordion-btn">🎥 Video Effects (影片效果)</button>
-            <div class="accordion-content">
-                <div class="sub-category-card">
-                    <h3>Adjust (調整)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">Extract</span>
-                        <span class="effect-tag">Levels</span>
-                        <span class="effect-tag">Lighting Effects</span>
-                        <span class="effect-tag">ProcAmp</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Blur & Sharpen (模糊與銳化)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">Camera Blur</span>
-                        <span class="effect-tag">Channel Blur</span>
-                        <span class="effect-tag">Compound Blur</span>
-                        <span class="effect-tag">Directional Blur</span>
-                        <span class="effect-tag">Fast Blur</span>
-                        <span class="effect-tag">Gaussian Blur</span>
-                        <span class="effect-tag">Radial Blur</span>
-                        <span class="effect-tag">Sharpen</span>
-                        <span class="effect-tag">Unsharp Mask</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Channel (色版/通道)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">Arithmetic</span>
-                        <span class="effect-tag">Blend</span>
-                        <span class="effect-tag">Calculations</span>
-                        <span class="effect-tag">Compound Arithmetic</span>
-                        <span class="effect-tag">Invert</span>
-                        <span class="effect-tag">Set Matte</span>
-                        <span class="effect-tag">Solid Composite</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Color Correction (色彩校正)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">ASC CDL</span>
-                        <span class="effect-tag">Brightness & Contrast</span>
-                        <span class="effect-tag">Change Color</span>
-                        <span class="effect-tag">Change to Color</span>
-                        <span class="effect-tag">Channel Mixer</span>
-                        <span class="effect-tag">Color Balance</span>
-                        <span class="effect-tag">Color Balance (HLS)</span>
-                        <span class="effect-tag">Equalize</span>
-                        <span class="effect-tag">Leave Color</span>
-                        <span class="effect-tag">Lumetri Color</span>
-                        <span class="effect-tag">Tint</span>
-                        <span class="effect-tag">Video Limiter</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Distort (扭曲)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">Corner Pin</span>
-                        <span class="effect-tag">Lens Distortion</span>
-                        <span class="effect-tag">Magnify</span>
-                        <span class="effect-tag">Mirror</span>
-                        <span class="effect-tag">Offset</span>
-                        <span class="effect-tag">Polar Coordinates</span>
-                        <span class="effect-tag">Ripple</span>
-                        <span class="effect-tag">Rolling Shutter Repair</span>
-                        <span class="effect-tag">Spherize</span>
-                        <span class="effect-tag">Transform</span>
-                        <span class="effect-tag">Turbulent Displace</span>
-                        <span class="effect-tag">Twirl</span>
-                        <span class="effect-tag">Warp Stabilizer</span>
-                        <span class="effect-tag">Wave Warp</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Generate (產生)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">4-Color Gradient</span>
-                        <span class="effect-tag">Cell Pattern</span>
-                        <span class="effect-tag">Checkerboard</span>
-                        <span class="effect-tag">Circle</span>
-                        <span class="effect-tag">Ellipse</span>
-                        <span class="effect-tag">Grid</span>
-                        <span class="effect-tag">Lens Flare</span>
-                        <span class="effect-tag">Lightning</span>
-                        <span class="effect-tag">Paint Bucket</span>
-                        <span class="effect-tag">Ramp</span>
-                        <span class="effect-tag">Write-on</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Image Control (影像控制)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">Black & White</span>
-                        <span class="effect-tag">Color Pass</span>
-                        <span class="effect-tag">Color Replace</span>
-                        <span class="effect-tag">Gamma Correction</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Immersive Video (沉浸式影片 VR)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">VR Blur</span>
-                        <span class="effect-tag">VR Chromatic Aberrations</span>
-                        <span class="effect-tag">VR Color Gradients</span>
-                        <span class="effect-tag">VR De-Noise</span>
-                        <span class="effect-tag">VR Digital Glitch</span>
-                        <span class="effect-tag">VR Fractal Noise</span>
-                        <span class="effect-tag">VR Glow</span>
-                        <span class="effect-tag">VR Plane to Sphere</span>
-                        <span class="effect-tag">VR Projection</span>
-                        <span class="effect-tag">VR Rotate Sphere</span>
-                        <span class="effect-tag">VR Sharpen</span>
-                        <span class="effect-tag">VR Sphere to Plane</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Keying (去背)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">Alpha Adjust</span>
-                        <span class="effect-tag">Color Key</span>
-                        <span class="effect-tag">Difference Matte</span>
-                        <span class="effect-tag">Image Matte Key</span>
-                        <span class="effect-tag">Luma Key</span>
-                        <span class="effect-tag">Non-Red Key</span>
-                        <span class="effect-tag">Remove Matte</span>
-                        <span class="effect-tag">Track Matte Key</span>
-                        <span class="effect-tag">Ultra Key</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Noise & Grain (雜訊與顆粒)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">Dust & Scratches</span>
-                        <span class="effect-tag">Median</span>
-                        <span class="effect-tag">Noise</span>
-                        <span class="effect-tag">Noise Alpha</span>
-                        <span class="effect-tag">Noise HLS</span>
-                        <span class="effect-tag">Noise HLS Auto</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Obsolete (舊版淘汰)</h3>
-                    <p class="desc">包含早期的 Color Balance, RGB Curves, Fast Color Corrector 等舊專案相容特效。</p>
-                    <div class="tag-container">
-                        <span class="effect-tag">Auto Color</span>
-                        <span class="effect-tag">Auto Contrast</span>
-                        <span class="effect-tag">Auto Levels</span>
-                        <span class="effect-tag">Basic 3D</span>
-                        <span class="effect-tag">Fast Color Corrector</span>
-                        <span class="effect-tag">Luma Curve</span>
-                        <span class="effect-tag">RGB Curves</span>
-                        <span class="effect-tag">Three-Way Color Corrector</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Perspective (透視)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">3D Glasses</span>
-                        <span class="effect-tag">Basic 3D</span>
-                        <span class="effect-tag">Bevel Alpha</span>
-                        <span class="effect-tag">Bevel Edges</span>
-                        <span class="effect-tag">Drop Shadow</span>
-                        <span class="effect-tag">Radial Shadow</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Stylize (風格化)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">Alpha Glow</span>
-                        <span class="effect-tag">Brush Strokes</span>
-                        <span class="effect-tag">Color Emboss</span>
-                        <span class="effect-tag">Emboss</span>
-                        <span class="effect-tag">Find Edges</span>
-                        <span class="effect-tag">Mosaic</span>
-                        <span class="effect-tag">Posterize</span>
-                        <span class="effect-tag">Replicate</span>
-                        <span class="effect-tag">Roughen Edges</span>
-                        <span class="effect-tag">Solarize</span>
-                        <span class="effect-tag">Strobe Light</span>
-                        <span class="effect-tag">Texturize</span>
-                        <span class="effect-tag">Threshold</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Time (時間)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">Echo</span>
-                        <span class="effect-tag">Posterize Time</span>
-                        <span class="effect-tag">Time Warp</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Transform (變形)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">Auto Reframe</span>
-                        <span class="effect-tag">Crop</span>
-                        <span class="effect-tag">Edge Feather</span>
-                        <span class="effect-tag">Horizontal Flip</span>
-                        <span class="effect-tag">Vertical Flip</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Utility (公用程式)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">Cineon Converter</span>
+            <div class="accordion">
+                <div class="accordion-header">Video Effects (影片效果) <span class="icon">+</span></div>
+                <div class="accordion-content">
+                    <div class="grid-container">
+                        <div class="card">
+                            <h4>Adjust <span class="cn-name">調整</span></h4>
+                            <div class="item-list"><span>包含：</span>Extract, Levels, Lighting Effects, ProcAmp</div>
+                        </div>
+                        <div class="card">
+                            <h4>Blur & Sharpen <span class="cn-name">模糊與銳利化</span></h4>
+                            <div class="item-list"><span>包含：</span>Camera Blur, Channel Blur, Compound Blur, Directional Blur, Fast Blur, Gaussian Blur, Radial Blur, Sharpen, Unsharp Mask</div>
+                        </div>
+                        <div class="card">
+                            <h4>Channel <span class="cn-name">色版 (通道)</span></h4>
+                            <div class="item-list"><span>包含：</span>Arithmetic, Blend, Calculations, Compound Arithmetic, Invert, Set Matte, Solid Composite</div>
+                        </div>
+                        <div class="card">
+                            <h4>Color Correction <span class="cn-name">色彩校正</span></h4>
+                            <div class="item-list"><span>包含：</span>ASC CDL, Brightness & Contrast, Change Color, Change to Color, Channel Mixer, Color Balance, Color Balance (HLS), Equalize, Leave Color, Lumetri Color, Tint, Video Limiter</div>
+                        </div>
+                        <div class="card">
+                            <h4>Distort <span class="cn-name">扭曲</span></h4>
+                            <div class="item-list"><span>包含：</span>Corner Pin, Lens Distortion, Magnify, Mirror, Offset, Polar Coordinates, Ripple, Rolling Shutter Repair, Spherize, Transform, Turbulent Displace, Twirl, Warp Stabilizer, Wave Warp</div>
+                        </div>
+                        <div class="card">
+                            <h4>Generate <span class="cn-name">產生</span></h4>
+                            <div class="item-list"><span>包含：</span>4-Color Gradient, Cell Pattern, Checkerboard, Circle, Ellipse, Grid, Lens Flare, Lightning, Paint Bucket, Ramp, Write-on</div>
+                        </div>
+                        <div class="card">
+                            <h4>Image Control <span class="cn-name">影像控制</span></h4>
+                            <div class="item-list"><span>包含：</span>Black & White, Color Pass, Color Replace, Gamma Correction</div>
+                        </div>
+                        <div class="card">
+                            <h4>Immersive Video <span class="cn-name">沉浸式影片 VR</span></h4>
+                            <div class="item-list"><span>包含：</span>VR Blur, VR Chromatic Aberrations, VR Color Gradients, VR De-Noise, VR Digital Glitch, VR Fractal Noise, VR Glow, VR Plane to Sphere, VR Projection, VR Rotate Sphere, VR Sharpen, VR Sphere to Plane</div>
+                        </div>
+                        <div class="card">
+                            <h4>Keying <span class="cn-name">去背 (鍵控)</span></h4>
+                            <div class="item-list"><span>包含：</span>Alpha Adjust, Color Key, Difference Matte, Image Matte Key, Luma Key, Non-Red Key, Remove Matte, Track Matte Key, Ultra Key</div>
+                        </div>
+                        <div class="card">
+                            <h4>Noise & Grain <span class="cn-name">雜訊與顆粒</span></h4>
+                            <div class="item-list"><span>包含：</span>Dust & Scratches, Median, Noise, Noise Alpha, Noise HLS, Noise HLS Auto</div>
+                        </div>
+                        <div class="card">
+                            <h4>Obsolete <span class="cn-name">舊版淘汰</span></h4>
+                            <div class="item-list"><span>包含：</span>Auto Color, Auto Contrast, Auto Levels, Basic 3D, Fast Color Corrector, Luma Curve, RGB Curves, Three-Way Color Corrector</div>
+                        </div>
+                        <div class="card">
+                            <h4>Perspective <span class="cn-name">透視</span></h4>
+                            <div class="item-list"><span>包含：</span>3D Glasses, Basic 3D, Bevel Alpha, Bevel Edges, Drop Shadow, Radial Shadow</div>
+                        </div>
+                        <div class="card">
+                            <h4>Stylize <span class="cn-name">風格化</span></h4>
+                            <div class="item-list"><span>包含：</span>Alpha Glow, Brush Strokes, Color Emboss, Emboss, Find Edges, Mosaic, Posterize, Replicate, Roughen Edges, Solarize, Strobe Light, Texturize, Threshold</div>
+                        </div>
+                        <div class="card">
+                            <h4>Time <span class="cn-name">時間</span></h4>
+                            <div class="item-list"><span>包含：</span>Echo, Posterize Time, Time Warp</div>
+                        </div>
+                        <div class="card">
+                            <h4>Transform <span class="cn-name">變形</span></h4>
+                            <div class="item-list"><span>包含：</span>Auto Reframe, Crop, Edge Feather, Horizontal Flip, Vertical Flip</div>
+                        </div>
+                        <div class="card">
+                            <h4>Utility <span class="cn-name">實用工具</span></h4>
+                            <div class="item-list"><span>包含：</span>Cineon Converter</div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="section-wrapper">
-            <button class="accordion-btn">🎵 Audio Transitions (音訊轉場)</button>
-            <div class="accordion-content">
-                <div class="sub-category-card">
-                    <h3>Crossfade (交叉淡化)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">Constant Gain</span>
-                        <span class="effect-tag">Constant Power</span>
-                        <span class="effect-tag">Exponential Fade</span>
+        <section class="tier-section">
+            <h2 class="tier-title" style="color: #4CAF50;">🎧 聽覺處理 (Audio)</h2>
+
+            <div class="accordion">
+                <div class="accordion-header">Audio Transitions (音訊轉場) <span class="icon">+</span></div>
+                <div class="accordion-content">
+                    <div class="grid-container">
+                        <div class="card">
+                            <h4>Crossfade <span class="cn-name">交叉淡化</span></h4>
+                            <div class="item-list"><span>包含：</span>Constant Gain, Constant Power, Exponential Fade</div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="section-wrapper">
-            <button class="accordion-btn">🎚️ Audio Effects (音訊效果)</button>
-            <div class="accordion-content">
-                <div class="sub-category-card">
-                    <h3>Amplitude and Compression (振幅與壓縮)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">Amplify</span>
-                        <span class="effect-tag">Channel Volume</span>
-                        <span class="effect-tag">DeEsser</span>
-                        <span class="effect-tag">Dynamics Processing</span>
-                        <span class="effect-tag">Hard Limiter</span>
-                        <span class="effect-tag">Multiband Compressor</span>
-                        <span class="effect-tag">Single-band Compressor</span>
-                        <span class="effect-tag">Tube-modeled Compressor</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Delay and Echo (延遲與回音)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">Analog Delay</span>
-                        <span class="effect-tag">Delay</span>
-                        <span class="effect-tag">Echo</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Filter and EQ (濾波與等化器)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">Bandpass</span>
-                        <span class="effect-tag">FFT Filter</span>
-                        <span class="effect-tag">Graphic Equalizer (10 Bands)</span>
-                        <span class="effect-tag">Graphic Equalizer (20 Bands)</span>
-                        <span class="effect-tag">Graphic Equalizer (30 Bands)</span>
-                        <span class="effect-tag">Notch Filter</span>
-                        <span class="effect-tag">Parametric Equalizer</span>
-                        <span class="effect-tag">Scientific Filter</span>
-                        <span class="effect-tag">Simple Parametric EQ</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Modulation (調變)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">Chorus</span>
-                        <span class="effect-tag">Flanger</span>
-                        <span class="effect-tag">Phaser</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Noise Reduction / Restoration (降噪與修復)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">Click/Pop Eliminator</span>
-                        <span class="effect-tag">DeNoise</span>
-                        <span class="effect-tag">DeReverb</span>
-                        <span class="effect-tag">Hiss Reduction</span>
-                        <span class="effect-tag">Noise Reduction</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Reverb (殘響)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">Convolution Reverb</span>
-                        <span class="effect-tag">Reverb</span>
-                        <span class="effect-tag">Studio Reverb</span>
-                        <span class="effect-tag">Surround Reverb</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Special (特殊)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">Distortion</span>
-                        <span class="effect-tag">Guitar Suite</span>
-                        <span class="effect-tag">Mastering</span>
-                        <span class="effect-tag">Vocal Enhancer</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Stereo Imagery (立體聲意象)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">Binauralizer</span>
-                        <span class="effect-tag">Center Channel Extractor</span>
-                        <span class="effect-tag">Stereo Expander</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Time and Pitch (時間與音高)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">Pitch Shifter</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Standalone Effects (獨立快捷音效)</h3>
-                    <div class="tag-container">
-                        <span class="effect-tag">DeNoise</span>
-                        <span class="effect-tag">DeReverb</span>
-                        <span class="effect-tag">Mute</span>
-                        <span class="effect-tag">PitchShifter</span>
-                        <span class="effect-tag">Volume</span>
+            <div class="accordion">
+                <div class="accordion-header">Audio Effects (音訊效果) <span class="icon">+</span></div>
+                <div class="accordion-content">
+                    <div class="grid-container">
+                        <div class="card">
+                            <h4>Amplitude / Compression <span class="cn-name">振幅與壓縮</span></h4>
+                            <div class="item-list"><span>包含：</span>Amplify, Channel Volume, DeEsser, Dynamics Processing, Hard Limiter, Multiband Compressor, Single-band Compressor, Tube-modeled Compressor</div>
+                        </div>
+                        <div class="card">
+                            <h4>Delay and Echo <span class="cn-name">延遲與回音</span></h4>
+                            <div class="item-list"><span>包含：</span>Analog Delay, Delay, Echo</div>
+                        </div>
+                        <div class="card">
+                            <h4>Filter and EQ <span class="cn-name">濾波與等化器</span></h4>
+                            <div class="item-list"><span>包含：</span>Bandpass, FFT Filter, Graphic Equalizer (10/20/30 Bands), Notch Filter, Parametric Equalizer, Scientific Filter, Simple Parametric EQ</div>
+                        </div>
+                        <div class="card">
+                            <h4>Modulation <span class="cn-name">調變</span></h4>
+                            <div class="item-list"><span>包含：</span>Chorus, Flanger, Phaser</div>
+                        </div>
+                        <div class="card">
+                            <h4>Noise Reduction <span class="cn-name">降噪與修復</span></h4>
+                            <div class="item-list"><span>包含：</span>Click/Pop Eliminator, DeNoise, DeReverb, Hiss Reduction, Noise Reduction</div>
+                        </div>
+                        <div class="card">
+                            <h4>Reverb <span class="cn-name">殘響</span></h4>
+                            <div class="item-list"><span>包含：</span>Convolution Reverb, Reverb, Studio Reverb, Surround Reverb</div>
+                        </div>
+                        <div class="card">
+                            <h4>Special <span class="cn-name">特殊效果</span></h4>
+                            <div class="item-list"><span>包含：</span>Distortion, Guitar Suite, Mastering, Vocal Enhancer</div>
+                        </div>
+                        <div class="card">
+                            <h4>Stereo Imagery <span class="cn-name">立體聲意象</span></h4>
+                            <div class="item-list"><span>包含：</span>Binauralizer, Center Channel Extractor, Stereo Expander</div>
+                        </div>
+                        <div class="card">
+                            <h4>Time and Pitch <span class="cn-name">時間與音高</span></h4>
+                            <div class="item-list"><span>包含：</span>Pitch Shifter</div>
+                        </div>
+                        <div class="card">
+                            <h4>Standalone <span class="cn-name">獨立快捷音效</span></h4>
+                            <div class="item-list"><span>包含：</span>DeNoise, DeReverb, Mute, PitchShifter, Volume</div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="section-wrapper">
-            <button class="accordion-btn">🎨 Presets & Lumetri (調色與預設集)</button>
-            <div class="accordion-content">
-                <div class="sub-category-card">
-                    <h3>Lumetri Presets (Lumetri 調色預設)</h3>
-                    <p class="desc">包含大量預設的 LUTs 調色檔。</p>
-                    <div class="tag-container">
-                        <span class="effect-tag">Cinematic</span>
-                        <span class="effect-tag">Filmstocks</span>
-                        <span class="effect-tag">Monochrome</span>
-                        <span class="effect-tag">SpeedLooks</span>
-                        <span class="effect-tag">Style</span>
-                        <span class="effect-tag">Technical</span>
-                    </div>
-                </div>
-                <div class="sub-category-card">
-                    <h3>Presets (官方預設集)</h3>
-                    <p class="desc">預先設定好關鍵影格的快捷效果，拖拉即可套用。</p>
-                    <div class="tag-container">
-                        <span class="effect-tag">Bevel Edges</span>
-                        <span class="effect-tag">Blurs</span>
-                        <span class="effect-tag">Color FX</span>
-                        <span class="effect-tag">Convolution Kernel</span>
-                        <span class="effect-tag">Lens Distortion Removal (各大相機變形校正)</span>
-                        <span class="effect-tag">Mosaics</span>
-                        <span class="effect-tag">PiPs</span>
-                        <span class="effect-tag">Solarizes</span>
-                        <span class="effect-tag">Sound Removal</span>
-                        <span class="effect-tag">Twirls</span>
-                        <span class="effect-tag">Video Out & In</span>
+        <section class="tier-section">
+            <h2 class="tier-title" style="color: #ffca28;">🎨 進階套用 (Presets & Color)</h2>
+
+            <div class="accordion">
+                <div class="accordion-header">Presets & Lumetri (預設集與調色) <span class="icon">+</span></div>
+                <div class="accordion-content">
+                    <div class="grid-container">
+                        <div class="card">
+                            <h4>Lumetri Presets <span class="cn-name">調色濾鏡</span></h4>
+                            <div class="item-list"><span>包含：</span>Cinematic, Filmstocks, Monochrome, SpeedLooks, Style, Technical</div>
+                        </div>
+                        <div class="card">
+                            <h4>Presets <span class="cn-name">官方預設集</span></h4>
+                            <div class="item-list"><span>包含：</span>Bevel Edges, Blurs, Color FX, Convolution Kernel, Lens Distortion Removal, Mosaics, PiPs, Solarizes, Sound Removal, Twirls, Video Out & In</div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="section-wrapper">
-            <button class="accordion-btn">🏛️ Legacy (舊版音訊效果)</button>
-            <div class="accordion-content">
-                <div class="sub-category-card legacy-section">
-                    <h3>Legacy (舊版相容特效)</h3>
-                    <div class="legacy-text">⚠️ 效能較差，僅供舊專案開啟使用。新專案請使用上方的 Audio Effects。</div>
-                    <div class="tag-container">
-                        <span class="effect-tag">Analog Delay</span>
-                        <span class="effect-tag">Bandpass</span>
-                        <span class="effect-tag">Bass</span>
-                        <span class="effect-tag">Chorus</span>
-                        <span class="effect-tag">DeEsser</span>
-                        <span class="effect-tag">Delay</span>
-                        <span class="effect-tag">Dynamics</span>
-                        <span class="effect-tag">EQ</span>
-                        <span class="effect-tag">Flanger</span>
-                        <span class="effect-tag">Highpass</span>
-                        <span class="effect-tag">Invert</span>
-                        <span class="effect-tag">Lowpass</span>
-                        <span class="effect-tag">MultibandCompressor</span>
-                        <span class="effect-tag">Notch</span>
-                        <span class="effect-tag">Parametric EQ</span>
-                        <span class="effect-tag">Phaser</span>
-                        <span class="effect-tag">PitchShifter</span>
-                        <span class="effect-tag">Reverb</span>
-                        <span class="effect-tag">Spectral Noise Reduction</span>
-                        <span class="effect-tag">Treble</span>
-                        <span class="effect-tag">Volume</span>
+        <section class="tier-section">
+            <h2 class="tier-title" style="color: var(--text-secondary);">🏛️ 歷史歸檔 (Legacy)</h2>
+
+            <div class="accordion">
+                <div class="accordion-header" style="color: var(--warning-color);">Legacy (舊版音訊效果) <span class="icon">+</span></div>
+                <div class="accordion-content">
+                    <div class="warning-badge">⚠️ 僅供開啟舊專案相容使用，新專案強烈建議使用上方的 Audio Effects。</div>
+                    <div class="grid-container">
+                        <div class="card legacy">
+                            <h4>Audio Effects <span class="cn-name">舊版相容</span></h4>
+                            <div class="item-list"><span>包含：</span>Analog Delay, Bandpass, Bass, Chorus, DeEsser, Delay, Dynamics, EQ, Flanger, Highpass, Invert, Lowpass, MultibandCompressor, Notch, Parametric EQ, Phaser, PitchShifter, Reverb, Spectral Noise Reduction, Treble, Volume</div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-    </div>
+        </section>
+    </main>
 
     <script>
-        // 控制手風琴展開/收合的邏輯
-        const accordions = document.querySelectorAll('.accordion-btn');
+        // 控制收合選單 (Accordion) 的 JavaScript
+        const accordions = document.querySelectorAll('.accordion-header');
 
-        accordions.forEach(button => {
-            button.addEventListener('click', function() {
-                // 切換按鈕的 active 狀態 (讓加號變叉叉或旋轉)
+        accordions.forEach(acc => {
+            acc.addEventListener('click', function() {
                 this.classList.toggle('active');
-                
-                // 取得緊接在按鈕後面的內容區塊
                 const content = this.nextElementSibling;
                 
-                // 切換內容的顯示狀態
-                content.classList.toggle('show');
+                if (content.style.display === 'block') {
+                    content.style.display = 'none';
+                } else {
+                    content.style.display = 'block';
+                }
             });
         });
     </script>
