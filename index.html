@@ -6,12 +6,11 @@
     <title>Premiere Pro 特效翻譯字典</title>
     <style>
         :root {
-            /* 白底黑字主題色彩 */
             --bg-main: #ffffff;          
             --text-main: #333333;        
             --sidebar-bg: #f8f9fa;       
-            --primary-color: #6c5ce7;    /* 主題紫藍色 */
-            --primary-light: rgba(108, 92, 231, 0.08); /* 淡淡的紫藍色背景 */
+            --primary-color: #6c5ce7;    
+            --primary-light: rgba(108, 92, 231, 0.08); 
             --border-color: #dee2e6;     
             --table-header: #f1f3f5;     
             --hover-bg: #e9ecef;         
@@ -44,12 +43,10 @@
             font-weight: bold;
             border-bottom: 1px solid var(--border-color);
             background-color: #ffffff;
-            color: var(--primary-color); /* 左上角標題改為紫藍色 */
+            color: var(--primary-color); 
             position: sticky;
             top: 0;
             z-index: 10;
-            
-            /* 防止文字被反白選取 */
             user-select: none;
             -webkit-user-select: none;
         }
@@ -66,8 +63,6 @@
             justify-content: space-between;
             align-items: center;
             transition: background 0.2s;
-            
-            /* 防止文字被反白選取 */
             user-select: none;
             -webkit-user-select: none;
         }
@@ -99,15 +94,12 @@
         }
 
         .sub-menu li {
-            /* 左邊預留 4px 的透明邊框，為了選取狀態做準備 */
             padding: 12px 20px 12px 36px;
             border-left: 4px solid transparent; 
             cursor: pointer;
             font-size: 0.95rem;
             color: #555;
             transition: all 0.2s;
-            
-            /* 防止文字被反白選取 */
             user-select: none;
             -webkit-user-select: none;
         }
@@ -117,7 +109,6 @@
             color: var(--text-main);
         }
 
-        /* 改回精緻的選取狀態：紫字 + 淡紫底 + 左側粗線 */
         .sub-menu li.active {
             background-color: var(--primary-light);
             color: var(--primary-color);
@@ -133,7 +124,6 @@
             background-color: var(--bg-main);
         }
 
-        /* 限制閱讀寬度，提升閱讀體驗 */
         .content-container {
             max-width: 960px;
             margin: 0 auto;
@@ -179,6 +169,12 @@
             margin-bottom: 20px;
         }
 
+        /* 搜尋結果專屬標題顏色 */
+        #search-results h2 {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
         /* 表格設計與欄位比例 */
         table {
             width: 100%;
@@ -200,22 +196,23 @@
             color: #333;
         }
 
-        /* 設定欄位黃金比例 */
         th:nth-child(1), td:nth-child(1) { width: 25%; font-weight: 500; }
         th:nth-child(2), td:nth-child(2) { width: 25%; }
         th:nth-child(3), td:nth-child(3) { width: 50%; line-height: 1.6; color: #444; }
 
-        tr:nth-child(even) {
-            background-color: #fcfcfc;
-        }
+        tr:nth-child(even) { background-color: #fcfcfc; }
+        tr:hover { background-color: #f1f8ff; }
 
-        tr:hover {
-            background-color: #f1f8ff;
-        }
-
-        /* 隱藏無符合結果的表格列 */
-        .hidden-row {
-            display: none !important;
+        /* 找不到結果的提示訊息 */
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+            font-size: 1.1rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border: 1px dashed var(--border-color);
+            display: none;
         }
 
         @keyframes fadeIn {
@@ -252,180 +249,94 @@
         <div class="content-container">
             
             <div class="search-container">
-                <input type="text" id="searchInput" class="search-input" placeholder="🔍 搜尋英文名稱、中文或用途關鍵字...">
+                <input type="text" id="searchInput" class="search-input" placeholder="🔍 全域搜尋：輸入英文、中文或用途關鍵字...">
             </div>
 
-            <div id="vt-3dmotion" class="tab-panel active">
+            <div id="search-results" class="tab-panel">
+                <h2>🔍 搜尋結果</h2>
+                <table id="search-table">
+                    <thead>
+                        <tr>
+                            <th>英文名稱</th>
+                            <th>中文名稱</th>
+                            <th>用途簡述</th>
+                        </tr>
+                    </thead>
+                    <tbody id="search-body">
+                        </tbody>
+                </table>
+                <div id="no-results-msg" class="no-results">
+                    找不到符合「<span id="keyword-display"></span>」的特效，請嘗試其他關鍵字。
+                </div>
+            </div>
+
+            <div id="vt-3dmotion" class="tab-panel category-panel active">
                 <h2>3D Motion (3D 運動)</h2>
                 <table>
-                    <thead>
-                        <tr>
-                            <th>英文名稱</th>
-                            <th>中文名稱</th>
-                            <th>用途簡述</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途簡述</th></tr></thead>
                     <tbody>
-                        <tr>
-                            <td>Cube Spin</td>
-                            <td>立方體旋轉</td>
-                            <td>畫面如同立體方塊般翻轉到下一個片段。</td>
-                        </tr>
-                        <tr>
-                            <td>Flip Over</td>
-                            <td>翻轉</td>
-                            <td>畫面以平面翻轉的方式切換至下一個畫面。</td>
-                        </tr>
+                        <tr><td>Cube Spin</td><td>立方體旋轉</td><td>畫面如同立體方塊般翻轉到下一個片段。</td></tr>
+                        <tr><td>Flip Over</td><td>翻轉</td><td>畫面以平面翻轉的方式切換至下一個畫面。</td></tr>
                     </tbody>
                 </table>
             </div>
 
-            <div id="vt-dissolve" class="tab-panel">
+            <div id="vt-dissolve" class="tab-panel category-panel">
                 <h2>Dissolve (溶解)</h2>
                 <table>
-                    <thead>
-                        <tr>
-                            <th>英文名稱</th>
-                            <th>中文名稱</th>
-                            <th>用途簡述</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途簡述</th></tr></thead>
                     <tbody>
-                        <tr>
-                            <td>Cross Dissolve</td>
-                            <td>交叉溶解</td>
-                            <td>最常用的轉場，前一個畫面漸淡，下一個畫面漸入。</td>
-                        </tr>
-                        <tr>
-                            <td>Dip to Black</td>
-                            <td>浸入黑色</td>
-                            <td>畫面先暗轉至全黑，再亮起進入下一個畫面。</td>
-                        </tr>
-                        <tr>
-                            <td>Dip to White</td>
-                            <td>浸入白色</td>
-                            <td>畫面先亮轉至全白（常搭配閃光音效），再進入下一個畫面。</td>
-                        </tr>
-                        <tr>
-                            <td>Morph Cut</td>
-                            <td>變形剪接</td>
-                            <td>用於訪談畫面，可讓兩段跳剪的畫面平滑過渡，隱藏剪接痕跡。</td>
-                        </tr>
+                        <tr><td>Cross Dissolve</td><td>交叉溶解</td><td>最常用的轉場，前一個畫面漸淡，下一個畫面漸入。</td></tr>
+                        <tr><td>Dip to Black</td><td>浸入黑色</td><td>畫面先暗轉至全黑，再亮起進入下一個畫面。</td></tr>
+                        <tr><td>Dip to White</td><td>浸入白色</td><td>畫面先亮轉至全白（常搭配閃光音效），再進入下一個畫面。</td></tr>
+                        <tr><td>Morph Cut</td><td>變形剪接</td><td>用於訪談畫面，可讓兩段跳剪的畫面平滑過渡，隱藏剪接痕跡。</td></tr>
                     </tbody>
                 </table>
             </div>
 
-            <div id="vt-wipe" class="tab-panel">
+            <div id="vt-wipe" class="tab-panel category-panel">
                 <h2>Wipe (擦除)</h2>
                 <table>
-                    <thead>
-                        <tr>
-                            <th>英文名稱</th>
-                            <th>中文名稱</th>
-                            <th>用途簡述</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途簡述</th></tr></thead>
                     <tbody>
-                        <tr>
-                            <td>Wipe</td>
-                            <td>擦除</td>
-                            <td>畫面由左至右或由上至下直接抹除切換。</td>
-                        </tr>
-                        <tr>
-                            <td>Radial Wipe</td>
-                            <td>放射狀擦除</td>
-                            <td>以時鐘指針旋轉的方式擦除畫面。</td>
-                        </tr>
+                        <tr><td>Wipe</td><td>擦除</td><td>畫面由左至右或由上至下直接抹除切換。</td></tr>
+                        <tr><td>Radial Wipe</td><td>放射狀擦除</td><td>以時鐘指針旋轉的方式擦除畫面。</td></tr>
                     </tbody>
                 </table>
             </div>
 
-            <div id="ve-blur" class="tab-panel">
+            <div id="ve-blur" class="tab-panel category-panel">
                 <h2>Blur & Sharpen (模糊與銳利化)</h2>
                 <table>
-                    <thead>
-                        <tr>
-                            <th>英文名稱</th>
-                            <th>中文名稱</th>
-                            <th>用途簡述</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途簡述</th></tr></thead>
                     <tbody>
-                        <tr>
-                            <td>Gaussian Blur</td>
-                            <td>高斯模糊</td>
-                            <td>最標準的模糊效果，能平滑地將畫面失焦。</td>
-                        </tr>
-                        <tr>
-                            <td>Directional Blur</td>
-                            <td>方向模糊</td>
-                            <td>製造往特定方向的模糊，常用於表現速度感。</td>
-                        </tr>
-                        <tr>
-                            <td>Sharpen</td>
-                            <td>銳利化</td>
-                            <td>強化畫面邊緣細節，讓微模糊的畫面變清晰。</td>
-                        </tr>
+                        <tr><td>Gaussian Blur</td><td>高斯模糊</td><td>最標準的模糊效果，能平滑地將畫面失焦。</td></tr>
+                        <tr><td>Directional Blur</td><td>方向模糊</td><td>製造往特定方向的模糊，常用於表現速度感。</td></tr>
+                        <tr><td>Sharpen</td><td>銳利化</td><td>強化畫面邊緣細節，讓微模糊的畫面變清晰。</td></tr>
                     </tbody>
                 </table>
             </div>
 
-            <div id="ve-color" class="tab-panel">
+            <div id="ve-color" class="tab-panel category-panel">
                 <h2>Color Correction (色彩校正)</h2>
                 <table>
-                    <thead>
-                        <tr>
-                            <th>英文名稱</th>
-                            <th>中文名稱</th>
-                            <th>用途簡述</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途簡述</th></tr></thead>
                     <tbody>
-                        <tr>
-                            <td>Lumetri Color</td>
-                            <td>Lumetri 色彩</td>
-                            <td>PR 最強大的整合式調色工具，支援基礎校正、曲線與色輪。</td>
-                        </tr>
-                        <tr>
-                            <td>Tint</td>
-                            <td>色調</td>
-                            <td>快速將畫面轉換為雙色調（例如黑白或泛黃復古風）。</td>
-                        </tr>
-                        <tr>
-                            <td>Change to Color</td>
-                            <td>變更為色彩</td>
-                            <td>將畫面中特定的顏色替換成另一種顏色。</td>
-                        </tr>
+                        <tr><td>Lumetri Color</td><td>Lumetri 色彩</td><td>PR 最強大的整合式調色工具，支援基礎校正、曲線與色輪。</td></tr>
+                        <tr><td>Tint</td><td>色調</td><td>快速將畫面轉換為雙色調（例如黑白或泛黃復古風）。</td></tr>
+                        <tr><td>Change to Color</td><td>變更為色彩</td><td>將畫面中特定的顏色替換成另一種顏色。</td></tr>
                     </tbody>
                 </table>
             </div>
 
-            <div id="ve-distort" class="tab-panel">
+            <div id="ve-distort" class="tab-panel category-panel">
                 <h2>Distort (扭曲)</h2>
                 <table>
-                    <thead>
-                        <tr>
-                            <th>英文名稱</th>
-                            <th>中文名稱</th>
-                            <th>用途簡述</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途簡述</th></tr></thead>
                     <tbody>
-                        <tr>
-                            <td>Warp Stabilizer</td>
-                            <td>彎曲穩定器</td>
-                            <td>自動計算並消除手持攝影機造成的畫面抖動。</td>
-                        </tr>
-                        <tr>
-                            <td>Transform</td>
-                            <td>變形</td>
-                            <td>包含縮放、旋轉等功能，且支援調整快門角度產生動態模糊。</td>
-                        </tr>
-                        <tr>
-                            <td>Corner Pin</td>
-                            <td>邊角固定</td>
-                            <td>可獨立控制畫面的四個角落，常用於合成螢幕畫面。</td>
-                        </tr>
+                        <tr><td>Warp Stabilizer</td><td>彎曲穩定器</td><td>自動計算並消除手持攝影機造成的畫面抖動。</td></tr>
+                        <tr><td>Transform</td><td>變形</td><td>包含縮放、旋轉等功能，且支援調整快門角度產生動態模糊。</td></tr>
+                        <tr><td>Corner Pin</td><td>邊角固定</td><td>可獨立控制畫面的四個角落，常用於合成螢幕畫面。</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -446,15 +357,21 @@
 
         // 2. 處理小分類點擊與右側內容切換
         const subMenuItems = document.querySelectorAll('.sub-menu li');
-        const tabPanels = document.querySelectorAll('.tab-panel');
+        const allTabPanels = document.querySelectorAll('.tab-panel');
+        const searchInput = document.getElementById('searchInput');
 
         subMenuItems.forEach(item => {
             item.addEventListener('click', () => {
+                // 如果正在搜尋狀態，點擊分類時自動清空搜尋框
+                if(searchInput.value !== '') {
+                    searchInput.value = '';
+                }
+
                 subMenuItems.forEach(li => li.classList.remove('active'));
                 item.classList.add('active');
 
                 const targetId = item.getAttribute('data-target');
-                tabPanels.forEach(panel => panel.classList.remove('active'));
+                allTabPanels.forEach(panel => panel.classList.remove('active'));
                 
                 const targetPanel = document.getElementById(targetId);
                 if (targetPanel) {
@@ -463,24 +380,60 @@
             });
         });
 
-        // 3. 處理搜尋功能
-        const searchInput = document.getElementById('searchInput');
-        const allTableRows = document.querySelectorAll('tbody tr');
+        // 3. 全域搜尋功能邏輯
+        const searchResultsPanel = document.getElementById('search-results');
+        const searchBody = document.getElementById('search-body');
+        const searchTable = document.getElementById('search-table');
+        const noResultsMsg = document.getElementById('no-results-msg');
+        const keywordDisplay = document.getElementById('keyword-display');
+        
+        // 取得所有「原本分類」裡的表格列 (排除搜尋結果本身的表格)
+        const allOriginalRows = document.querySelectorAll('.category-panel tbody tr');
 
         searchInput.addEventListener('input', function() {
             const keyword = this.value.toLowerCase().trim();
 
-            allTableRows.forEach(row => {
-                // 取得整列的文字內容
-                const rowText = row.textContent.toLowerCase();
+            // 如果搜尋框是空的，恢復顯示目前左側選取的分類
+            if (keyword === '') {
+                allTabPanels.forEach(panel => panel.classList.remove('active'));
                 
-                // 如果有包含關鍵字就顯示，沒有就隱藏
+                // 找出左側 active 的項目並顯示
+                const currentActiveMenu = document.querySelector('.sub-menu li.active');
+                if (currentActiveMenu) {
+                    const targetId = currentActiveMenu.getAttribute('data-target');
+                    document.getElementById(targetId).classList.add('active');
+                }
+                return;
+            }
+
+            // 進入搜尋模式：隱藏所有面板，只顯示搜尋面板
+            allTabPanels.forEach(panel => panel.classList.remove('active'));
+            searchResultsPanel.classList.add('active');
+            
+            // 清空先前的搜尋結果
+            searchBody.innerHTML = '';
+            let matchCount = 0;
+
+            // 尋找符合的列並複製到搜尋面板中
+            allOriginalRows.forEach(row => {
+                const rowText = row.textContent.toLowerCase();
                 if (rowText.includes(keyword)) {
-                    row.classList.remove('hidden-row');
-                } else {
-                    row.classList.add('hidden-row');
+                    // 複製這個 tr 節點並塞進搜尋結果的 tbody 裡
+                    const clonedRow = row.cloneNode(true);
+                    searchBody.appendChild(clonedRow);
+                    matchCount++;
                 }
             });
+
+            // 處理「有結果」與「找不到結果」的顯示切換
+            if (matchCount > 0) {
+                searchTable.style.display = 'table';
+                noResultsMsg.style.display = 'none';
+            } else {
+                searchTable.style.display = 'none';
+                keywordDisplay.textContent = this.value;
+                noResultsMsg.style.display = 'block';
+            }
         });
     </script>
 </body>
