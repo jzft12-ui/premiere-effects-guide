@@ -1,517 +1,350 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Premiere 特效與轉場字典 - 影片轉場篇</title>
-  <style>
-    /* 核心變數設定 */
-    :root {
-      --bg-color: #f3f4f6;
-      --sidebar-bg: #ffffff;
-      --card-bg: #ffffff;
-      --text-main: #1f2937;
-      --text-muted: #6b7280;
-      --primary-color: #4f46e5;
-      --primary-light: #e0e7ff;
-      --border-color: #e5e7eb;
-      --highlight-bg: #fef08a;
-      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premiere Pro Effects 效果字典</title>
+    <style>
+        /* CSS 基礎重置與變數設定 */
+        :root {
+            --bg-color: #181818;
+            --surface-color: #252526;
+            --surface-hover: #2d2d30;
+            --text-primary: #e0e0e0;
+            --text-secondary: #9e9e9e;
+            --accent-color: #3daee9; /* 類似 Premiere 的焦點藍色 */
+            --accent-purple: #b661ff;
+            --warning-color: #e2a85c;
+            --border-color: #3e3e42;
+        }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-main);
-      display: flex;
-      height: 100vh;
-      overflow: hidden;
-      line-height: 1.6;
-    }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
 
-    /* 左側導覽列 Sidebar */
-    .sidebar {
-      width: 280px;
-      background-color: var(--sidebar-bg);
-      border-right: 1px solid var(--border-color);
-      display: flex;
-      flex-direction: column;
-      flex-shrink: 0;
-      overflow-y: auto;
-    }
+        /* 頂部導覽列 */
+        header {
+            background-color: #111111;
+            padding: 15px 30px;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-    .sidebar-header {
-      padding: 1.5rem;
-      border-bottom: 1px solid var(--border-color);
-      position: sticky;
-      top: 0;
-      background: var(--sidebar-bg);
-      z-index: 10;
-    }
+        header h1 {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: 1px;
+        }
 
-    .sidebar-header h1 {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--primary-color);
-    }
+        /* 主要內容區塊 */
+        main {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
 
-    .nav-content { padding: 1rem 0; }
-    .nav-group { margin-bottom: 1.5rem; }
-    .nav-group-title {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-muted);
-      font-weight: 700;
-      padding: 0 1.5rem;
-      margin-bottom: 0.5rem;
-    }
-    .nav-item {
-      display: block;
-      padding: 0.4rem 1.5rem 0.4rem 2rem;
-      color: var(--text-main);
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: all 0.2s;
-      border-left: 3px solid transparent;
-    }
-    .nav-item:hover { background-color: var(--bg-color); color: var(--primary-color); }
-    .nav-item.active {
-      background-color: var(--primary-light);
-      color: var(--primary-color);
-      border-left-color: var(--primary-color);
-      font-weight: 500;
-    }
+        /* 大區塊標題 (例如：視訊處理、音訊處理) */
+        .tier-section {
+            margin-bottom: 50px;
+        }
 
-    /* 右側主內容區 Main Content */
-    .main-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        .tier-title {
+            font-size: 1.5rem;
+            color: var(--accent-purple);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-    /* 頂部搜尋列 Search Bar */
-    .top-bar {
-      background-color: var(--card-bg);
-      padding: 1rem 2rem;
-      border-bottom: 1px solid var(--border-color);
-      display: flex;
-      align-items: center;
-      box-shadow: var(--shadow-sm);
-      z-index: 10;
-    }
-    .search-wrapper { position: relative; width: 100%; max-width: 600px; }
-    .search-input {
-      width: 100%; padding: 0.75rem 1rem 0.75rem 2.5rem; font-size: 1rem;
-      border: 1px solid var(--border-color); border-radius: 8px;
-      background-color: var(--bg-color); transition: all 0.3s;
-    }
-    .search-input:focus {
-      outline: none; border-color: var(--primary-color); background-color: var(--card-bg);
-      box-shadow: 0 0 0 3px var(--primary-light);
-    }
-    .search-icon { position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+        /* 收合選單 (Accordion) 樣式 */
+        .accordion {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
 
-    /* 內容捲動區 Content Scroll */
-    .content-scroll { flex: 1; overflow-y: auto; padding: 2rem; scroll-behavior: smooth; }
-    .content-container { max-width: 900px; margin: 0 auto; }
+        .accordion-header {
+            padding: 18px 20px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--surface-color);
+            transition: background-color 0.2s ease;
+        }
 
-    /* 卡片設計 Card UI */
-    .section-card {
-      background-color: var(--card-bg); border-radius: 12px; padding: 2rem; margin-bottom: 2rem;
-      box-shadow: var(--shadow-sm); border: 1px solid var(--border-color);
-    }
-    .section-card h2 {
-      font-size: 1.5rem; color: var(--text-main); margin-bottom: 0.5rem;
-      border-bottom: 2px solid var(--primary-light); padding-bottom: 0.5rem; display: inline-block;
-    }
-    .section-card p { color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .accordion-header:hover {
+            background-color: var(--surface-hover);
+        }
 
-    /* 表格設計 Clean Table */
-    table { width: 100%; border-collapse: collapse; text-align: left; }
-    th { font-weight: 600; color: var(--text-muted); padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-color); background-color: #f9fafb; }
-    td { padding: 1rem; border-bottom: 1px solid var(--border-color); vertical-align: top; }
-    tr:last-child td { border-bottom: none; }
-    tr:hover td { background-color: #f9fafb; }
-    .col-en { width: 30%; font-weight: 500; color: var(--text-main); }
-    .col-zh { width: 25%; color: var(--text-muted); }
-    .col-desc { width: 45%; }
+        .accordion-header.active {
+            border-bottom: 1px solid var(--border-color);
+            color: var(--accent-color);
+        }
 
-    /* 搜尋高亮與隱藏 */
-    mark { background-color: var(--highlight-bg); color: var(--text-main); padding: 0 2px; border-radius: 2px; }
-    .is-hidden { display: none !important; }
-    .no-result { text-align: center; padding: 3rem; color: var(--text-muted); display: none; }
-    .no-result.show { display: block; }
+        .icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
 
-    /* 手機版響應式 */
-    @media (max-width: 768px) {
-      body { flex-direction: column; }
-      .sidebar { width: 100%; height: auto; max-height: 35vh; border-right: none; border-bottom: 1px solid var(--border-color); }
-      .top-bar { padding: 1rem; }
-      .content-scroll { padding: 1rem; }
-      .section-card { padding: 1.5rem; }
-      table, thead, tbody, th, td, tr { display: block; }
-      th { display: none; }
-      td { padding: 0.5rem 0; border: none; width: 100% !important; }
-      td.col-en { font-size: 1.1rem; color: var(--primary-color); padding-top: 1rem; }
-      td.col-zh { font-size: 0.9rem; font-weight: bold; }
-      td.col-desc { padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
-      tr:last-child td.col-desc { border-bottom: none; }
-    }
-  </style>
+        .active .icon {
+            transform: rotate(45deg);
+        }
+
+        /* 內部網格與卡片設計 */
+        .accordion-content {
+            padding: 20px;
+            display: none; /* 預設隱藏，由 JS 控制 */
+            background-color: #1e1e1e;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--surface-color);
+            padding: 15px 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--border-color);
+            transition: border-color 0.2s ease;
+        }
+
+        .card:hover {
+            border-left-color: var(--accent-color);
+        }
+
+        .card h4 {
+            margin: 0 0 8px 0;
+            font-size: 1.05rem;
+            color: var(--text-primary);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .card .cn-name {
+            color: var(--accent-color);
+            font-size: 0.9rem;
+        }
+
+        .card p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* 警告標籤 (Legacy 專用) */
+        .warning-badge {
+            display: inline-block;
+            background-color: rgba(226, 168, 92, 0.1);
+            color: var(--warning-color);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+            border: 1px solid rgba(226, 168, 92, 0.3);
+        }
+
+        .card.legacy:hover {
+            border-left-color: var(--warning-color);
+        }
+
+        /* 手機版適應 */
+        @media (max-width: 600px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
 
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <h1>特效字典：影片轉場</h1>
-    </div>
-    <div class="nav-content">
-      <div class="nav-group">
-        <div class="nav-group-title">Video Transitions</div>
-        <a href="#animation" class="nav-item">Animation (動態)</a>
-        <a href="#dissolve" class="nav-item">Dissolve (溶解)</a>
-        <a href="#grunge-distort" class="nav-item">Grunge & Distort (破壞)</a>
-        <a href="#immersive" class="nav-item">Immersive Video (VR)</a>
-        <a href="#lights-blurs" class="nav-item">Lights & Blurs (光影)</a>
-        <a href="#slide" class="nav-item">Slide (滑動)</a>
-        <a href="#smart-tools" class="nav-item">Smart Tools (智慧工具)</a>
-        <a href="#text" class="nav-item">Text (文字)</a>
-        <a href="#transformers" class="nav-item">Transformers (變形)</a>
-        <a href="#wipe" class="nav-item">Wipe (擦除)</a>
-      </div>
-    </div>
-  </aside>
-
-  <main class="main-area">
-    <header class="top-bar">
-      <div class="search-wrapper">
-        <span class="search-icon">🔍</span>
-        <input type="text" id="searchInput" class="search-input" placeholder="搜尋轉場名稱或用途 (例: Cross, 模糊, 閃爍...)">
-      </div>
+    <header>
+        <h1>Premiere Pro Effects</h1>
     </header>
 
-    <div class="content-scroll" id="contentScroll">
-      <div class="content-container">
-        <div id="noResult" class="no-result">
-          <h2>找不到相關轉場 😢</h2>
-          <p>請嘗試更換關鍵字，或檢查拼字是否正確。</p>
-        </div>
+    <main>
+        <section class="tier-section">
+            <h2 class="tier-title">🎬 視覺處理 (Video)</h2>
 
-        <div class="section-card" id="animation">
-          <h2>Animation 動畫轉場</h2>
-          <p>帶有物理運動感（如彈跳、翻轉、旋轉）的基礎形體切換，適合活潑的影片節奏。</p>
-          <table>
-            <thead><tr><th class="col-en">英文名稱</th><th class="col-zh">中文名稱</th><th class="col-desc">用途簡述</th></tr></thead>
-            <tbody>
-              <tr><td class="col-en">Block Motion</td><td class="col-zh">方塊運動</td><td class="col-desc">將畫面分割成方塊區塊並移動切換。</td></tr>
-              <tr><td class="col-en">Flip Motion</td><td class="col-zh">翻轉運動</td><td class="col-desc">像翻撲克牌一樣，將整個畫面翻轉到下一幕。</td></tr>
-              <tr><td class="col-en">Fold Motion</td><td class="col-zh">摺疊運動</td><td class="col-desc">將畫面像紙張一樣立體摺疊收合。</td></tr>
-              <tr><td class="col-en">Pop Motion</td><td class="col-zh">彈出運動</td><td class="col-desc">畫面帶有「ㄉㄨㄞ ㄉㄨㄞ」彈性的放大或縮小切換。</td></tr>
-              <tr><td class="col-en">Pull Motion</td><td class="col-zh">拉出運動</td><td class="col-desc">將當前的畫面往後方（Z軸）迅速拉遠退出。</td></tr>
-              <tr><td class="col-en">Spin Motion</td><td class="col-zh">旋轉運動</td><td class="col-desc">畫面像飛盤一樣旋轉飛出或飛入。</td></tr>
-              <tr><td class="col-en">Spring Motion</td><td class="col-zh">彈簧運動</td><td class="col-desc">帶有強烈彈簧物理阻尼感的動態轉場。</td></tr>
-              <tr><td class="col-en">Travel Motion</td><td class="col-zh">穿梭運動</td><td class="col-desc">模擬鏡頭快速往前推移的空間穿梭感。</td></tr>
-            </tbody>
-          </table>
-        </div>
+            <div class="accordion">
+                <div class="accordion-header">Video Transitions (影片轉場) <span class="icon">+</span></div>
+                <div class="accordion-content">
+                    <p style="margin-top:0; color:var(--text-secondary); font-size:0.9rem;">用於兩個影片片段交接處的過渡效果。</p>
+                    <div class="grid-container">
+                        <div class="card">
+                            <h4>Dissolve <span class="cn-name">溶解</span></h4>
+                            <p>最常用的轉場。包含 Cross Dissolve (交叉溶解)，讓前一個畫面平滑淡出、下一個畫面淡入。</p>
+                        </div>
+                        <div class="card">
+                            <h4>Wipe <span class="cn-name">擦除</span></h4>
+                            <p>利用形狀或線條將畫面抹除並替換。包含 Band Wipe (帶狀擦除)、Center Split (中央分割) 等。</p>
+                        </div>
+                        <div class="card">
+                            <h4>Slide / Zoom <span class="cn-name">滑動 / 縮放</span></h4>
+                            <p>利用物理推移、滑入或畫面推近/拉遠來進行場景切換。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        <div class="section-card" id="dissolve">
-          <h2>Dissolve 溶解轉場</h2>
-          <p>最自然平滑的漸變過渡方式，用於時間流逝、情緒轉換或無縫銜接。</p>
-          <table>
-            <thead><tr><th class="col-en">英文名稱</th><th class="col-zh">中文名稱</th><th class="col-desc">用途簡述</th></tr></thead>
-            <tbody>
-              <tr><td class="col-en">Additive Dissolve</td><td class="col-zh">相加溶解</td><td class="col-desc">交疊時色彩亮度會相加，產生輕微發亮的漸變效果。</td></tr>
-              <tr><td class="col-en">Blur Dissolve</td><td class="col-zh">模糊溶解</td><td class="col-desc">伴隨畫面變模糊的交叉漸變。</td></tr>
-              <tr><td class="col-en">Burn Alpha</td><td class="col-zh">Alpha 燃燒</td><td class="col-desc">針對具有透明度(Alpha)的物件邊緣產生燃燒消退感。</td></tr>
-              <tr><td class="col-en">Cross Dissolve</td><td class="col-zh">交叉溶解</td><td class="col-desc">⭐ 最萬用的標準漸變。前畫面淡出同時後畫面淡入。</td></tr>
-              <tr><td class="col-en">Dip to Black</td><td class="col-zh">變黑</td><td class="col-desc">⭐ 畫面先暗轉至全黑，再亮起。適合段落、章節結束。</td></tr>
-              <tr><td class="col-en">Dip to Color</td><td class="col-zh">變色</td><td class="col-desc">畫面漸變到自訂的純色（如藍色、紅色），再進入下個畫面。</td></tr>
-              <tr><td class="col-en">Dip to White</td><td class="col-zh">變白</td><td class="col-desc">⭐ 畫面閃白過渡。適合夢境、回憶或強烈閃光情境。</td></tr>
-              <tr><td class="col-en">Film Dissolve</td><td class="col-zh">底片溶解</td><td class="col-desc">模擬真實底片感光特性的漸變，較具有電影質感。</td></tr>
-              <tr><td class="col-en">Luma Fade</td><td class="col-zh">亮度淡入淡出</td><td class="col-desc">根據畫面的亮暗部來決定漸變的順序。</td></tr>
-              <tr><td class="col-en">Morph Cut</td><td class="col-zh">變形剪接</td><td class="col-desc">⭐ 人物訪談救星。AI 自動補幀修飾同一個人的說話跳剪。</td></tr>
-              <tr><td class="col-en">Mosaic</td><td class="col-zh">馬賽克</td><td class="col-desc">畫面變成大塊馬賽克像素後切換。</td></tr>
-            </tbody>
-          </table>
-        </div>
+            <div class="accordion">
+                <div class="accordion-header">Video Effects (影片效果) <span class="icon">+</span></div>
+                <div class="accordion-content">
+                    <p style="margin-top:0; color:var(--text-secondary); font-size:0.9rem;">改變畫面物理狀態或運算邏輯的核心工具 (共 16 大類)。</p>
+                    <div class="grid-container">
+                        <div class="card"><h4>Adjust <span class="cn-name">調整</span></h4><p>控制畫面的基本亮度、對比度與光照情況 (如色階、光照效果)。</p></div>
+                        <div class="card"><h4>Blur & Sharpen <span class="cn-name">模糊與銳利化</span></h4><p>改變畫面的清晰度，製造景深、動態模糊或提升細節銳利度。</p></div>
+                        <div class="card"><h4>Channel <span class="cn-name">色版 (通道)</span></h4><p>針對影片的 RGB 色彩或 Alpha (透明度) 通道進行混合或反轉。</p></div>
+                        <div class="card"><h4>Color Correction <span class="cn-name">色彩校正</span></h4><p>調整影片的色彩基調、修正色偏，包含最強大的 Lumetri Color。</p></div>
+                        <div class="card"><h4>Distort <span class="cn-name">扭曲</span></h4><p>改變畫面幾何形狀 (如波浪、放大鏡)，或修復果凍效應、穩定晃動畫面。</p></div>
+                        <div class="card"><h4>Generate <span class="cn-name">產生</span></h4><p>在畫面上直接「無中生有」創造出圖形，例如漸層、鏡頭光暈、閃電。</p></div>
+                        <div class="card"><h4>Image Control <span class="cn-name">影像控制</span></h4><p>基礎色彩控制工具，常用於快速轉成黑白或替換特定顏色。</p></div>
+                        <div class="card"><h4>Immersive Video <span class="cn-name">沉浸式影片</span></h4><p>專為 VR 360 度環景影片設計的視覺特效與視角處理。</p></div>
+                        <div class="card"><h4>Keying <span class="cn-name">去背 (鍵控)</span></h4><p>處理綠幕、藍幕或亮度去背的核心工具 (包含 Ultra Key)。</p></div>
+                        <div class="card"><h4>Noise & Grain <span class="cn-name">雜訊與顆粒</span></h4><p>為畫面添加電影膠卷的顆粒感，或進行畫面的平滑與降噪。</p></div>
+                        <div class="card"><h4>Obsolete <span class="cn-name">已淘汰</span></h4><p>為了相容舊專案而保留的過時特效，官方不建議在新專案使用。</p></div>
+                        <div class="card"><h4>Perspective <span class="cn-name">透視</span></h4><p>建立畫面立體感與空間關係的特效，例如常用來做物件陰影的 Drop Shadow。</p></div>
+                        <div class="card"><h4>Stylize <span class="cn-name">風格化</span></h4><p>賦予畫面強烈的藝術風格，例如馬賽克、浮雕或粗糙邊緣。</p></div>
+                        <div class="card"><h4>Time <span class="cn-name">時間</span></h4><p>製作時間殘影或改變視覺幀率 (如定格動畫感的 Posterize Time)。</p></div>
+                        <div class="card"><h4>Transform <span class="cn-name">變形</span></h4><p>針對畫面的物理裁切與鏡像翻轉，例如常用的 Crop (裁切)。</p></div>
+                        <div class="card"><h4>Utility <span class="cn-name">實用工具</span></h4><p>色彩與運算輔助工具，例如 Cineon 轉換器。</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <div class="section-card" id="grunge-distort">
-          <h2>Grunge & Distort 破壞與扭曲</h2>
-          <p>製造畫面故障、雜訊、震動或髒污感，非常適合科技感、恐怖或強烈節奏的影片。</p>
-          <table>
-            <thead><tr><th class="col-en">英文名稱</th><th class="col-zh">中文名稱</th><th class="col-desc">用途簡述</th></tr></thead>
-            <tbody>
-              <tr><td class="col-en">Chaos</td><td class="col-zh">混亂</td><td class="col-desc">強烈且無規則的畫面錯位與閃爍。</td></tr>
-              <tr><td class="col-en">Earthquake</td><td class="col-zh">地震</td><td class="col-desc">模擬攝影機受到強烈撞擊或地震的劇烈搖晃。</td></tr>
-              <tr><td class="col-en">Flicker</td><td class="col-zh">閃爍</td><td class="col-desc">畫面快速閃動（亮/暗或穿插）來進行切換。</td></tr>
-              <tr><td class="col-en">Glass</td><td class="col-zh">玻璃</td><td class="col-desc">畫面如同隔著不規則的厚玻璃產生折射扭曲。</td></tr>
-              <tr><td class="col-en">Glitch</td><td class="col-zh">故障/數位雜訊</td><td class="col-desc">⭐ 極度熱門！模擬電視訊號不良、色彩錯位的賽博龐克感。</td></tr>
-              <tr><td class="col-en">Grunge</td><td class="col-zh">髒污斑駁</td><td class="col-desc">畫面出現老舊刮痕、污漬的破壞感。</td></tr>
-              <tr><td class="col-en">Kaleidoscope</td><td class="col-zh">萬花筒</td><td class="col-desc">將畫面切割成對稱的多邊形並旋轉。</td></tr>
-              <tr><td class="col-en">Liquid Distortion</td><td class="col-zh">液體扭曲</td><td class="col-desc">畫面像水波紋或融化一樣流動變形。</td></tr>
-              <tr><td class="col-en">TV Power</td><td class="col-zh">電視開關</td><td class="col-desc">模擬早期 CRT 老電視機關機時畫面縮成一條白線的效果。</td></tr>
-              <tr><td class="col-en">VHS Damage</td><td class="col-zh">錄影帶損壞</td><td class="col-desc">模擬 80 年代 VCR 錄影帶的磁軌損壞與橫向雜訊。</td></tr>
-            </tbody>
-          </table>
-        </div>
+        <section class="tier-section">
+            <h2 class="tier-title" style="color: #4CAF50;">🎧 聽覺處理 (Audio)</h2>
 
-        <div class="section-card" id="immersive">
-          <h2>Immersive Video 沉浸式 (VR 360)</h2>
-          <p>專為 VR 360 度環景影片設計的轉場，避免在球體觀看時接縫處產生破綻。（一般影片較少使用）</p>
-          <table>
-            <thead><tr><th class="col-en">英文名稱</th><th class="col-zh">中文名稱</th><th class="col-desc">用途簡述</th></tr></thead>
-            <tbody>
-              <tr><td class="col-en">VR Chroma Leaks</td><td class="col-zh">VR 色彩漏光</td><td class="col-desc">VR 專用的色塊漏光轉場。</td></tr>
-              <tr><td class="col-en">VR Gradient Wipe</td><td class="col-zh">VR 漸層擦除</td><td class="col-desc">VR 專用的漸層過渡。</td></tr>
-              <tr><td class="col-en">VR Iris Wipe</td><td class="col-zh">VR 圓形擦除</td><td class="col-desc">VR 專用的圓孔縮放轉場。</td></tr>
-              <tr><td class="col-en">VR Light Leaks</td><td class="col-zh">VR 漏光</td><td class="col-desc">VR 專用的底片漏光效果。</td></tr>
-              <tr><td class="col-en">VR Light Rays</td><td class="col-zh">VR 光芒</td><td class="col-desc">VR 專用的強烈放射光線過渡。</td></tr>
-              <tr><td class="col-en">VR Mobius Zoom</td><td class="col-zh">VR 莫比烏斯縮放</td><td class="col-desc">VR 專用的無盡空間縮放錯覺轉場。</td></tr>
-              <tr><td class="col-en">VR Random Blocks</td><td class="col-zh">VR 隨機方塊</td><td class="col-desc">VR 專用的方塊解體轉場。</td></tr>
-              <tr><td class="col-en">VR Spherical Blur</td><td class="col-zh">VR 球面模糊</td><td class="col-desc">VR 專用的全方位模糊過渡。</td></tr>
-            </tbody>
-          </table>
-        </div>
+            <div class="accordion">
+                <div class="accordion-header">Audio Transitions (音訊轉場) <span class="icon">+</span></div>
+                <div class="accordion-content">
+                    <div class="grid-container">
+                        <div class="card">
+                            <h4>Crossfade <span class="cn-name">交叉淡化</span></h4>
+                            <p>包含恆定增益、指數淡化，以及<b>最平滑常用的「Constant Power (恆定功率)」</b>，確保兩段音訊過渡時音量能量一致。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        <div class="section-card" id="lights-blurs">
-          <h2>Lights & Blurs 光效與模糊</h2>
-          <p>利用強光、漏光或攝影機鏡頭的模糊動態來做切換，是 YouTuber 與 VLOG 最愛用的現代分類。</p>
-          <table>
-            <thead><tr><th class="col-en">英文名稱</th><th class="col-zh">中文名稱</th><th class="col-desc">用途簡述</th></tr></thead>
-            <tbody>
-              <tr><td class="col-en">Burn Chroma</td><td class="col-zh">色度燃燒</td><td class="col-desc">顏色過曝並產生色塊分離的燃燒感。</td></tr>
-              <tr><td class="col-en">Chroma Leak</td><td class="col-zh">色度漏光</td><td class="col-desc">色彩偏移且帶有漏光的切換。</td></tr>
-              <tr><td class="col-en">Cross Zoom</td><td class="col-zh">交叉縮放 (推拉)</td><td class="col-desc">⭐ 極受歡迎！第一幕往前衝刺放大，第二幕從後方拉遠出現。</td></tr>
-              <tr><td class="col-en">Directional Blur</td><td class="col-zh">方向模糊</td><td class="col-desc">往單一方向拉出模糊線條的動感切換。</td></tr>
-              <tr><td class="col-en">Flare</td><td class="col-zh">耀光</td><td class="col-desc">模擬鏡頭對著太陽產生的強烈光斑。</td></tr>
-              <tr><td class="col-en">Flash</td><td class="col-zh">閃光</td><td class="col-desc">快速的純白閃光（類似相機閃光燈）。</td></tr>
-              <tr><td class="col-en">Glow</td><td class="col-zh">發光</td><td class="col-desc">畫面亮部發出柔和光暈直到畫面全白交替。</td></tr>
-              <tr><td class="col-en">Lens Blur</td><td class="col-zh">鏡頭模糊</td><td class="col-desc">模擬真實單眼相機失焦（產生光點散景）的唯美過渡。</td></tr>
-              <tr><td class="col-en">Light Leak</td><td class="col-zh">漏光</td><td class="col-desc">⭐ 常見於旅遊影片，模擬底片機邊緣走光的橘紅色光影。</td></tr>
-              <tr><td class="col-en">Light Sweep</td><td class="col-zh">掃光</td><td class="col-desc">一道光束從畫面一端掃到另一端。</td></tr>
-              <tr><td class="col-en">Phosphor</td><td class="col-zh">螢光</td><td class="col-desc">帶有復古陰極射線管的綠/藍色殘影發光。</td></tr>
-              <tr><td class="col-en">Radial Blur</td><td class="col-zh">放射模糊</td><td class="col-desc">畫面從中心點向外拉扯模糊。</td></tr>
-              <tr><td class="col-en">Ray</td><td class="col-zh">光芒/射線</td><td class="col-desc">畫面主體向外射出強烈的光線。</td></tr>
-              <tr><td class="col-en">Solarize</td><td class="col-zh">過度曝光 (負片)</td><td class="col-desc">畫面色彩反轉，產生類似底片負片的高對比效果。</td></tr>
-              <tr><td class="col-en">Stripe</td><td class="col-zh">條紋光</td><td class="col-desc">產生細長條紋狀的光影過渡。</td></tr>
-              <tr><td class="col-en">Zoom Blur</td><td class="col-zh">縮放模糊</td><td class="col-desc">伴隨前後縮放的動態模糊。</td></tr>
-            </tbody>
-          </table>
-        </div>
+            <div class="accordion">
+                <div class="accordion-header">Audio Effects (音訊效果) <span class="icon">+</span></div>
+                <div class="accordion-content">
+                    <p style="margin-top:0; color:var(--text-secondary); font-size:0.9rem;">修飾聲音頻率、空間感與音量的專業工具。</p>
+                    <div class="grid-container">
+                        <div class="card"><h4>Amplitude / Compression <span class="cn-name">振幅與壓縮</span></h4><p>控制整體音量動態，避免爆音，或讓大聲與小聲的差距縮小。</p></div>
+                        <div class="card"><h4>Delay and Echo <span class="cn-name">延遲與回音</span></h4><p>產生聲音重複出現的空間效果，模擬特定的實體反射環境。</p></div>
+                        <div class="card"><h4>Filter and EQ <span class="cn-name">濾波與等化器</span></h4><p>調整高低音頻率分佈。切除低頻雜音、提升人聲清晰度的最關鍵工具。</p></div>
+                        <div class="card"><h4>Modulation <span class="cn-name">調變</span></h4><p>改變相位或振幅創造特殊效果 (和聲、迷幻音效)。</p></div>
+                        <div class="card"><h4>Noise Reduction <span class="cn-name">降噪與修復</span></h4><p>拯救瑕疵錄音，去除背景白噪音或消除惱人的電流干擾。</p></div>
+                        <div class="card"><h4>Reverb <span class="cn-name">殘響</span></h4><p>模擬聲音在實體空間 (如大廳、小房間) 中碰到牆壁的尾音反射感。</p></div>
+                        <div class="card"><h4>Special <span class="cn-name">特殊效果</span></h4><p>提供破音失真、吉他音箱模擬或強化人聲頻率的專門工具。</p></div>
+                        <div class="card"><h4>Stereo Imagery <span class="cn-name">立體聲意象</span></h4><p>控制聲音在左右聲道的分佈與空間寬度，或調整左右耳平衡。</p></div>
+                        <div class="card"><h4>Time and Pitch <span class="cn-name">時間與音高</span></h4><p>不改變速度改變音調 (變聲)，或修正因調整速度而走音的人聲。</p></div>
+                    </div>
+                    
+                    <h4 style="color:var(--text-primary); margin: 25px 0 10px 0; border-top: 1px solid var(--border-color); padding-top: 15px;">獨立快捷音效 (Standalone)</h4>
+                    <div class="grid-container">
+                        <div class="card"><h4>DeNoise / DeReverb <span class="cn-name">快速降噪 / 去殘響</span></h4><p>直接套用於音軌，一鍵減少背景白噪音與空曠房間的反射迴音。</p></div>
+                        <div class="card"><h4>Volume / Mute <span class="cn-name">音量 / 靜音</span></h4><p>最基礎的音量大小控制與完全靜音切換。</p></div>
+                        <div class="card"><h4>PitchShifter <span class="cn-name">音高位移器</span></h4><p>快速將聲音變高或變低的單一工具。</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <div class="section-card" id="slide">
-          <h2>Slide 滑動與推擠</h2>
-          <p>畫面透過 X 軸或 Y 軸的實體位移，將舊畫面推開，帶入新畫面。</p>
-          <table>
-            <thead><tr><th class="col-en">英文名稱</th><th class="col-zh">中文名稱</th><th class="col-desc">用途簡述</th></tr></thead>
-            <tbody>
-              <tr><td class="col-en">3D Roll</td><td class="col-zh">3D 滾動</td><td class="col-desc">畫面像立體方塊一樣翻滾切換。</td></tr>
-              <tr><td class="col-en">Film Roll</td><td class="col-zh">底片滾動</td><td class="col-desc">模擬電影膠卷上下捲動失步的視覺效果。</td></tr>
-              <tr><td class="col-en">Push</td><td class="col-zh">推入</td><td class="col-desc">新畫面從側邊把舊畫面「硬擠」出去（PPT 常見）。</td></tr>
-              <tr><td class="col-en">Roll</td><td class="col-zh">滾動</td><td class="col-desc">畫面以平面的方式連續往上或往旁捲動。</td></tr>
-              <tr><td class="col-en">Split</td><td class="col-zh">分割</td><td class="col-desc">畫面從中間裂開（像開門一樣），露出底下的新畫面。</td></tr>
-              <tr><td class="col-en">Stretch</td><td class="col-zh">拉伸</td><td class="col-desc">將畫面邊緣極度拉長延伸到下一幕。</td></tr>
-              <tr><td class="col-en">Whip</td><td class="col-zh">甩動 (快速滑動)</td><td class="col-desc">⭐ 帶有強烈動態模糊的極快速橫向或直向滑動（甩鏡頭）。</td></tr>
-            </tbody>
-          </table>
-        </div>
+        <section class="tier-section">
+            <h2 class="tier-title" style="color: #ffca28;">🎨 進階套用 (Presets & Color)</h2>
 
-        <div class="section-card" id="smart-tools">
-          <h2>Smart Tools 智慧工具</h2>
-          <p>針對特定圖形或運鏡補間的智慧型控制轉場。</p>
-          <table>
-            <thead><tr><th class="col-en">英文名稱</th><th class="col-zh">中文名稱</th><th class="col-desc">用途簡述</th></tr></thead>
-            <tbody>
-              <tr><td class="col-en">Motion Camera</td><td class="col-zh">動態攝影機</td><td class="col-desc">模擬手持攝影機在空間中移動尋找下個畫面的運鏡感。</td></tr>
-              <tr><td class="col-en">Motion Tween</td><td class="col-zh">動態補間</td><td class="col-desc">平滑地連接兩個具有不同位置或大小的畫面。</td></tr>
-              <tr><td class="col-en">Shape Flow</td><td class="col-zh">形狀流動</td><td class="col-desc">利用幾何圖形（如圓形、方形）的擴張來進行切換。</td></tr>
-            </tbody>
-          </table>
-        </div>
+            <div class="accordion">
+                <div class="accordion-header">Lumetri Presets (調色預設) <span class="icon">+</span></div>
+                <div class="accordion-content">
+                    <p style="margin-top:0; color:var(--text-secondary); font-size:0.9rem;">官方內建的色彩濾鏡 (LUTs)，直接套用改變畫面風格。</p>
+                    <div class="grid-container">
+                        <div class="card"><h4>Cinematic <span class="cn-name">電影感</span></h4><p>模擬好萊塢電影常用調色 (如青橙色調)，增強畫面戲劇張力。</p></div>
+                        <div class="card"><h4>Filmstocks <span class="cn-name">底片模擬</span></h4><p>模仿經典類比底片 (Kodak, Fujifilm) 的色彩科學與復古對比。</p></div>
+                        <div class="card"><h4>Monochrome <span class="cn-name">單色 (黑白)</span></h4><p>提供多種對比度與亮度的黑白濾鏡，突顯畫面光影。</p></div>
+                        <div class="card"><h4>SpeedLooks / Style <span class="cn-name">專業預設 / 風格化</span></h4><p>極具質感的電影級色彩風格與極端藝術感濾鏡。</p></div>
+                        <div class="card"><h4>Technical <span class="cn-name">技術性校正</span></h4><p>色彩空間轉換。將灰白的 Log 檔快速還原成標準色彩。</p></div>
+                    </div>
+                </div>
+            </div>
 
-        <div class="section-card" id="text">
-          <h2>Text 文字專用</h2>
-          <p>專門套用在文字圖層上的動態效果（如果套在一般影片上可能會產生裁切）。</p>
-          <table>
-            <thead><tr><th class="col-en">英文名稱</th><th class="col-zh">中文名稱</th><th class="col-desc">用途簡述</th></tr></thead>
-            <tbody>
-              <tr><td class="col-en">Text Animator</td><td class="col-zh">文字動畫</td><td class="col-desc">讓字元一個一個飛入、彈跳或淡入的預設動畫。</td></tr>
-              <tr><td class="col-en">Typewriter</td><td class="col-zh">打字機</td><td class="col-desc">模擬鍵盤打字，文字逐字出現的效果。</td></tr>
-            </tbody>
-          </table>
-        </div>
+            <div class="accordion">
+                <div class="accordion-header">Presets (官方預設集) <span class="icon">+</span></div>
+                <div class="accordion-content">
+                    <p style="margin-top:0; color:var(--text-secondary); font-size:0.9rem;">預先綁好關鍵影格的現成動畫或修正檔，拉入即可使用。</p>
+                    <div class="grid-container">
+                        <div class="card" style="border-left-color: #ffca28;">
+                            <h4>Lens Distortion Removal <span class="cn-name">鏡頭變形校正 (推薦)</span></h4>
+                            <p><b>極具實用價值！</b>內建各大廠牌 (GoPro, DJI) 的校正檔，一套用即可將空拍機或運動相機的「魚眼膨脹」拉平修正。</p>
+                        </div>
+                        <div class="card">
+                            <h4>Lazy Tools <span class="cn-name">基礎快捷預設</span></h4>
+                            <p>包含 PiPs (畫中畫縮放)、自動淡入淡出、馬賽克動態等。適合初學者快速套用，省去手動拉關鍵影格的時間。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <div class="section-card" id="transformers">
-          <h2>Transformers 變形與切割</h2>
-          <p>將畫面進行物理性的切割、翻轉或鏡像來揭開下一幕。</p>
-          <table>
-            <thead><tr><th class="col-en">英文名稱</th><th class="col-zh">中文名稱</th><th class="col-desc">用途簡述</th></tr></thead>
-            <tbody>
-              <tr><td class="col-en">3D Spin</td><td class="col-zh">3D 旋轉</td><td class="col-desc">畫面以 Y 軸或 X 軸為中心進行立體翻轉。</td></tr>
-              <tr><td class="col-en">Frame</td><td class="col-zh">框架</td><td class="col-desc">畫面縮小變成一個畫框後掉落或飛出。</td></tr>
-              <tr><td class="col-en">Louver</td><td class="col-zh">百葉窗</td><td class="col-desc">將畫面切割成多條細長的百葉窗葉片並翻轉。</td></tr>
-              <tr><td class="col-en">Mirror</td><td class="col-zh">鏡像</td><td class="col-desc">畫面產生對稱的鏡像反射。</td></tr>
-              <tr><td class="col-en">Page Peel</td><td class="col-zh">翻頁</td><td class="col-desc">像翻書一樣把畫面的角落捲起翻開。</td></tr>
-              <tr><td class="col-en">Slice</td><td class="col-zh">切片</td><td class="col-desc">將畫面像切西瓜一樣切開滑動。</td></tr>
-              <tr><td class="col-en">Wave</td><td class="col-zh">波浪</td><td class="col-desc">畫面產生如水波般的扭曲起伏。</td></tr>
-            </tbody>
-          </table>
-        </div>
+        <section class="tier-section">
+            <h2 class="tier-title" style="color: var(--text-secondary);">🏛️ 歷史歸檔 (Legacy)</h2>
 
-       <div class="section-card" id="wipe">
-  <h2>Wipe 擦除</h2>
-  <p>藉由各種形狀（直線、圓形、時鐘）逐步將畫面擦拭掉，有明顯的圖形介入感。</p>
-  <table>
-    <thead>
-      <tr>
-        <th class="col-en">英文名稱</th>
-        <th class="col-zh">中文名稱</th>
-        <th class="col-desc">用途簡述</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="col-en">Clock Wipe</td>
-        <td class="col-zh">時鐘擦除</td>
-        <td class="col-desc">像時鐘指針轉一圈一樣，依圓形角度抹開畫面。</td>
-      </tr>
-      <tr>
-        <td class="col-en">Linear Wipe</td>
-        <td class="col-zh">線性擦除</td>
-        <td class="col-desc">以單一水平或垂直直線方向平移，將舊畫面抹除。</td>
-      </tr>
-      <tr>
-        <td class="col-en">Neon Wipe</td>
-        <td class="col-zh">霓虹擦除</td>
-        <td class="col-desc">在擦除的交界處帶有霓虹發光邊緣的轉場效果。</td>
-      </tr>
-      <tr>
-        <td class="col-en">Panel Wipe</td>
-        <td class="col-zh">面板擦除</td>
-        <td class="col-desc">將畫面分割成面板色塊狀進行推擠交替的擦除。</td>
-      </tr>
-      <tr>
-        <td class="col-en">Plateau Wipe</td>
-        <td class="col-zh">平台擦除</td>
-        <td class="col-desc">產生類似階梯或高原區塊狀的動態擦除效果。</td>
-      </tr>
-      <tr>
-        <td class="col-en">Radial Wipe</td>
-        <td class="col-zh">放射擦除</td>
-        <td class="col-desc">以畫面中某個點為圓心，呈現放射狀或扇形擦除。</td>
-      </tr>
-      <tr>
-        <td class="col-en">Soft Wipe</td>
-        <td class="col-zh">柔邊擦除</td>
-        <td class="col-desc">帶有羽化效果、邊緣柔和不生硬的擦除轉場。</td>
-      </tr>
-      <tr>
-        <td class="col-en">Star Wipe</td>
-        <td class="col-zh">星形擦除</td>
-        <td class="col-desc">以星形圖案向外擴展或向內縮小來替換畫面。</td>
-      </tr>
-      <tr>
-        <td class="col-en">Stretch Wipe</td>
-        <td class="col-zh">延展擦除</td>
-        <td class="col-desc">在進行擦除替換的同時，畫面邊緣會產生拉伸變形的視覺效果。</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+            <div class="accordion">
+                <div class="accordion-header" style="color: var(--warning-color);">Legacy (舊版音訊效果) <span class="icon">+</span></div>
+                <div class="accordion-content">
+                    <div class="warning-badge">⚠️ 僅供開啟舊專案相容使用，新專案強烈建議使用「Audio Effects」中對應的新版工具。</div>
+                    <div class="grid-container">
+                        <div class="card legacy"><h4>舊版調整工具</h4><p>Dynamics (動態壓縮)、EQ (等化器)、Highpass/Lowpass (高/低通濾波)、Volume (音量)、Treble (高音)。</p></div>
+                        <div class="card legacy"><h4>舊版空間與特效</h4><p>Reverb (殘響)、Delay (延遲)、Chorus (合唱)、Flanger/Phaser (鑲邊/移相)、PitchShifter (音高位移)。</p></div>
+                        <div class="card legacy"><h4>舊版修復工具</h4><p>Spectral Noise Reduction (頻譜降噪)、Invert (相位反轉)、Notch (陷波消除)。</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
-      </div>
-    </div>
-  </main>
+    <script>
+        // 控制收合選單 (Accordion) 的 JavaScript
+        const accordions = document.querySelectorAll('.accordion-header');
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const searchInput = document.getElementById('searchInput');
-      const noResult = document.getElementById('noResult');
-      const cards = Array.from(document.querySelectorAll('.section-card'));
-      const navItems = Array.from(document.querySelectorAll('.nav-item'));
-      const contentScroll = document.getElementById('contentScroll');
-
-      function clearMarks(card) {
-        card.querySelectorAll('mark').forEach(mark => {
-          mark.replaceWith(document.createTextNode(mark.textContent));
-        });
-      }
-
-      function filterContent() {
-        const keyword = searchInput.value.trim().toLowerCase();
-        let visibleCount = 0;
-
-        cards.forEach(card => {
-          clearMarks(card);
-          if (keyword === '') {
-            card.classList.remove('is-hidden');
-            card.querySelectorAll('tbody tr').forEach(row => row.classList.remove('is-hidden'));
-            visibleCount++;
-            return;
-          }
-
-          const rows = Array.from(card.querySelectorAll('tbody tr'));
-          let hasMatch = false;
-
-          if (rows.length > 0) {
-            let matchedRows = 0;
-            rows.forEach(row => {
-              const text = row.innerText.toLowerCase();
-              const match = text.includes(keyword);
-              row.classList.toggle('is-hidden', !match);
-              if (match) matchedRows++;
+        accordions.forEach(acc => {
+            acc.addEventListener('click', function() {
+                // 切換標題本身的 active 狀態 (旋轉加號)
+                this.classList.toggle('active');
+                
+                // 取得對應的內容區塊
+                const content = this.nextElementSibling;
+                
+                // 判斷目前是展開還是收合，並進行切換
+                if (content.style.display === 'block') {
+                    content.style.display = 'none';
+                } else {
+                    content.style.display = 'block';
+                }
             });
-            hasMatch = matchedRows > 0;
-          }
-
-          if (!hasMatch) {
-            const cardText = card.innerText.toLowerCase();
-            hasMatch = cardText.includes(keyword);
-            if (hasMatch) {
-              rows.forEach(row => row.classList.remove('is-hidden'));
-            }
-          }
-
-          card.classList.toggle('is-hidden', !hasMatch);
-          if (hasMatch) visibleCount++;
         });
-
-        noResult.classList.toggle('show', visibleCount === 0);
-      }
-
-      searchInput.addEventListener('input', filterContent);
-
-      const observerOptions = {
-        root: contentScroll,
-        rootMargin: '-20px 0px -60% 0px',
-        threshold: 0
-      };
-
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const id = entry.target.getAttribute('id');
-            navItems.forEach(nav => nav.classList.remove('active'));
-            const activeNav = document.querySelector(`.nav-item[href="#${id}"]`);
-            if (activeNav) activeNav.classList.add('active');
-          }
-        });
-      }, observerOptions);
-
-      cards.forEach(card => observer.observe(card));
-
-      navItems.forEach(nav => {
-        nav.addEventListener('click', (e) => {
-          e.preventDefault();
-          const targetId = nav.getAttribute('href').substring(1);
-          const targetCard = document.getElementById(targetId);
-          if (targetCard) {
-            targetCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        });
-      });
-    });
-  </script>
+    </script>
 </body>
 </html>
