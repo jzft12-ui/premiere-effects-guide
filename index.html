@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premiere Pro 特效翻譯字典</title>
+    <title>Premiere Pro 特效翻譯字典 (46分類 x 完整用途詳解版)</title>
     <style>
         :root {
             --bg-main: #ffffff;          
@@ -17,246 +17,180 @@
         }
 
         body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            height: 100vh;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-main);
+            margin: 0; padding: 0; display: flex; height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-main); color: var(--text-main);
         }
 
-        /* ================= 左側選單 ================= */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #aaa; }
+
         .sidebar {
-            width: 280px;
-            background-color: var(--sidebar-bg);
-            border-right: 1px solid var(--border-color);
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            flex-shrink: 0;
+            width: 330px; background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color); overflow-y: auto;
+            display: flex; flex-direction: column; flex-shrink: 0;
         }
 
         .sidebar-header {
-            padding: 20px;
-            font-size: 1.2rem;
-            font-weight: bold;
+            padding: 20px; font-size: 1.2rem; font-weight: bold;
             border-bottom: 1px solid var(--border-color);
-            background-color: #ffffff;
-            color: var(--primary-color); 
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            user-select: none;
-            -webkit-user-select: none;
+            background-color: #ffffff; color: var(--primary-color); 
+            position: sticky; top: 0; z-index: 10; user-select: none;
         }
 
-        .menu-group {
-            border-bottom: 1px solid #eeeeee;
-        }
+        .menu-group { border-bottom: 1px solid #eeeeee; }
 
         .menu-title {
-            padding: 15px 20px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: background 0.2s;
-            user-select: none;
-            -webkit-user-select: none;
+            padding: 15px 20px; font-weight: bold; cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center;
+            transition: background 0.2s; user-select: none;
+            background-color: #f1f3f5; color: #2d3436;
         }
 
-        .menu-title:hover {
-            background-color: var(--hover-bg);
-        }
+        .menu-title:hover { background-color: var(--hover-bg); }
+        .menu-title::after { content: '▼'; font-size: 0.8em; color: #888; transition: transform 0.3s; }
+        .menu-title.collapsed::after { transform: rotate(-90deg); }
 
-        .menu-title::after {
-            content: '▼';
-            font-size: 0.8em;
-            color: #888;
-            transition: transform 0.3s;
-        }
-
-        .menu-title.collapsed::after {
-            transform: rotate(-90deg);
-        }
-
-        .sub-menu {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: block;
-        }
-
-        .sub-menu.hidden {
-            display: none;
-        }
-
+        .sub-menu { list-style: none; padding: 0; margin: 0; display: block; }
+        .sub-menu.hidden { display: none; }
+        
         .sub-menu li {
-            padding: 12px 20px 12px 36px;
-            border-left: 4px solid transparent; 
-            cursor: pointer;
-            font-size: 0.95rem;
-            color: #555;
-            transition: all 0.2s;
-            user-select: none;
-            -webkit-user-select: none;
+            padding: 10px 20px 10px 36px; border-left: 4px solid transparent; 
+            cursor: pointer; font-size: 0.95rem; color: #555;
+            transition: all 0.2s; user-select: none;
         }
 
-        .sub-menu li:hover {
-            background-color: var(--hover-bg);
-            color: var(--text-main);
-        }
-
+        .sub-menu li:hover { background-color: var(--hover-bg); color: var(--text-main); }
         .sub-menu li.active {
-            background-color: var(--primary-light);
-            color: var(--primary-color);
-            font-weight: bold;
-            border-left: 4px solid var(--primary-color);
+            background-color: var(--primary-light); color: var(--primary-color);
+            font-weight: bold; border-left: 4px solid var(--primary-color);
         }
 
-        /* ================= 右側主要內容 ================= */
-        .content-area {
-            flex: 1;
-            padding: 40px;
-            overflow-y: auto;
-            background-color: var(--bg-main);
-        }
-
-        .content-container {
-            max-width: 960px;
-            margin: 0 auto;
-        }
-
-        .search-container {
-            margin-bottom: 30px;
-        }
+        .content-area { flex: 1; padding: 40px; overflow-y: auto; }
+        .content-container { max-width: 1000px; margin: 0 auto; }
+        .search-container { margin-bottom: 30px; position: sticky; top: 0; z-index: 20; background: var(--bg-main); padding-bottom: 10px; }
 
         .search-input {
-            width: 100%;
-            padding: 14px 20px;
-            font-size: 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            box-sizing: border-box;
-            background-color: #fcfcfc;
-            transition: border-color 0.2s;
+            width: 100%; padding: 14px 20px; font-size: 1rem;
+            border: 1px solid var(--border-color); border-radius: 8px;
+            box-sizing: border-box; background-color: #fcfcfc;
+            transition: border-color 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.05);
         }
 
-        .search-input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            background-color: #ffffff;
-            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
-        }
+        .search-input:focus { outline: none; border-color: var(--primary-color); background-color: #ffffff; box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1); }
 
-        .tab-panel {
-            display: none;
-        }
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; animation: fadeIn 0.3s ease; }
 
-        .tab-panel.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
+        h2 { margin-top: 0; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; color: var(--text-main); margin-bottom: 20px; }
+        #search-results h2 { color: var(--primary-color); border-bottom-color: var(--primary-color); }
 
-        h2 {
-            margin-top: 0;
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 10px;
-            color: var(--text-main);
-            margin-bottom: 20px;
-        }
-
-        #search-results h2 {
-            color: var(--primary-color);
-            border-bottom-color: var(--primary-color);
-        }
-
-        /* 表格基礎設計 */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.95rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-
-        th, td {
-            border: 1px solid var(--border-color);
-            padding: 14px 16px;
-            text-align: left;
-            vertical-align: top;
-        }
-
-        th {
-            background-color: var(--table-header);
-            font-weight: bold;
-            color: #333;
-        }
-
+        table { width: 100%; border-collapse: collapse; font-size: 0.95rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        th, td { border: 1px solid var(--border-color); padding: 14px 16px; text-align: left; vertical-align: middle; }
+        th { background-color: var(--table-header); font-weight: bold; color: #333; }
         tr:nth-child(even) { background-color: #fcfcfc; }
         tr:hover { background-color: #f1f8ff; }
 
-        /* 一般分類表格的欄位比例 (3欄) */
-        .category-panel th:nth-child(1), .category-panel td:nth-child(1) { width: 25%; font-weight: 500; }
-        .category-panel th:nth-child(2), .category-panel td:nth-child(2) { width: 25%; }
-        .category-panel th:nth-child(3), .category-panel td:nth-child(3) { width: 50%; line-height: 1.6; color: #444; }
+        .category-panel th:nth-child(1), .category-panel td:nth-child(1) { width: 22%; font-weight: 500; }
+        .category-panel th:nth-child(2), .category-panel td:nth-child(2) { width: 22%; }
+        .category-panel th:nth-child(3), .category-panel td:nth-child(3) { width: 56%; line-height: 1.6; color: #444; }
 
-        /* 搜尋結果表格的欄位比例 (4欄) */
-        #search-results th:nth-child(1), #search-results td:nth-child(1) { width: 20%; font-weight: 500; }
-        #search-results th:nth-child(2), #search-results td:nth-child(2) { width: 20%; }
-        #search-results th:nth-child(3), #search-results td:nth-child(3) { width: 40%; line-height: 1.6; color: #444; }
-        #search-results th:nth-child(4), #search-results td:nth-child(4) { width: 20%; }
-
-        /* 分類標籤設計 */
         .category-badge {
-            display: inline-block;
-            background-color: var(--primary-light);
-            color: var(--primary-color);
-            padding: 6px 10px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            white-space: nowrap;
+            display: inline-block; background-color: var(--primary-light);
+            color: var(--primary-color); padding: 6px 10px;
+            border-radius: 6px; font-size: 0.85rem; font-weight: 500; white-space: nowrap;
         }
 
-        .no-results {
-            text-align: center;
-            padding: 40px;
-            color: #888;
-            font-size: 1.1rem;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            border: 1px dashed var(--border-color);
-            display: none;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .no-results { text-align: center; padding: 40px; color: #888; font-size: 1.1rem; background-color: #f8f9fa; border-radius: 8px; border: 1px dashed var(--border-color); display: none; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
     <div class="sidebar">
-        <div class="sidebar-header">Premiere Pro Effects</div>
+        <div class="sidebar-header">PR 特效字典 (完整解析版)</div>
 
         <div class="menu-group">
-            <div class="menu-title">Video Transitions (影片轉場)</div>
-            <ul class="sub-menu">
-                <li data-target="vt-3dmotion" class="active">3D Motion (3D 運動)</li>
-                <li data-target="vt-dissolve">Dissolve (溶解)</li>
-                <li data-target="vt-wipe">Wipe (擦除)</li>
+            <div class="menu-title collapsed">Lumetri Presets (Lumetri預設)</div>
+            <ul class="sub-menu hidden">
+                <li data-target="lp-cinematic">Cinematic (電影)</li>
+                <li data-target="lp-monochrome">Monochrome (單色)</li>
+                <li data-target="lp-speedlooks">SpeedLooks</li>
+                <li data-target="lp-technical">Technical (技術)</li>
+            </ul>
+        </div>
+
+        <div class="menu-group">
+            <div class="menu-title collapsed">Presets (預設集)</div>
+            <ul class="sub-menu hidden">
+                <li data-target="pr-bevel">Bevel Edges (斜面邊緣)</li>
+                <li data-target="pr-blurs">Blurs (模糊)</li>
+                <li data-target="pr-color">Color Effects (色彩效果)</li>
+                <li data-target="pr-mosaics">Mosaics (馬賽克)</li>
+                <li data-target="pr-pips">PiPs (子母畫面)</li>
+                <li data-target="pr-solarizes">Solarizes (過度曝光)</li>
+                <li data-target="pr-twirls">Twirls (彎曲)</li>
+            </ul>
+        </div>
+
+        <div class="menu-group">
+            <div class="menu-title collapsed">Audio Effects (音訊效果)</div>
+            <ul class="sub-menu hidden">
+                <li data-target="ae-amp">Amplitude and Compression (振幅與壓縮)</li>
+                <li data-target="ae-delay">Delay and Echo (延遲與回音)</li>
+                <li data-target="ae-filter">Filter and EQ (濾波器與等化器)</li>
+                <li data-target="ae-mod">Modulation (調變)</li>
+                <li data-target="ae-noise">Noise Reduction/Restoration (雜訊抑制)</li>
+                <li data-target="ae-reverb">Reverb (殘響)</li>
+                <li data-target="ae-special">Special (特殊)</li>
+                <li data-target="ae-stereo">Stereo Imagery (立體聲影像)</li>
+                <li data-target="ae-time">Time and Pitch (時間與音高)</li>
+            </ul>
+        </div>
+
+        <div class="menu-group">
+            <div class="menu-title collapsed">Audio Transitions (音訊轉場)</div>
+            <ul class="sub-menu hidden">
+                <li data-target="at-crossfade">Crossfade (交叉淡化)</li>
             </ul>
         </div>
 
         <div class="menu-group">
             <div class="menu-title">Video Effects (影片效果)</div>
             <ul class="sub-menu">
+                <li data-target="ve-adjust">Adjust (調整)</li>
                 <li data-target="ve-blur">Blur & Sharpen (模糊與銳利化)</li>
+                <li data-target="ve-channel">Channel (色版)</li>
                 <li data-target="ve-color">Color Correction (色彩校正)</li>
                 <li data-target="ve-distort">Distort (扭曲)</li>
+                <li data-target="ve-generate">Generate (產生)</li>
+                <li data-target="ve-imagecontrol">Image Control (影像控制)</li>
+                <li data-target="ve-immersive">Immersive Video (沉浸式影片)</li>
+                <li data-target="ve-keying">Keying (去背)</li>
+                <li data-target="ve-noise">Noise & Grain (雜訊與紋理)</li>
+                <li data-target="ve-obsolete">Obsolete (舊版)</li>
+                <li data-target="ve-perspective">Perspective (透視)</li>
+                <li data-target="ve-stylize">Stylize (風格化)</li>
+                <li data-target="ve-time">Time (時間)</li>
+                <li data-target="ve-transform">Transform (變形)</li>
+                <li data-target="ve-transition" class="active">Transition (轉場)</li>
+                <li data-target="ve-utility">Utility (公用程式)</li>
+            </ul>
+        </div>
+
+        <div class="menu-group">
+            <div class="menu-title collapsed">Video Transitions (影片轉場)</div>
+            <ul class="sub-menu hidden">
+                <li data-target="vt-3d">3D Motion (3D運動)</li>
+                <li data-target="vt-dissolve">Dissolve (溶解)</li>
+                <li data-target="vt-immersive">Immersive Video (沉浸式影片)</li>
+                <li data-target="vt-iris">Iris (光圈)</li>
+                <li data-target="vt-page">Page Peel (頁面剝落)</li>
+                <li data-target="vt-slide">Slide (滑動)</li>
+                <li data-target="vt-wipe">Wipe (擦除)</li>
+                <li data-target="vt-zoom">Zoom (縮放)</li>
             </ul>
         </div>
     </div>
@@ -265,103 +199,268 @@
         <div class="content-container">
             
             <div class="search-container">
-                <input type="text" id="searchInput" class="search-input" placeholder="🔍 全域搜尋：輸入英文、中文或用途關鍵字...">
+                <input type="text" id="searchInput" class="search-input" placeholder="🔍 全域搜尋：輸入英文、中文或用途關鍵字 (例如：去背、模糊、調色)...">
             </div>
 
             <div id="search-results" class="tab-panel">
                 <h2>🔍 搜尋結果</h2>
                 <table id="search-table">
-                    <thead>
-                        <tr>
-                            <th>英文名稱</th>
-                            <th>中文名稱</th>
-                            <th>用途簡述</th>
-                            <th>所屬分類</th> </tr>
-                    </thead>
-                    <tbody id="search-body">
-                        </tbody>
+                    <thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th><th>所屬分類</th></tr></thead>
+                    <tbody id="search-body"></tbody>
                 </table>
-                <div id="no-results-msg" class="no-results">
-                    找不到符合「<span id="keyword-display"></span>」的特效，請嘗試其他關鍵字。
-                </div>
+                <div id="no-results-msg" class="no-results">找不到符合「<span id="keyword-display"></span>」的特效，請嘗試其他關鍵字。</div>
             </div>
 
-            <div id="vt-3dmotion" class="tab-panel category-panel active">
-                <h2>3D Motion (3D 運動)</h2>
-                <table>
-                    <thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途簡述</th></tr></thead>
-                    <tbody>
-                        <tr><td>Cube Spin</td><td>立方體旋轉</td><td>畫面如同立體方塊般翻轉到下一個片段。</td></tr>
-                        <tr><td>Flip Over</td><td>翻轉</td><td>畫面以平面翻轉的方式切換至下一個畫面。</td></tr>
-                    </tbody>
-                </table>
-            </div>
+            <div id="lp-cinematic" class="tab-panel category-panel"><h2>Cinematic (電影)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>SL BLEACH / SL BLUE 等</td><td>(電影感調色)</td><td>內建的電影級 LUT 色彩預設，套用後可快速讓一般拍攝的畫面呈現好萊塢電影常見的冷色調、漂白或高對比風格。</td></tr>
+            </tbody></table></div>
+            
+            <div id="lp-monochrome" class="tab-panel category-panel"><h2>Monochrome (單色)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>SL Noir / Punch 等</td><td>單色預設</td><td>提供多種不同對比度與亮度的黑白濾鏡，比單純抽乾顏色更有層次感，適合復古或懸疑氛圍。</td></tr>
+            </tbody></table></div>
+            
+            <div id="lp-speedlooks" class="tab-panel category-panel"><h2>SpeedLooks</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>SL Gold / SL Matrix</td><td>SpeedLooks風格</td><td>針對專業數位攝影機設計的高階色彩還原與風格化濾鏡，能賦予畫面特殊的底片質感（如膠卷金或駭客任務綠）。</td></tr>
+            </tbody></table></div>
+            
+            <div id="lp-technical" class="tab-panel category-panel"><h2>Technical (技術)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Phantom / ARRI LUTs</td><td>技術轉換 LUT</td><td>專業用途，用來將特定高階攝影機拍攝的灰階 Log 檔畫面，一鍵還原為標準的 Rec.709 正常色彩，是調色的第一步。</td></tr>
+            </tbody></table></div>
 
-            <div id="vt-dissolve" class="tab-panel category-panel">
-                <h2>Dissolve (溶解)</h2>
-                <table>
-                    <thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途簡述</th></tr></thead>
-                    <tbody>
-                        <tr><td>Cross Dissolve</td><td>交叉溶解</td><td>最常用的轉場，前一個畫面漸淡，下一個畫面漸入。</td></tr>
-                        <tr><td>Dip to Black</td><td>浸入黑色</td><td>畫面先暗轉至全黑，再亮起進入下一個畫面。</td></tr>
-                        <tr><td>Dip to White</td><td>浸入白色</td><td>畫面先亮轉至全白（常搭配閃光音效），再進入下一個畫面。</td></tr>
-                        <tr><td>Morph Cut</td><td>變形剪接</td><td>用於訪談畫面，可讓兩段跳剪的畫面平滑過渡，隱藏剪接痕跡。</td></tr>
-                    </tbody>
-                </table>
-            </div>
+            <div id="pr-bevel" class="tab-panel category-panel"><h2>Bevel Edges (斜面邊緣)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Bevel Edges Thick / Thin</td><td>厚/薄斜面邊緣</td><td>為畫面四周加上預先設定好的立體浮雕邊框，常搭配縮小的子母畫面使用，增加立體感。</td></tr>
+            </tbody></table></div>
+            
+            <div id="pr-blurs" class="tab-panel category-panel"><h2>Blurs (模糊)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Blur In / Blur Out</td><td>模糊移入 / 移出</td><td>已經綁定好動態關鍵影格的模糊效果，套用在片頭會自動從模糊漸漸變清晰，省去手動設關鍵影格的時間。</td></tr>
+            </tbody></table></div>
+            
+            <div id="pr-color" class="tab-panel category-panel"><h2>Color Effects (色彩效果)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Color Tint</td><td>色彩色調</td><td>預先調配好的強烈色彩覆蓋預設，適合快速製作回憶片段或特殊夢境感。</td></tr>
+            </tbody></table></div>
+            
+            <div id="pr-mosaics" class="tab-panel category-panel"><h2>Mosaics (馬賽克)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Mosaic In / Out</td><td>馬賽克移入 / 移出</td><td>帶有動態過程的馬賽克效果，畫面會從粗糙的大塊馬賽克自動縮小還原成清晰畫面。</td></tr>
+            </tbody></table></div>
+            
+            <div id="pr-pips" class="tab-panel category-panel"><h2>PiPs (子母畫面)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>PiP 25% UR / LL</td><td>子母畫面 25% 右上/左下</td><td>超實用預設！一鍵將當前影片縮小至 25% 並自動對齊到指定的螢幕角落（UR=右上，LL=左下），常做遊戲實況人頭視窗。</td></tr>
+            </tbody></table></div>
+            
+            <div id="pr-solarizes" class="tab-panel category-panel"><h2>Solarizes (過度曝光)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Solarize In / Out</td><td>過曝移入 / 移出</td><td>產生色彩反轉、極度高光的過曝特效預設，視覺衝擊強，常用於MV或迷幻風格影片的開場。</td></tr>
+            </tbody></table></div>
+            
+            <div id="pr-twirls" class="tab-panel category-panel"><h2>Twirls (彎曲)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Twirl In / Out</td><td>彎曲移入 / 移出</td><td>畫面中心如黑洞漩渦般扭曲捲入或散開的動態預設，常用於搞笑或穿越時空的轉場輔助。</td></tr>
+            </tbody></table></div>
 
-            <div id="vt-wipe" class="tab-panel category-panel">
-                <h2>Wipe (擦除)</h2>
-                <table>
-                    <thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途簡述</th></tr></thead>
-                    <tbody>
-                        <tr><td>Wipe</td><td>擦除</td><td>畫面由左至右或由上至下直接抹除切換。</td></tr>
-                        <tr><td>Radial Wipe</td><td>放射狀擦除</td><td>以時鐘指針旋轉的方式擦除畫面。</td></tr>
-                    </tbody>
-                </table>
-            </div>
+            <div id="ae-amp" class="tab-panel category-panel"><h2>Amplitude and Compression (振幅與壓縮)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Amplify</td><td>放大</td><td>最基礎的音量控制，可單純提高或降低音訊分貝（增益）。</td></tr>
+                <tr><td>Dynamics</td><td>動態</td><td>進階整合工具，內含壓縮器、限幅器與雜訊閘，能讓忽大忽小的聲音變得平穩。</td></tr>
+                <tr><td>Hard Limiter</td><td>硬性限制器</td><td>強行限制聲音的最大音量（例如設定在 -3dB），是防止影片輸出去踩到「爆音」底線的最後防線。</td></tr>
+                <tr><td>Multiband Compressor</td><td>多頻帶壓縮器</td><td>【YouTuber必備】針對高、中、低音頻分別進行壓縮處理，有內建「Broadcast」預設，一鍵讓人聲變得像廣播電台一樣厚實飽滿。</td></tr>
+            </tbody></table></div>
+            
+            <div id="ae-delay" class="tab-panel category-panel"><h2>Delay and Echo (延遲與回音)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Analog Delay</td><td>類比延遲</td><td>模擬早期磁帶錄音機那種溫暖且帶有輕微失真的聲音延遲效果。</td></tr>
+                <tr><td>Echo</td><td>回音</td><td>產生非常明顯、間隔分明的山谷回音疊加效果，可自訂回音次數與衰減程度。</td></tr>
+            </tbody></table></div>
+            
+            <div id="ae-filter" class="tab-panel category-panel"><h2>Filter and EQ (濾波器與等化器)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Parametric Equalizer</td><td>參數等化器</td><td>提供視覺化的頻率曲線，能極度精準地拉高或降低特定頻率（EQ），是修飾人聲、去除麥克風悶聲的核心工具。</td></tr>
+                <tr><td>Highpass</td><td>高通濾波器</td><td>只讓「高頻」通過，用來徹底消除低頻的環境轟鳴聲（如呼呼的風聲、遠處的引擎聲）。</td></tr>
+                <tr><td>Lowpass</td><td>低通濾波器</td><td>只讓「低頻」通過，用來消除刺耳的高頻雜音或電流聲，也會讓聲音聽起來像是在隔壁房間（悶悶的）。</td></tr>
+            </tbody></table></div>
+            
+            <div id="ae-mod" class="tab-panel category-panel"><h2>Modulation (調變)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Chorus</td><td>合唱</td><td>將單一聲音複製並稍微錯開時間與音高，讓一個人講話聽起來像是一群人同時發聲。</td></tr>
+                <tr><td>Flanger</td><td>金屬和聲 (Flanger)</td><td>產生類似噴射機起飛時，那種極具金屬感、空洞且來回掃掠的科幻音效。</td></tr>
+            </tbody></table></div>
+            
+            <div id="ae-noise" class="tab-panel category-panel"><h2>Noise Reduction/Restoration (雜訊抑制)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>DeNoise</td><td>降噪</td><td>【超常用】最強大的底噪消除工具，一鍵就能大幅消除室內冷氣運轉聲或機器的白噪音。</td></tr>
+                <tr><td>DeReverb</td><td>去殘響</td><td>當你在空曠的房間、教室或浴室錄音產生了嚴重的空間回音時，這個工具可以有效吸收、減少這些回音。</td></tr>
+                <tr><td>DeClicker</td><td>去喀嚓聲</td><td>專門用來消除麥克風收音時不小心錄進去的口水聲、唇齒音，或是線路接觸不良的電流突波聲。</td></tr>
+            </tbody></table></div>
+            
+            <div id="ae-reverb" class="tab-panel category-panel"><h2>Reverb (殘響)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Studio Reverb</td><td>錄音室殘響</td><td>為原本乾扁的錄音室聲音加上空間感，可以模擬聲音在小房間、大廳或教堂裡發出的感覺。</td></tr>
+            </tbody></table></div>
+            
+            <div id="ae-special" class="tab-panel category-panel"><h2>Special (特殊)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Distortion</td><td>破音 (失真)</td><td>故意讓聲音過載爆音，常被用來模擬無線電對講機、大聲公或是破舊喇叭傳出來的聲音。</td></tr>
+                <tr><td>Vocal Enhancer</td><td>人聲強化器</td><td>懶人調音工具，會自動辨識男聲或女聲，並針對其頻率特性進行優化，讓人聲更清晰突出。</td></tr>
+            </tbody></table></div>
+            
+            <div id="ae-stereo" class="tab-panel category-panel"><h2>Stereo Imagery (立體聲影像)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Stereo Expander</td><td>立體聲擴展器</td><td>可以把原本擠在中間的聲音往左右兩邊拉開，讓戴耳機的觀眾感覺聲音的立體空間變得很寬廣。</td></tr>
+            </tbody></table></div>
+            
+            <div id="ae-time" class="tab-panel category-panel"><h2>Time and Pitch (時間與音高)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Pitch Shifter</td><td>音高更變器</td><td>改變聲音的高低音但「不改變語速」。常用來做綜藝變聲處理（調高變花栗鼠/卡通音，調低變歹徒勒索音）。</td></tr>
+            </tbody></table></div>
 
-            <div id="ve-blur" class="tab-panel category-panel">
-                <h2>Blur & Sharpen (模糊與銳利化)</h2>
-                <table>
-                    <thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途簡述</th></tr></thead>
-                    <tbody>
-                        <tr><td>Gaussian Blur</td><td>高斯模糊</td><td>最標準的模糊效果，能平滑地將畫面失焦。</td></tr>
-                        <tr><td>Directional Blur</td><td>方向模糊</td><td>製造往特定方向的模糊，常用於表現速度感。</td></tr>
-                        <tr><td>Sharpen</td><td>銳利化</td><td>強化畫面邊緣細節，讓微模糊的畫面變清晰。</td></tr>
-                    </tbody>
-                </table>
-            </div>
+            <div id="at-crossfade" class="tab-panel category-panel"><h2>Crossfade (交叉淡化)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Constant Gain</td><td>固定增益</td><td>以直線等比的方式讓聲音漸強漸弱，有時候在聽覺上中間重疊的部分會顯得有點生硬。</td></tr>
+                <tr><td>Constant Power</td><td>固定功率</td><td>【系統預設】最常用的音軌轉場。它的音量變化曲線符合人耳的對數聽覺特性，淡入淡出非常平滑自然。</td></tr>
+                <tr><td>Exponential Fade</td><td>指數淡化</td><td>以拋物線的方式急速變化音量，適合用在兩個反差極大、或是單一音檔需要快速收尾的情境。</td></tr>
+            </tbody></table></div>
 
-            <div id="ve-color" class="tab-panel category-panel">
-                <h2>Color Correction (色彩校正)</h2>
-                <table>
-                    <thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途簡述</th></tr></thead>
-                    <tbody>
-                        <tr><td>Lumetri Color</td><td>Lumetri 色彩</td><td>PR 最強大的整合式調色工具，支援基礎校正、曲線與色輪。</td></tr>
-                        <tr><td>Tint</td><td>色調</td><td>快速將畫面轉換為雙色調（例如黑白或泛黃復古風）。</td></tr>
-                        <tr><td>Change to Color</td><td>變更為色彩</td><td>將畫面中特定的顏色替換成另一種顏色。</td></tr>
-                    </tbody>
-                </table>
-            </div>
+            <div id="ve-adjust" class="tab-panel category-panel"><h2>Adjust (調整)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Extract</td><td>摘錄</td><td>會先將畫面轉為黑白，然後讓你設定一個亮度區間，強制把這區間以外的像素變透明或全黑。</td></tr>
+                <tr><td>Levels</td><td>色階</td><td>Photoshop 裡常見的色階工具，透過調整黑、白、灰三個控制點，重新定義畫面的亮暗對比。</td></tr>
+                <tr><td>Lighting Effects</td><td>光源效果</td><td>在畫面上憑空生成虛擬燈光（如聚光燈、泛光燈），可以自訂打光角度與顏色，營造舞台感。</td></tr>
+            </tbody></table></div>
+            
+            <div id="ve-blur" class="tab-panel category-panel"><h2>Blur & Sharpen (模糊與銳利化)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Camera Blur</td><td>相機模糊</td><td>模擬真實相機鏡頭失焦時產生的六角形/圓形散景光斑，視覺效果比一般模糊更具電影感。</td></tr>
+                <tr><td>Directional Blur</td><td>方向模糊</td><td>產生只往單一指定方向拉扯的模糊殘影，非常適合用來表現汽車飛馳或人物奔跑的「速度感」。</td></tr>
+                <tr><td>Fast Blur</td><td>快速模糊</td><td>運算負擔最低的模糊效果，適合用來處理大面積背景模糊，不會拖慢電腦速度。</td></tr>
+                <tr><td>Gaussian Blur</td><td>高斯模糊</td><td>【最常用】最標準、過渡最平滑的模糊方式。常用於配合遮罩替人臉打馬賽克，或製作柔焦背景。</td></tr>
+                <tr><td>Sharpen</td><td>銳利化</td><td>強制增加畫面中物體邊緣的對比度，讓失焦或微軟的畫面看起來更清晰俐落。</td></tr>
+                <tr><td>Unsharp Mask</td><td>遮色片銳利化</td><td>進階的銳利化工具，可以控制邊緣銳利的範圍與強度，比普通銳利化更能保留畫面細節而不死硬。</td></tr>
+            </tbody></table></div>
+            
+            <div id="ve-channel" class="tab-panel category-panel"><h2>Channel (色版)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Invert</td><td>負片 (反轉)</td><td>將畫面的RGB色彩完全反轉，產生類似傳統沖洗底片或監視器異常的詭異效果。</td></tr>
+                <tr><td>Set Matte</td><td>設定遮罩</td><td>非常進階的合成工具，可以「借用」另一個圖層的形狀、亮度或Alpha色版，來當作目前圖層的透明去背遮罩。</td></tr>
+            </tbody></table></div>
+            
+            <div id="ve-color" class="tab-panel category-panel"><h2>Color Correction (色彩校正)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Change to Color</td><td>變更為色彩</td><td>選擇畫面中特定的顏色（例如紅色的衣服），強制將其替換成另一種顏色（變成藍色），且保留原本的光影皺褶。</td></tr>
+                <tr><td>Color Balance</td><td>色彩平衡</td><td>傳統調色工具，將畫面分為陰影、中間調、亮部，讓你獨立調整這三個區域的 RGB 比例。</td></tr>
+                <tr><td>Leave Color</td><td>保留色彩</td><td>吸取並保留畫面中的一種顏色（例如紅玫瑰），然後將其他所有顏色抽乾變成黑白（俗稱辛德勒的名單效果）。</td></tr>
+                <tr><td>Lumetri Color</td><td>Lumetri 色彩</td><td>【PR 核心靈魂】目前最強大、最主流的調色引擎。從白平衡、曝光、對比、曲線調色到套用 LUT，全部都在這一個特效裡完成。</td></tr>
+                <tr><td>Tint</td><td>色調</td><td>將畫面轉為雙色調（預設為黑白）。你可以將最黑的地方指定為藍色，最白的地方指定為黃色，快速做出復古濾鏡。</td></tr>
+            </tbody></table></div>
+            
+            <div id="ve-distort" class="tab-panel category-panel"><h2>Distort (扭曲)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Corner Pin</td><td>邊角固定</td><td>提供四個角落控制點讓你自由拉扯畫面變形，超級常拿來把影片「合成、貼齊」到傾斜的手機螢幕或電視機裡。</td></tr>
+                <tr><td>Lens Distortion</td><td>鏡頭扭曲</td><td>模擬廣角鏡頭/GoPro那種畫面邊緣凸起彎曲的魚眼效果，或是反向用來修正魚眼變形。</td></tr>
+                <tr><td>Mirror</td><td>鏡射</td><td>在畫面上設定一條軸線，將畫面像照鏡子一樣對稱反射，常做成萬花筒或倒影效果。</td></tr>
+                <tr><td>Transform</td><td>變形</td><td>【進階實用】比起內建的縮放，這個特效支援設定「快門角度(Shutter Angle)」。只要設為180，你在做位移或放大時就會自動產生真實的「動態模糊」。</td></tr>
+                <tr><td>Turbulent Displace</td><td>位移亂數</td><td>產生不規則、隨機的波紋扭曲。常用來模擬水底下的視覺折射、或是夏天柏油路上的熱空氣流動。</td></tr>
+                <tr><td>Warp Stabilizer</td><td>彎曲穩定器</td><td>【救星特效】丟上去後會自動分析運鏡，強制將手持拍攝的嚴重抖動畫面抹平，變得像用穩定器拍的一樣滑順。</td></tr>
+                <tr><td>Wave Warp</td><td>波形彎曲</td><td>產生規律的波浪狀扭曲（如正弦波、鋸齒波），常用來做電視訊號干擾或旗幟飄動效果。</td></tr>
+            </tbody></table></div>
+            
+            <div id="ve-generate" class="tab-panel category-panel"><h2>Generate (產生)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>4-Color Gradient</td><td>四色漸層</td><td>在畫面的四個角落生成並混合四種自訂顏色，常用來做漂亮的漸層背景圖層。</td></tr>
+                <tr><td>Grid</td><td>格線</td><td>憑空生成可自訂粗細、顏色與間距的網格線條，適合做科技感背景或排版對齊參考線。</td></tr>
+                <tr><td>Lens Flare</td><td>鏡頭光暈</td><td>模擬太陽或強光直接照射鏡頭時產生的耀光光斑，可隨意拖動光源位置，增加畫面史詩感。</td></tr>
+                <tr><td>Lightning</td><td>閃電</td><td>憑空生成動態的閃電效果，你可以控制閃電的起點、終點、分支數量和抖動頻率。</td></tr>
+                <tr><td>Ramp</td><td>漸層</td><td>最簡單的雙色漸層生成器，可選擇線性漸層或放射狀漸層，常做為字幕背景。</td></tr>
+            </tbody></table></div>
+            
+            <div id="ve-imagecontrol" class="tab-panel category-panel"><h2>Image Control (影像控制)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Black & White</td><td>黑白</td><td>沒有任何複雜設定，丟上去畫面瞬間變成最標準的黑白影像。</td></tr>
+                <tr><td>Color Replace</td><td>色彩取代</td><td>選擇畫面中某個單一顏色，用另一個指定的色塊去硬性取代它（邊緣過渡較生硬）。</td></tr>
+            </tbody></table></div>
+            
+            <div id="ve-immersive" class="tab-panel category-panel"><h2>Immersive Video (沉浸式影片)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>VR Blur 等系列</td><td>VR 系列特效</td><td>專為 360 度全景影片設計的專屬特效群。在處理 VR 影片時，使用這些特效才不會在畫面接縫處產生破綻或詭異變形。</td></tr>
+            </tbody></table></div>
+            
+            <div id="ve-keying" class="tab-panel category-panel"><h2>Keying (去背 / 鍵控)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Color Key</td><td>色彩鍵</td><td>最傳統、基礎的去背工具。點擊某個顏色（通常是單純的背景色），該顏色就會變透明。</td></tr>
+                <tr><td>Luma Key</td><td>明度鍵</td><td>根據畫面的「亮度」來去背。通常用在黑底白字的素材，一鍵就能把黑底挖空變透明。</td></tr>
+                <tr><td>Track Matte Key</td><td>軌道遮罩鍵</td><td>【超常用技巧】利用上層圖層的「形狀」當作下層影片的遮罩。常被用來做出「影片在文字裡面播放」的鏤空字特效。</td></tr>
+                <tr><td>Ultra Key</td><td>Ultra 鍵控</td><td>【最強去背】PR 內建最強大的綠幕/藍幕去背工具。它能精準處理髮絲邊緣、消除綠幕反光(Spill Suppression)，是YouTuber去背的首選。</td></tr>
+            </tbody></table></div>
+            
+            <div id="ve-noise" class="tab-panel category-panel"><h2>Noise & Grain (雜訊與紋理)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Median</td><td>中間值</td><td>將像素與周圍像素平均化，能有效消除畫面邊緣的毛躁感，有時被用來做粗糙的磨皮柔膚處理。</td></tr>
+                <tr><td>Noise</td><td>雜訊</td><td>在畫面上疊加隨機跳動的雪花顆粒雜訊，常用於配合調色製作「復古底片感」或電視無訊號畫面。</td></tr>
+            </tbody></table></div>
+            
+            <div id="ve-obsolete" class="tab-panel category-panel"><h2>Obsolete (舊版)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>(各種舊版特效)</td><td>(舊版特效區)</td><td>此資料夾包含 Adobe 官方已經「建議棄用」，並被新工具取代的舊版特效（如舊版調色盤、舊版模糊）。保留只是為了相容舊專案，新剪輯不建議使用。</td></tr>
+            </tbody></table></div>
+            
+            <div id="ve-perspective" class="tab-panel category-panel"><h2>Perspective (透視)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Basic 3D</td><td>基本 3D</td><td>讓平面的影片或圖片擁有簡單的 XYZ 軸翻轉能力，可以做出立體卡片旋轉或拉遠逼近的 3D 空間感。</td></tr>
+                <tr><td>Drop Shadow</td><td>陰影</td><td>【極度常用】為具有透明背景的物件（如字幕、Logo、去背人像）添加可調整角度、模糊度和顏色的立體陰影。</td></tr>
+            </tbody></table></div>
+            
+            <div id="ve-stylize" class="tab-panel category-panel"><h2>Stylize (風格化)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Emboss</td><td>浮雕</td><td>將畫面轉換成灰色系，並根據高低對比產生類似石頭雕刻出來的立體浮雕感。</td></tr>
+                <tr><td>Find Edges</td><td>尋找邊緣</td><td>自動偵測畫面中物體的輪廓線條，其餘部分變白，產生類似鉛筆素描或漫畫草稿的效果。</td></tr>
+                <tr><td>Mosaic</td><td>馬賽克</td><td>將畫面切割成方塊像素化，常用於隱私打碼（需配合遮罩圈出臉部或車牌）。</td></tr>
+                <tr><td>Posterize</td><td>色調分離</td><td>大幅減少畫面的色彩過渡層次，讓影像變成一塊一塊的純色塊，產生早期復古海報或普普藝術感。</td></tr>
+                <tr><td>Replicate</td><td>複製</td><td>將畫面分割成九宮格或更多的網格，每個格子裡都顯示重複的縮小版影像（常見於早期MV牆效果）。</td></tr>
+                <tr><td>Roughen Edges</td><td>粗糙邊緣</td><td>讓文字或物件原本筆直平滑的邊緣，產生被腐蝕、溶解或手繪墨水暈開的不規則邊緣感。</td></tr>
+                <tr><td>Strobe Light</td><td>閃光燈</td><td>讓畫面規律地閃爍純白色（或設定的顏色），常用於電音派對影片或營造急促的緊張氣氛。</td></tr>
+            </tbody></table></div>
+            
+            <div id="ve-time" class="tab-panel category-panel"><h2>Time (時間)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Echo</td><td>回音 (視覺)</td><td>在視覺上將前幾幀的畫面以半透明方式疊加在當前畫面上，人物移動時會產生多重殘影、靈魂出竅般的拖影效果。</td></tr>
+                <tr><td>Posterize Time</td><td>色調分離時間</td><td>強制鎖定並降低影片的幀率。例如將 60fps 的影片降格鎖定在 12fps 播放，就能做出宛如黏土定格動畫的卡頓感。</td></tr>
+            </tbody></table></div>
+            
+            <div id="ve-transform" class="tab-panel category-panel"><h2>Transform (變形)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Crop</td><td>裁切</td><td>【極常用排版工具】精確裁切畫面的上、下、左、右邊緣。支援羽化(Feather)功能，常拿來做電影上下黑邊，或多重分割畫面。</td></tr>
+                <tr><td>Horizontal Flip</td><td>水平翻轉</td><td>將畫面左右鏡像顛倒（左手變右手）。常發現人物視線方向不對時用來修正。</td></tr>
+                <tr><td>Vertical Flip</td><td>垂直翻轉</td><td>將畫面上下鏡像顛倒。</td></tr>
+            </tbody></table></div>
+            
+            <div id="ve-transition" class="tab-panel category-panel active"><h2>Transition (轉場 - 影片效果分類)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Block Dissolve</td><td>區塊溶解</td><td>它不是放在片段交界處，而是加在單一片段上。透過設定關鍵影格，讓畫面被分割成無數隨機方塊逐漸消失或出現。</td></tr>
+                <tr><td>Linear Wipe</td><td>線性擦除</td><td>【做字卡超常用】建立一條直線來控制畫面顯示的範圍。設定關鍵影格後，可以做出文字像被掃描儀掃過一樣，由左至右平滑出現的遮罩效果。</td></tr>
+                <tr><td>Radial Wipe</td><td>放射狀擦除</td><td>像時鐘的指針一樣，以圓心為基準旋轉來隱藏或顯示畫面，常用於圓形 Logo 的進場動態。</td></tr>
+                <tr><td>Venetian Blinds</td><td>百葉窗</td><td>將畫面切割成平行的條紋，透過調整「過渡完成」數值，讓畫面像百葉窗拉上或翻轉一樣消失。</td></tr>
+            </tbody></table></div>
 
-            <div id="ve-distort" class="tab-panel category-panel">
-                <h2>Distort (扭曲)</h2>
-                <table>
-                    <thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途簡述</th></tr></thead>
-                    <tbody>
-                        <tr><td>Warp Stabilizer</td><td>彎曲穩定器</td><td>自動計算並消除手持攝影機造成的畫面抖動。</td></tr>
-                        <tr><td>Transform</td><td>變形</td><td>包含縮放、旋轉等功能，且支援調整快門角度產生動態模糊。</td></tr>
-                        <tr><td>Corner Pin</td><td>邊角固定</td><td>可獨立控制畫面的四個角落，常用於合成螢幕畫面。</td></tr>
-                    </tbody>
-                </table>
-            </div>
+            <div id="ve-utility" class="tab-panel category-panel"><h2>Utility (公用程式)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Cineon Converter</td><td>Cineon 轉換器</td><td>非常專業底層的工具，用於處理早期膠捲底片掃描下來的 Cineon (10-bit Log) 檔案，進行色彩空間對數轉換。一般 YouTuber 幾乎不會用到。</td></tr>
+            </tbody></table></div>
+
+            <div id="vt-3d" class="tab-panel category-panel"><h2>3D Motion (3D運動)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Cube Spin</td><td>立方體旋轉</td><td>把 A 畫面跟 B 畫面貼在一個立體方塊的兩面上，轉場時整個方塊會進行 3D 翻轉帶出下一個畫面。</td></tr>
+                <tr><td>Flip Over</td><td>翻轉</td><td>畫面像是紙牌一樣從中間平面翻轉 180 度，背面顯示出下一個影片。</td></tr>
+            </tbody></table></div>
+            
+            <div id="vt-dissolve" class="tab-panel category-panel"><h2>Dissolve (溶解)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Cross Dissolve</td><td>交叉溶解</td><td>【PR 預設，世界最常用】A 畫面逐漸變透明的同時，B 畫面逐漸浮現，是最平滑、最不會出錯的萬用轉場。</td></tr>
+                <tr><td>Dip to Black</td><td>浸入黑色</td><td>A 畫面先暗轉至全黑，停頓瞬間後，B 畫面再從全黑亮起。常用於表示時間流逝、章節切換或影片結尾。</td></tr>
+                <tr><td>Dip to White</td><td>浸入白色</td><td>A 畫面爆亮至全白，再降亮顯示 B 畫面。通常會配合相機快門音效或是回憶畫面使用（閃白轉場）。</td></tr>
+                <tr><td>Film Dissolve</td><td>底片溶解</td><td>運作原理類似交叉溶解，但它的亮度計算方式是模擬真實光學底片的線性色彩空間，過渡起來色彩會比交叉溶解更寫實一點。</td></tr>
+                <tr><td>Morph Cut</td><td>變形剪接</td><td>【訪談救星】專門用來處理同一個人物說話時的「跳剪」痕跡。它會利用AI運算自動補幀，把跳剪處融合在一起，讓人看不出有剪輯過。</td></tr>
+            </tbody></table></div>
+            
+            <div id="vt-immersive" class="tab-panel category-panel"><h2>Immersive Video (沉浸式)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>VR Light Leaks</td><td>VR 漏光 等</td><td>專門設計給 360 度全景影片使用的漏光、模糊等轉場過渡，確保在 VR 頭盔中觀看時接縫自然。</td></tr>
+            </tbody></table></div>
+            
+            <div id="vt-iris" class="tab-panel category-panel"><h2>Iris (光圈)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Iris Box</td><td>方塊光圈</td><td>下一個畫面從螢幕正中央以方形不斷向外擴大，直到覆蓋滿整個螢幕。</td></tr>
+                <tr><td>Iris Round</td><td>圓形光圈</td><td>下一個畫面以圓形（就像相機鏡頭光圈打開一樣）由內向外擴展開來，常見於早期卡通結束畫面（Porky Pig 結尾）。</td></tr>
+            </tbody></table></div>
+            
+            <div id="vt-page" class="tab-panel category-panel"><h2>Page Peel (頁面剝落)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Page Peel</td><td>頁面剝落</td><td>畫面一角像真實的書頁一樣被捲起來、撕開翻頁，露出底下的新畫面，帶有強烈的復古簡報感。</td></tr>
+            </tbody></table></div>
+            
+            <div id="vt-slide" class="tab-panel category-panel"><h2>Slide (滑動)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Push</td><td>推動</td><td>B 畫面像火車車廂一樣，從畫面邊緣硬生生把 A 畫面給推擠出去。</td></tr>
+                <tr><td>Slide</td><td>滑動</td><td>A 畫面不動，B 畫面像是幻燈片一樣從上面直接滑進來蓋住 A 畫面。</td></tr>
+                <tr><td>Split</td><td>分割</td><td>A 畫面像摩西分海一樣從中間裂開往兩側退去，露出背後的 B 畫面。</td></tr>
+            </tbody></table></div>
+            
+            <div id="vt-wipe" class="tab-panel category-panel"><h2>Wipe (擦除)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Wipe</td><td>擦除</td><td>一條直線由左到右（或上到下）掃過，掃過的地方變成新畫面。星際大戰(Star Wars)最愛用的經典轉場。</td></tr>
+                <tr><td>Band Wipe</td><td>帶狀擦除</td><td>畫面被切成數條橫向或縱向的帶子，交錯著把新畫面帶進來。</td></tr>
+                <tr><td>Clock Wipe</td><td>時鐘擦除</td><td>像時鐘的秒針轉一圈一樣，順時針掃過畫面完成過渡。</td></tr>
+            </tbody></table></div>
+            
+            <div id="vt-zoom" class="tab-panel category-panel"><h2>Zoom (縮放)</h2><table><thead><tr><th>英文名稱</th><th>中文名稱</th><th>用途詳解</th></tr></thead><tbody>
+                <tr><td>Cross Zoom</td><td>交叉縮放</td><td>A 畫面急速放大到模糊的狀態，接著切換到 B 畫面從放大狀態急速縮小回正常比例，非常有動感的網紅愛用轉場。</td></tr>
+            </tbody></table></div>
 
         </div>
     </div>
 
     <script>
-        // 1. 處理大分類的展開與收合
         const menuTitles = document.querySelectorAll('.menu-title');
         menuTitles.forEach(title => {
             title.addEventListener('click', () => {
@@ -371,75 +470,54 @@
             });
         });
 
-        // 2. 處理小分類點擊與右側內容切換
         const subMenuItems = document.querySelectorAll('.sub-menu li');
         const allTabPanels = document.querySelectorAll('.tab-panel');
         const searchInput = document.getElementById('searchInput');
 
         subMenuItems.forEach(item => {
             item.addEventListener('click', () => {
-                if(searchInput.value !== '') {
-                    searchInput.value = '';
-                }
-
+                if(searchInput.value !== '') searchInput.value = '';
                 subMenuItems.forEach(li => li.classList.remove('active'));
                 item.classList.add('active');
-
                 const targetId = item.getAttribute('data-target');
                 allTabPanels.forEach(panel => panel.classList.remove('active'));
-                
                 const targetPanel = document.getElementById(targetId);
-                if (targetPanel) {
-                    targetPanel.classList.add('active');
-                }
+                if (targetPanel) targetPanel.classList.add('active');
             });
         });
 
-        // 3. 全域搜尋功能邏輯 (加入所屬分類)
         const searchResultsPanel = document.getElementById('search-results');
         const searchBody = document.getElementById('search-body');
         const searchTable = document.getElementById('search-table');
         const noResultsMsg = document.getElementById('no-results-msg');
         const keywordDisplay = document.getElementById('keyword-display');
-        
         const allOriginalRows = document.querySelectorAll('.category-panel tbody tr');
 
         searchInput.addEventListener('input', function() {
             const keyword = this.value.toLowerCase().trim();
-
             if (keyword === '') {
                 allTabPanels.forEach(panel => panel.classList.remove('active'));
                 const currentActiveMenu = document.querySelector('.sub-menu li.active');
                 if (currentActiveMenu) {
-                    const targetId = currentActiveMenu.getAttribute('data-target');
-                    document.getElementById(targetId).classList.add('active');
+                    document.getElementById(currentActiveMenu.getAttribute('data-target')).classList.add('active');
                 }
                 return;
             }
 
             allTabPanels.forEach(panel => panel.classList.remove('active'));
             searchResultsPanel.classList.add('active');
-            
             searchBody.innerHTML = '';
             let matchCount = 0;
 
             allOriginalRows.forEach(row => {
                 const rowText = row.textContent.toLowerCase();
                 if (rowText.includes(keyword)) {
-                    // 找出這筆資料所屬的分類標題 (h2 標籤內容)
                     const parentPanel = row.closest('.category-panel');
                     const categoryName = parentPanel.querySelector('h2').textContent;
-
-                    // 複製原本的表格列
                     const clonedRow = row.cloneNode(true);
-                    
-                    // 建立一個新的欄位 (td)，並放入帶有樣式的分類標籤
                     const categoryTd = document.createElement('td');
                     categoryTd.innerHTML = `<span class="category-badge">${categoryName}</span>`;
-                    
-                    // 將新欄位加入複製的表格列中
                     clonedRow.appendChild(categoryTd);
-                    
                     searchBody.appendChild(clonedRow);
                     matchCount++;
                 }
