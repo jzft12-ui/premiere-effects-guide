@@ -7,14 +7,14 @@
     <style>
         :root {
             /* 白底黑字主題色彩 */
-            --bg-main: #ffffff;          /* 主要白底 */
-            --text-main: #333333;        /* 主要黑字 */
-            --sidebar-bg: #f8f9fa;       /* 側邊欄淺灰底色 */
+            --bg-main: #ffffff;          
+            --text-main: #333333;        
+            --sidebar-bg: #f8f9fa;       
             --active-bg: #6c5ce7;        /* 選取時的藍紫色 */
-            --active-text: #ffffff;      /* 選取時的白字 */
-            --border-color: #dee2e6;     /* 邊框顏色 */
-            --table-header: #f1f3f5;     /* 表格標題底色 */
-            --hover-bg: #e9ecef;         /* 滑鼠懸停底色 */
+            --active-text: #ffffff;      
+            --border-color: #dee2e6;     
+            --table-header: #f1f3f5;     
+            --hover-bg: #e9ecef;         
         }
 
         body {
@@ -35,6 +35,7 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
+            flex-shrink: 0;
         }
 
         .sidebar-header {
@@ -43,9 +44,11 @@
             font-weight: bold;
             border-bottom: 1px solid var(--border-color);
             background-color: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
-        /* 大分類 */
         .menu-group {
             border-bottom: 1px solid #eeeeee;
         }
@@ -75,12 +78,11 @@
             transform: rotate(-90deg);
         }
 
-        /* 小分類 (可展開/收合) */
         .sub-menu {
             list-style: none;
             padding: 0;
             margin: 0;
-            display: block; /* 預設展開 */
+            display: block;
         }
 
         .sub-menu.hidden {
@@ -100,7 +102,6 @@
             color: var(--text-main);
         }
 
-        /* 藍紫色選取狀態 */
         .sub-menu li.active {
             background-color: var(--active-bg);
             color: var(--active-text);
@@ -113,6 +114,35 @@
             padding: 40px;
             overflow-y: auto;
             background-color: var(--bg-main);
+        }
+
+        /* 限制閱讀寬度，提升閱讀體驗 */
+        .content-container {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        /* 搜尋列設計 */
+        .search-container {
+            margin-bottom: 30px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 20px;
+            font-size: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-sizing: border-box;
+            background-color: #fcfcfc;
+            transition: border-color 0.2s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--active-bg);
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
         }
 
         .tab-panel {
@@ -129,35 +159,46 @@
             border-bottom: 2px solid var(--border-color);
             padding-bottom: 10px;
             color: var(--text-main);
+            margin-bottom: 20px;
         }
 
-        /* 三欄式表格設計 */
+        /* 表格設計與欄位比例 */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
             font-size: 0.95rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
 
         th, td {
             border: 1px solid var(--border-color);
-            padding: 12px 15px;
+            padding: 14px 16px;
             text-align: left;
+            vertical-align: top; /* 讓文字靠上對齊，多行時較整齊 */
         }
 
         th {
             background-color: var(--table-header);
             font-weight: bold;
             color: #333;
-            width: 33.33%; /* 讓三欄等寬，也可視需求移除讓文字自動撐開 */
         }
+
+        /* 設定欄位黃金比例 */
+        th:nth-child(1), td:nth-child(1) { width: 25%; font-weight: 500; }
+        th:nth-child(2), td:nth-child(2) { width: 25%; }
+        th:nth-child(3), td:nth-child(3) { width: 50%; line-height: 1.6; color: #444; }
 
         tr:nth-child(even) {
             background-color: #fcfcfc;
         }
 
         tr:hover {
-            background-color: #f1f8ff; /* 表格列懸停提示 */
+            background-color: #f1f8ff;
+        }
+
+        /* 隱藏無符合結果的表格列 */
+        .hidden-row {
+            display: none !important;
         }
 
         @keyframes fadeIn {
@@ -191,182 +232,188 @@
     </div>
 
     <div class="content-area">
-        
-        <div id="vt-3dmotion" class="tab-panel active">
-            <h2>3D 運動 (3D Motion)</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>英文名稱</th>
-                        <th>中文名稱</th>
-                        <th>用途簡述</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Cube Spin</td>
-                        <td>立方體旋轉</td>
-                        <td>畫面如同立體方塊般翻轉到下一個片段。</td>
-                    </tr>
-                    <tr>
-                        <td>Flip Over</td>
-                        <td>翻轉</td>
-                        <td>畫面以平面翻轉的方式切換至下一個畫面。</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <div class="content-container">
+            
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-input" placeholder="🔍 搜尋英文名稱、中文或用途關鍵字...">
+            </div>
 
-        <div id="vt-dissolve" class="tab-panel">
-            <h2>溶解 (Dissolve)</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>英文名稱</th>
-                        <th>中文名稱</th>
-                        <th>用途簡述</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Cross Dissolve</td>
-                        <td>交叉溶解</td>
-                        <td>最常用的轉場，前一個畫面漸淡，下一個畫面漸入。</td>
-                    </tr>
-                    <tr>
-                        <td>Dip to Black</td>
-                        <td>浸入黑色</td>
-                        <td>畫面先暗轉至全黑，再亮起進入下一個畫面。</td>
-                    </tr>
-                    <tr>
-                        <td>Dip to White</td>
-                        <td>浸入白色</td>
-                        <td>畫面先亮轉至全白（常搭配閃光音效），再進入下一個畫面。</td>
-                    </tr>
-                    <tr>
-                        <td>Morph Cut</td>
-                        <td>變形剪接</td>
-                        <td>用於訪談畫面，可讓兩段跳剪的畫面平滑過渡，隱藏剪接痕跡。</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+            <div id="vt-3dmotion" class="tab-panel active">
+                <h2>3D 運動 (3D Motion)</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>英文名稱</th>
+                            <th>中文名稱</th>
+                            <th>用途簡述</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Cube Spin</td>
+                            <td>立方體旋轉</td>
+                            <td>畫面如同立體方塊般翻轉到下一個片段。</td>
+                        </tr>
+                        <tr>
+                            <td>Flip Over</td>
+                            <td>翻轉</td>
+                            <td>畫面以平面翻轉的方式切換至下一個畫面。</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-        <div id="vt-wipe" class="tab-panel">
-            <h2>擦除 (Wipe)</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>英文名稱</th>
-                        <th>中文名稱</th>
-                        <th>用途簡述</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Wipe</td>
-                        <td>擦除</td>
-                        <td>畫面由左至右或由上至下直接抹除切換。</td>
-                    </tr>
-                    <tr>
-                        <td>Radial Wipe</td>
-                        <td>放射狀擦除</td>
-                        <td>以時鐘指針旋轉的方式擦除畫面。</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+            <div id="vt-dissolve" class="tab-panel">
+                <h2>溶解 (Dissolve)</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>英文名稱</th>
+                            <th>中文名稱</th>
+                            <th>用途簡述</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Cross Dissolve</td>
+                            <td>交叉溶解</td>
+                            <td>最常用的轉場，前一個畫面漸淡，下一個畫面漸入。</td>
+                        </tr>
+                        <tr>
+                            <td>Dip to Black</td>
+                            <td>浸入黑色</td>
+                            <td>畫面先暗轉至全黑，再亮起進入下一個畫面。</td>
+                        </tr>
+                        <tr>
+                            <td>Dip to White</td>
+                            <td>浸入白色</td>
+                            <td>畫面先亮轉至全白（常搭配閃光音效），再進入下一個畫面。</td>
+                        </tr>
+                        <tr>
+                            <td>Morph Cut</td>
+                            <td>變形剪接</td>
+                            <td>用於訪談畫面，可讓兩段跳剪的畫面平滑過渡，隱藏剪接痕跡。</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-        <div id="ve-blur" class="tab-panel">
-            <h2>模糊與銳利化 (Blur & Sharpen)</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>英文名稱</th>
-                        <th>中文名稱</th>
-                        <th>用途簡述</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Gaussian Blur</td>
-                        <td>高斯模糊</td>
-                        <td>最標準的模糊效果，能平滑地將畫面失焦。</td>
-                    </tr>
-                    <tr>
-                        <td>Directional Blur</td>
-                        <td>方向模糊</td>
-                        <td>製造往特定方向的模糊，常用於表現速度感。</td>
-                    </tr>
-                    <tr>
-                        <td>Sharpen</td>
-                        <td>銳利化</td>
-                        <td>強化畫面邊緣細節，讓微模糊的畫面變清晰。</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+            <div id="vt-wipe" class="tab-panel">
+                <h2>擦除 (Wipe)</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>英文名稱</th>
+                            <th>中文名稱</th>
+                            <th>用途簡述</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Wipe</td>
+                            <td>擦除</td>
+                            <td>畫面由左至右或由上至下直接抹除切換。</td>
+                        </tr>
+                        <tr>
+                            <td>Radial Wipe</td>
+                            <td>放射狀擦除</td>
+                            <td>以時鐘指針旋轉的方式擦除畫面。</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-        <div id="ve-color" class="tab-panel">
-            <h2>色彩校正 (Color Correction)</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>英文名稱</th>
-                        <th>中文名稱</th>
-                        <th>用途簡述</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Lumetri Color</td>
-                        <td>Lumetri 色彩</td>
-                        <td>PR 最強大的整合式調色工具，支援基礎校正、曲線與色輪。</td>
-                    </tr>
-                    <tr>
-                        <td>Tint</td>
-                        <td>色調</td>
-                        <td>快速將畫面轉換為雙色調（例如黑白或泛黃復古風）。</td>
-                    </tr>
-                    <tr>
-                        <td>Change to Color</td>
-                        <td>變更為色彩</td>
-                        <td>將畫面中特定的顏色替換成另一種顏色。</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+            <div id="ve-blur" class="tab-panel">
+                <h2>模糊與銳利化 (Blur & Sharpen)</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>英文名稱</th>
+                            <th>中文名稱</th>
+                            <th>用途簡述</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Gaussian Blur</td>
+                            <td>高斯模糊</td>
+                            <td>最標準的模糊效果，能平滑地將畫面失焦。</td>
+                        </tr>
+                        <tr>
+                            <td>Directional Blur</td>
+                            <td>方向模糊</td>
+                            <td>製造往特定方向的模糊，常用於表現速度感。</td>
+                        </tr>
+                        <tr>
+                            <td>Sharpen</td>
+                            <td>銳利化</td>
+                            <td>強化畫面邊緣細節，讓微模糊的畫面變清晰。</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-        <div id="ve-distort" class="tab-panel">
-            <h2>扭曲 (Distort)</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>英文名稱</th>
-                        <th>中文名稱</th>
-                        <th>用途簡述</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Warp Stabilizer</td>
-                        <td>彎曲穩定器</td>
-                        <td>自動計算並消除手持攝影機造成的畫面抖動。</td>
-                    </tr>
-                    <tr>
-                        <td>Transform</td>
-                        <td>變形</td>
-                        <td>包含縮放、旋轉等功能，且支援調整快門角度產生動態模糊。</td>
-                    </tr>
-                    <tr>
-                        <td>Corner Pin</td>
-                        <td>邊角固定</td>
-                        <td>可獨立控制畫面的四個角落，常用於合成螢幕畫面。</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+            <div id="ve-color" class="tab-panel">
+                <h2>色彩校正 (Color Correction)</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>英文名稱</th>
+                            <th>中文名稱</th>
+                            <th>用途簡述</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Lumetri Color</td>
+                            <td>Lumetri 色彩</td>
+                            <td>PR 最強大的整合式調色工具，支援基礎校正、曲線與色輪。</td>
+                        </tr>
+                        <tr>
+                            <td>Tint</td>
+                            <td>色調</td>
+                            <td>快速將畫面轉換為雙色調（例如黑白或泛黃復古風）。</td>
+                        </tr>
+                        <tr>
+                            <td>Change to Color</td>
+                            <td>變更為色彩</td>
+                            <td>將畫面中特定的顏色替換成另一種顏色。</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
+            <div id="ve-distort" class="tab-panel">
+                <h2>扭曲 (Distort)</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>英文名稱</th>
+                            <th>中文名稱</th>
+                            <th>用途簡述</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Warp Stabilizer</td>
+                            <td>彎曲穩定器</td>
+                            <td>自動計算並消除手持攝影機造成的畫面抖動。</td>
+                        </tr>
+                        <tr>
+                            <td>Transform</td>
+                            <td>變形</td>
+                            <td>包含縮放、旋轉等功能，且支援調整快門角度產生動態模糊。</td>
+                        </tr>
+                        <tr>
+                            <td>Corner Pin</td>
+                            <td>邊角固定</td>
+                            <td>可獨立控制畫面的四個角落，常用於合成螢幕畫面。</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
     </div>
 
     <script>
@@ -374,9 +421,7 @@
         const menuTitles = document.querySelectorAll('.menu-title');
         menuTitles.forEach(title => {
             title.addEventListener('click', () => {
-                // 切換箭頭方向
                 title.classList.toggle('collapsed');
-                // 切換下方的次選單顯示狀態
                 const subMenu = title.nextElementSibling;
                 subMenu.classList.toggle('hidden');
             });
@@ -388,21 +433,35 @@
 
         subMenuItems.forEach(item => {
             item.addEventListener('click', () => {
-                // 清除所有選項的藍紫色 active 狀態
                 subMenuItems.forEach(li => li.classList.remove('active'));
-                // 為當前點擊的選項加上 active
                 item.classList.add('active');
 
-                // 取得對應的 id
                 const targetId = item.getAttribute('data-target');
-
-                // 隱藏所有右側面板
                 tabPanels.forEach(panel => panel.classList.remove('active'));
                 
-                // 顯示選中的面板
                 const targetPanel = document.getElementById(targetId);
                 if (targetPanel) {
                     targetPanel.classList.add('active');
+                }
+            });
+        });
+
+        // 3. 處理搜尋功能
+        const searchInput = document.getElementById('searchInput');
+        const allTableRows = document.querySelectorAll('tbody tr');
+
+        searchInput.addEventListener('input', function() {
+            const keyword = this.value.toLowerCase().trim();
+
+            allTableRows.forEach(row => {
+                // 取得整列的文字內容
+                const rowText = row.textContent.toLowerCase();
+                
+                // 如果有包含關鍵字就顯示，沒有就隱藏
+                if (rowText.includes(keyword)) {
+                    row.classList.remove('hidden-row');
+                } else {
+                    row.classList.add('hidden-row');
                 }
             });
         });
