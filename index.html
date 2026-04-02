@@ -10,8 +10,8 @@
             --bg-main: #ffffff;          
             --text-main: #333333;        
             --sidebar-bg: #f8f9fa;       
-            --active-bg: #6c5ce7;        /* 選取時的藍紫色 */
-            --active-text: #ffffff;      
+            --primary-color: #6c5ce7;    /* 主題紫藍色 */
+            --primary-light: rgba(108, 92, 231, 0.08); /* 淡淡的紫藍色背景 */
             --border-color: #dee2e6;     
             --table-header: #f1f3f5;     
             --hover-bg: #e9ecef;         
@@ -44,9 +44,14 @@
             font-weight: bold;
             border-bottom: 1px solid var(--border-color);
             background-color: #ffffff;
+            color: var(--primary-color); /* 左上角標題改為紫藍色 */
             position: sticky;
             top: 0;
             z-index: 10;
+            
+            /* 防止文字被反白選取 */
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         .menu-group {
@@ -61,6 +66,10 @@
             justify-content: space-between;
             align-items: center;
             transition: background 0.2s;
+            
+            /* 防止文字被反白選取 */
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         .menu-title:hover {
@@ -90,11 +99,17 @@
         }
 
         .sub-menu li {
-            padding: 12px 20px 12px 40px;
+            /* 左邊預留 4px 的透明邊框，為了選取狀態做準備 */
+            padding: 12px 20px 12px 36px;
+            border-left: 4px solid transparent; 
             cursor: pointer;
             font-size: 0.95rem;
             color: #555;
             transition: all 0.2s;
+            
+            /* 防止文字被反白選取 */
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         .sub-menu li:hover {
@@ -102,10 +117,12 @@
             color: var(--text-main);
         }
 
+        /* 改回精緻的選取狀態：紫字 + 淡紫底 + 左側粗線 */
         .sub-menu li.active {
-            background-color: var(--active-bg);
-            color: var(--active-text);
+            background-color: var(--primary-light);
+            color: var(--primary-color);
             font-weight: bold;
+            border-left: 4px solid var(--primary-color);
         }
 
         /* ================= 右側主要內容 ================= */
@@ -140,7 +157,7 @@
 
         .search-input:focus {
             outline: none;
-            border-color: var(--active-bg);
+            border-color: var(--primary-color);
             background-color: #ffffff;
             box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
         }
