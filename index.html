@@ -129,7 +129,6 @@
             margin: 0 auto;
         }
 
-        /* 搜尋列設計 */
         .search-container {
             margin-bottom: 30px;
         }
@@ -169,13 +168,12 @@
             margin-bottom: 20px;
         }
 
-        /* 搜尋結果專屬標題顏色 */
         #search-results h2 {
             color: var(--primary-color);
             border-bottom-color: var(--primary-color);
         }
 
-        /* 表格設計與欄位比例 */
+        /* 表格基礎設計 */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -196,14 +194,32 @@
             color: #333;
         }
 
-        th:nth-child(1), td:nth-child(1) { width: 25%; font-weight: 500; }
-        th:nth-child(2), td:nth-child(2) { width: 25%; }
-        th:nth-child(3), td:nth-child(3) { width: 50%; line-height: 1.6; color: #444; }
-
         tr:nth-child(even) { background-color: #fcfcfc; }
         tr:hover { background-color: #f1f8ff; }
 
-        /* 找不到結果的提示訊息 */
+        /* 一般分類表格的欄位比例 (3欄) */
+        .category-panel th:nth-child(1), .category-panel td:nth-child(1) { width: 25%; font-weight: 500; }
+        .category-panel th:nth-child(2), .category-panel td:nth-child(2) { width: 25%; }
+        .category-panel th:nth-child(3), .category-panel td:nth-child(3) { width: 50%; line-height: 1.6; color: #444; }
+
+        /* 搜尋結果表格的欄位比例 (4欄) */
+        #search-results th:nth-child(1), #search-results td:nth-child(1) { width: 20%; font-weight: 500; }
+        #search-results th:nth-child(2), #search-results td:nth-child(2) { width: 20%; }
+        #search-results th:nth-child(3), #search-results td:nth-child(3) { width: 40%; line-height: 1.6; color: #444; }
+        #search-results th:nth-child(4), #search-results td:nth-child(4) { width: 20%; }
+
+        /* 分類標籤設計 */
+        .category-badge {
+            display: inline-block;
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
         .no-results {
             text-align: center;
             padding: 40px;
@@ -260,7 +276,7 @@
                             <th>英文名稱</th>
                             <th>中文名稱</th>
                             <th>用途簡述</th>
-                        </tr>
+                            <th>所屬分類</th> </tr>
                     </thead>
                     <tbody id="search-body">
                         </tbody>
@@ -362,7 +378,6 @@
 
         subMenuItems.forEach(item => {
             item.addEventListener('click', () => {
-                // 如果正在搜尋狀態，點擊分類時自動清空搜尋框
                 if(searchInput.value !== '') {
                     searchInput.value = '';
                 }
@@ -380,24 +395,20 @@
             });
         });
 
-        // 3. 全域搜尋功能邏輯
+        // 3. 全域搜尋功能邏輯 (加入所屬分類)
         const searchResultsPanel = document.getElementById('search-results');
         const searchBody = document.getElementById('search-body');
         const searchTable = document.getElementById('search-table');
         const noResultsMsg = document.getElementById('no-results-msg');
         const keywordDisplay = document.getElementById('keyword-display');
         
-        // 取得所有「原本分類」裡的表格列 (排除搜尋結果本身的表格)
         const allOriginalRows = document.querySelectorAll('.category-panel tbody tr');
 
         searchInput.addEventListener('input', function() {
             const keyword = this.value.toLowerCase().trim();
 
-            // 如果搜尋框是空的，恢復顯示目前左側選取的分類
             if (keyword === '') {
                 allTabPanels.forEach(panel => panel.classList.remove('active'));
-                
-                // 找出左側 active 的項目並顯示
                 const currentActiveMenu = document.querySelector('.sub-menu li.active');
                 if (currentActiveMenu) {
                     const targetId = currentActiveMenu.getAttribute('data-target');
@@ -406,26 +417,34 @@
                 return;
             }
 
-            // 進入搜尋模式：隱藏所有面板，只顯示搜尋面板
             allTabPanels.forEach(panel => panel.classList.remove('active'));
             searchResultsPanel.classList.add('active');
             
-            // 清空先前的搜尋結果
             searchBody.innerHTML = '';
             let matchCount = 0;
 
-            // 尋找符合的列並複製到搜尋面板中
             allOriginalRows.forEach(row => {
                 const rowText = row.textContent.toLowerCase();
                 if (rowText.includes(keyword)) {
-                    // 複製這個 tr 節點並塞進搜尋結果的 tbody 裡
+                    // 找出這筆資料所屬的分類標題 (h2 標籤內容)
+                    const parentPanel = row.closest('.category-panel');
+                    const categoryName = parentPanel.querySelector('h2').textContent;
+
+                    // 複製原本的表格列
                     const clonedRow = row.cloneNode(true);
+                    
+                    // 建立一個新的欄位 (td)，並放入帶有樣式的分類標籤
+                    const categoryTd = document.createElement('td');
+                    categoryTd.innerHTML = `<span class="category-badge">${categoryName}</span>`;
+                    
+                    // 將新欄位加入複製的表格列中
+                    clonedRow.appendChild(categoryTd);
+                    
                     searchBody.appendChild(clonedRow);
                     matchCount++;
                 }
             });
 
-            // 處理「有結果」與「找不到結果」的顯示切換
             if (matchCount > 0) {
                 searchTable.style.display = 'table';
                 noResultsMsg.style.display = 'none';
